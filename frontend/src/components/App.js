@@ -7,14 +7,23 @@ import { Container } from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./Footer";
 
+// STYLES
+import "../styles/App.css";
+
 const App = () => {
   return (
     <>
-      <Header />
-      <Container classNam='py-3'>
-        <h1>Hello world</h1>
-      </Container>
-      <Footer />
+      <div className='App'>
+        <div>
+          <Header />
+          <Container classNam='py-3'>
+            <h1>Hello world</h1>
+          </Container>
+        </div>
+        <div>
+          <Footer />
+        </div>
+      </div>
     </>
   );
 };
