@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 // COMPONENTS
 import Header from "./Header";
 import Footer from "./Footer";
+import Routes from "./Router";
 
 // SCREENS
 import HomeScreen from "../screens/HomeScreen";
@@ -19,9 +20,7 @@ const App = () => {
       <div className='App'>
         <div>
           <Header />
-          <Container className='py-4 text-center'>
-            <HomeScreen />
-          </Container>
+          <Routes />
         </div>
         <div>
           <Footer />
