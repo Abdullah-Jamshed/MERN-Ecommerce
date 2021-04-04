@@ -7,6 +7,9 @@ import { Container } from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./Footer";
 
+// SCREENS
+import HomeScreen from "../screens/HomeScreen";
+
 // STYLES
 import "../styles/App.css";
 
@@ -16,8 +19,8 @@ const App = () => {
       <div className='App'>
         <div>
           <Header />
-          <Container classNam='py-3'>
-            <h1>Hello world</h1>
+          <Container className='py-4 text-center'>
+            <HomeScreen />
           </Container>
         </div>
         <div>
