@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <Container className='text-center'>
+    <Container className='py-3 text-center'>
       <p>copyright &copy; 2021</p>
     </Container>
   );
