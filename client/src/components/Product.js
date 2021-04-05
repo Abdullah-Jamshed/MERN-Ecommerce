@@ -17,8 +17,7 @@ const Product = ({ product }) => {
         <Card.Title>{product.name}</Card.Title>
         {/* <Card.Text>{product.description}</Card.Text> */}
         <Card.Text as='div'>
-        <Rating rating={product.rating} reviews={product.numReviews} />
-          
+          <Rating rating={product.rating} reviews={product.numReviews} />
         </Card.Text>
         <Card.Text as='h3'>${product.price}</Card.Text>
         {/* <Button variant='primary'>Go somewhere</Button> */}
