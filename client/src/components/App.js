@@ -6,7 +6,7 @@ import React from "react";
 import Routes from "./Router";
 
 // SCREENS
-import HomeScreen from "../screens/HomeScreen";
+// import HomeScreen from "../screens/HomeScreen";
 
 // STYLES
 import "../styles/App.css";

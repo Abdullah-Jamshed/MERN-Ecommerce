@@ -15,7 +15,7 @@ const HomeScreen = () => {
       <h1>Latest Product</h1>
       <Row>
         {products.map((product) => (
-          <Col sm={12} md={6} lg={3} className=''>
+          <Col key={product._id} sm={12} md={6} lg={3} className=''>
             <Product product={product} />
           </Col>
         ))}

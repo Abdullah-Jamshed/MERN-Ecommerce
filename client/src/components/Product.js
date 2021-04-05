@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENTS
-import { Button, Card, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 //  COMPONENTS
 import Rating from "./Rating";
@@ -13,7 +13,7 @@ const Product = ({ product }) => {
       <Link to={`product/${product._id}`}>
         <Card.Img variant='top' src={product.image} />
       </Link>
-      <Card.Body className="text-left">
+      <Card.Body className='text-left'>
         <Card.Title>{product.name}</Card.Title>
         {/* <Card.Text>{product.description}</Card.Text> */}
         <Card.Text as='div'>
