@@ -1,5 +1,14 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
+// UI LIBRARY COMPONENTS
+import { Container } from "react-bootstrap";
+
+//  COMPONENTS
+import Rating from "./Rating";
+
+// DUMMY DATA
+import products from "../dummyData/products";
 
 const ProductScreen = () => {
   const history = useHistory();

@@ -1,11 +1,8 @@
 import React from "react";
 
-// UI LIBRARY COMPONENTS
-import { Container } from "react-bootstrap";
-
 // COMPONENTS
-import Header from "./Header";
-import Footer from "./Footer";
+// import Header from "./Header";
+// import Footer from "./Footer";
 import Routes from "./Router";
 
 // SCREENS
