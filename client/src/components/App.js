@@ -17,15 +17,15 @@ import "../styles/App.css";
 const App = () => {
   return (
     <>
-      <div className='App'>
+      {/* <div className='App'>
         <div>
-          <Header />
-          <Routes />
-        </div>
+          <Header /> */}
+      <Routes />
+      {/* </div>
         <div>
           <Footer />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
