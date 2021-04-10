@@ -1,4 +1,4 @@
-const products = require("../dummyData/products");
+import products from "../dummyData/products.js";
 
 const fetchProducts = (req, res) => {
   res.json(products);
@@ -10,4 +10,4 @@ const fetchProductsById = (req, res) => {
   res.json(product);
 };
 
-module.exports = { fetchProducts, fetchProductsById };
+export { fetchProducts, fetchProductsById };

@@ -1,9 +1,11 @@
-const productsRoute = require("express").Router();
+// const productsRoute = require("express").Router();
+import express from "express";
+const productsRoute = express.Router();
 
 // CONTROLLER
-const { fetchProducts,fetchProductsById } = require("../controller/products");
+import { fetchProducts, fetchProductsById } from "../controller/products.js";
 
 productsRoute.get("/", fetchProducts);
 productsRoute.get("/:id", fetchProductsById);
 
-module.exports = productsRoute;
+export default productsRoute;
