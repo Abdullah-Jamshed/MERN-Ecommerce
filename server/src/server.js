@@ -48,25 +48,25 @@ app.get("/", (req, res) => {
   res.json({ msg: "hello from my shop server" });
 });
 
-app.post("/user", async (req, res) => {
-  try {
-    
-    await User.deleteMany();
-    await Product.deleteMany();
+// app.post("/user", async (req, res) => {
+//   try {
 
-    const createdUsers = await User.insertMany(users);
-    const adminUserId = createdUsers[0]._id;
-    const sampleData = products.map((product) => ({ ...product, user: adminUserId }));
-    // Product
-    await Product.insertMany(sampleData);
-    res.json({ msg: "Data Added" });
-  } catch (error) {
-    console.log(error);
-    res.json({ msg: "Error" });
-  }
-});
+//     await User.deleteMany();
+//     await Product.deleteMany();
 
-app.use("/products", productsRoute);
+//     const createdUsers = await User.insertMany(users);
+//     const adminUserId = createdUsers[0]._id;
+//     const sampleData = products.map((product) => ({ ...product, user: adminUserId }));
+//     // Product
+//     await Product.insertMany(sampleData);
+//     res.json({ msg: "Data Added" });
+//   } catch (error) {
+//     console.log(error);
+//     res.json({ msg: "Error" });
+//   }
+// });
+
+app.use("/api/products", productsRoute);
 
 app.listen(app.get("port"), () => {
   console.log(`Express Started on: http://localhost:${app.get("port")}`);

@@ -3,7 +3,7 @@ import API from "../../api";
 const fetchProduct = () => {
   return async (dispatch) => {
     try {
-      const { data } = await API.get("/products");
+      const { data } = await API.get("/api/products");
       dispatch({ type: "PRODUCTS", payload: { products: data || [] } });
     } catch (err) {
       console.log(err);
@@ -14,7 +14,7 @@ const fetchProduct = () => {
 const fetchProductById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await API.get(`/products/${id}`);
+      const { data } = await API.get(`/api/products/${id}`);
       dispatch({ type: "PRODUCT", payload: { product: data || null } });
     } catch (err) {
       console.log(err);
