@@ -1,15 +1,17 @@
 const express = require("express");
-require("dotenv").config();
-
-console.log(process.env.PORT);
-
 const app = express();
+require("dotenv").config();
+const cors = require("cors");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.set("port", process.env.PORT || 3001);
 
+const products = require("./dummyData/products");
+
 app.get("/", (req, res) => {
-  res.json({ msg: "Hello world" });
+  res.json(products);
 });
 
 app.listen(app.get("port"), () => {

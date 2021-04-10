@@ -1,10 +1,9 @@
-const INITIAL_STATE = {
-
-};
+const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "USER_LOADING":
+    case "PRODUCTS":
+      console.log(action.payload.products);
       return {
         ...state,
       };

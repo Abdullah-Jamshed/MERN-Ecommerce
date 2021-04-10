@@ -8,6 +8,10 @@ import Routes from "./Router";
 // SCREENS
 // import HomeScreen from "../screens/HomeScreen";
 
+// REDUX
+import { Provider } from "react-redux";
+import store from "../store";
+
 // STYLES
 import "../styles/App.css";
 
@@ -17,7 +21,9 @@ const App = () => {
       {/* <div className='App'>
         <div>
           <Header /> */}
-      <Routes />
+      <Provider store={store}>
+        <Routes />
+      </Provider>
       {/* </div>
         <div>
           <Footer />
