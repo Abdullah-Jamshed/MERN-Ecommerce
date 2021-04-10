@@ -24,7 +24,6 @@ const HomeScreen = () => {
   const { products } = useSelector((state) => state.productReducer);
 
   useEffect(() => {
-    console.log("Loading data ...");
     dispatch(fetchProduct());
   }, [dispatch]);
 

@@ -1,7 +1,13 @@
-const products = require("./dummyData/products");
+const products = require("../dummyData/products");
 
 const fetchProducts = (req, res) => {
   res.json(products);
 };
 
-module.exports = { fetchProducts };
+const fetchProductsById = (req, res) => {
+  console.log("id ==>>> ", req.params.id);
+  const product = products.find((product) => product._id === req.params.id);
+  res.json(product);
+};
+
+module.exports = { fetchProducts, fetchProductsById };
