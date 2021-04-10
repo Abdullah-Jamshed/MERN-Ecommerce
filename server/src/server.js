@@ -14,6 +14,14 @@ dotenv.config();
 // ROUTES
 import productsRoute from "./routes/products.js";
 
+// MODELS
+import Product from "./models/productModel.js";
+import User from "./models/userModel.js";
+
+// DUMMY DATA
+import users from "./dummyData/users.js";
+import products from "./dummyData/products.js";
+
 console.log(process.env.MONGODB_URI);
 
 mongoose.connect(process.env.MONGODB_URI, {
@@ -39,6 +47,25 @@ app.set("port", process.env.PORT || 3001);
 app.get("/", (req, res) => {
   res.json({ msg: "hello from my shop server" });
 });
+
+app.post("/user", async (req, res) => {
+  try {
+    
+    await User.deleteMany();
+    await Product.deleteMany();
+
+    const createdUsers = await User.insertMany(users);
+    const adminUserId = createdUsers[0]._id;
+    const sampleData = products.map((product) => ({ ...product, user: adminUserId }));
+    // Product
+    await Product.insertMany(sampleData);
+    res.json({ msg: "Data Added" });
+  } catch (error) {
+    console.log(error);
+    res.json({ msg: "Error" });
+  }
+});
+
 app.use("/products", productsRoute);
 
 app.listen(app.get("port"), () => {

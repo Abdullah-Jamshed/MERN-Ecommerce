@@ -1,12 +1,13 @@
-import products from "../dummyData/products.js";
+// MODELS
+import Product from "../models/productModel.js";
 
-const fetchProducts = (req, res) => {
+const fetchProducts = async (req, res) => {
+  const products = await Product.find({});
   res.json(products);
 };
 
-const fetchProductsById = (req, res) => {
-  console.log("id ==>>> ", req.params.id);
-  const product = products.find((product) => product._id === req.params.id);
+const fetchProductsById = async (req, res) => {
+  const product = await Product.findById(req.params.id);
   res.json(product);
 };
 
