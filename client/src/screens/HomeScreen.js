@@ -10,6 +10,7 @@ import { Col, Container, Row, Spinner } from "react-bootstrap";
 
 // COMPONENTS
 import Product from "../components/Product";
+import Message from "../components/Message";
 
 // REDUX
 // actions
@@ -21,7 +22,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { products, isLoading } = useSelector((state) => state.productReducer);
+  const { products, errorMessage, isLoading } = useSelector((state) => state.productReducer);
 
   useEffect(() => {
     dispatch(fetchProduct());
@@ -42,7 +43,7 @@ const HomeScreen = () => {
             </Row>
           </>
         ) : (
-          <h2 className='text-center'>No Product Found</h2>
+          <Message variant='danger'>{errorMessage}</Message>
         )
       ) : (
         <Spinner className='mt-4' animation='grow' />

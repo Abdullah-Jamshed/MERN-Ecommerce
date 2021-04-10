@@ -9,8 +9,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
-dotenv.config();
-
 // ROUTES
 import productsRoute from "./routes/products.js";
 
@@ -67,6 +65,12 @@ app.get("/", (req, res) => {
 // });
 
 app.use("/api/products", productsRoute);
+
+
+app.use("*", (req, res) => {
+  res.json({ msg: "invalid Route" });
+});
+
 
 app.listen(app.get("port"), () => {
   console.log(`Express Started on: http://localhost:${app.get("port")}`);

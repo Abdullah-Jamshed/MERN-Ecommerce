@@ -7,8 +7,9 @@ const fetchProduct = () => {
       const { data } = await API.get("/api/products");
       dispatch({ type: "PRODUCTS", payload: { products: data || [] } });
     } catch (err) {
-      console.log(err);
-      dispatch({ type: "LOADING", payload: { flag: false } });
+      console.log(err.response.data);
+      // console.log(err.message);
+      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg } });
     }
   };
 };
@@ -20,7 +21,7 @@ const fetchProductById = (id) => {
       const { data } = await API.get(`/api/products/${id}`);
       dispatch({ type: "PRODUCT", payload: { product: data || null } });
     } catch (err) {
-      dispatch({ type: "LOADING", payload: { flag: false } });
+      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg } });
     }
   };
 };

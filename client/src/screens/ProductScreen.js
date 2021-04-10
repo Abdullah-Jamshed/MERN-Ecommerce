@@ -6,6 +6,7 @@ import { Button, Card, Col, Container, Image, ListGroup, Row, Spinner } from "re
 
 //  COMPONENTS
 import Rating from "../components/Rating";
+import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,7 @@ const ProductScreen = ({ match }) => {
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { product, isLoading } = useSelector((state) => state.productReducer);
+  const { product, errorMessage, isLoading } = useSelector((state) => state.productReducer);
 
   useEffect(() => {
     dispatch(fetchProductById(match.params.id));
@@ -78,7 +79,7 @@ const ProductScreen = ({ match }) => {
               </Col>
             </Row>
           ) : (
-            <h2 className='text-center'>Product Not Found</h2>
+            <Message variant='info'>{errorMessage}</Message>
           )
         ) : (
           <Spinner className='mt-4 ' animation='grow' />

@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   products: [],
   product: null,
   isLoading: false,
+  errorMessage: "",
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         product: null,
+      };
+    case "FETCH_FAILED":
+      return {
+        ...state,
+        errorMessage: action.payload.msg,
+        isLoading: false,
       };
     default:
       return { ...state };
