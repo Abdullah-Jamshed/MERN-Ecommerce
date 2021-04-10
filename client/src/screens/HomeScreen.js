@@ -6,25 +6,27 @@ import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 // DUMMY DATA
-import products from "../dummyData/products";
+// import products from "../dummyData/products";
 
 // COMPONENTS
 import Product from "../components/Product";
 
 // REDUX
 // actions
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/actions/productActions";
 
 const HomeScreen = () => {
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
+  // REDUX STATE
+  const { products } = useSelector((state) => state.productReducer);
+
   useEffect(() => {
     console.log("Loading data ...");
-    dispatch(fetchProduct);
-    // API.get("http://localhost:5000/").then((data) => console.log(data));
-  }, []);
+    dispatch(fetchProduct());
+  }, [dispatch]);
 
   return (
     <Container className='py-4 text-center'>

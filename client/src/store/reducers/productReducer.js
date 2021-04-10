@@ -1,13 +1,17 @@
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  products: [],
+};
 
-export default (state = INITIAL_STATE, action) => {
+const productReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "PRODUCTS":
-      console.log(action.payload.products);
       return {
         ...state,
+        products: action.payload.products,
       };
     default:
       return { ...state };
   }
 };
+
+export default productReducer;
