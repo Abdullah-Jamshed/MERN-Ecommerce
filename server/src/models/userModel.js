@@ -3,20 +3,20 @@ import mongoose from "mongoose";
 const userSchema = mongoose.Schema(
   {
     name: {
-      name: String,
+      type: String,
       require: true,
     },
     email: {
-      name: String,
+      type: String,
       require: true,
       unique: true,
     },
     password: {
-      name: String,
+      type: String,
       require: true,
     },
     isAdmin: {
-      name: Boolean,
+      type: Boolean,
       require: true,
       default: false,
     },
