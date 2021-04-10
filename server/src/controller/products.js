@@ -2,13 +2,20 @@
 import Product from "../models/productModel.js";
 
 const fetchProducts = async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  try {
+    const products = await Product.find({});
+    res.json(products);
+  } catch (error) {}
+  res.status(404).json({ msg: "Something Went Wrong" });
 };
 
 const fetchProductsById = async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  res.json(product);
+  try {
+    const product = await Product.findById(req.params.id);
+    res.json(product);
+  } catch (error) {
+    res.status(404).json({ msg: "Something Went Wrong" });
+  }
 };
 
 export { fetchProducts, fetchProductsById };
