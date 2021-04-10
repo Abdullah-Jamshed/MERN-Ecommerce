@@ -1,6 +1,10 @@
 // MODELS
 import Product from "../models/productModel.js";
 
+// @desc   Fetch all products
+// @route  GET /api/product
+// @access Public
+
 const fetchProducts = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -8,6 +12,10 @@ const fetchProducts = async (req, res) => {
   } catch (error) {}
   res.status(404).json({ msg: "Something Went Wrong" });
 };
+
+// @desc   Fetch Single Product
+// @route  GET /api/product/:id
+// @access Public
 
 const fetchProductsById = async (req, res) => {
   try {
