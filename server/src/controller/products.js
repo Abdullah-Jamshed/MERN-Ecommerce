@@ -1,4 +1,4 @@
-const products = require("../dummyData/products");
+const products = require("./dummyData/products");
 
 const fetchProducts = (req, res) => {
   res.json(products);

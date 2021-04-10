@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 // import API from "../api";
 
 // UI LIBRARY COMPONENTS
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 
 // DUMMY DATA
 // import products from "../dummyData/products";
@@ -31,13 +31,17 @@ const HomeScreen = () => {
   return (
     <Container className='py-4 text-center'>
       <h1>Latest Product</h1>
-      <Row>
-        {products.map((product) => (
-          <Col key={product._id} sm={12} md={6} lg={3} className=''>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+      {products.length !== 0 ? (
+        <Row>
+          {products.map((product) => (
+            <Col key={product._id} sm={12} md={6} lg={3} className=''>
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <Spinner className='mt-4' animation='grow' />
+      )}
     </Container>
   );
 };
