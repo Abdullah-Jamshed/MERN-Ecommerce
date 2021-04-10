@@ -7,9 +7,27 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import mongoose from "mongoose";
+
+dotenv.config();
 
 // ROUTES
 import productsRoute from "./routes/products.js";
+
+console.log(process.env.MONGODB_URI);
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+mongoose.connection
+  .once("open", () => {
+    console.log("<<<<<======== Connection is Established....========>>>>>>>>");
+  })
+  .on("error", (err) => {
+    console.log("Err: ", err);
+  });
 
 const app = express();
 dotenv.config();
