@@ -1,11 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // SCREEN
 import HomeScreen from "../screens/HomeScreen";
 import ProductScreen from "../screens/ProductScreen";
 import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/LoginScreen";
+import NotFoundScreen from "./NotFoundScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -20,10 +21,13 @@ const Routes = () => {
       <div className='App'>
         <main>
           <Header />
-          <Route exact path='/' component={HomeScreen} />
-          <Route path='/product/:id' component={ProductScreen} />
-          <Route path='/cart' component={CartScreen} />
-          <Route path='/login' component={LoginScreen} />
+          <Switch>
+            <Route exact path='/' component={HomeScreen} />
+            <Route exact path='/product/:id' component={ProductScreen} />
+            <Route exact path='/cart' component={CartScreen} />
+            <Route exact path='/login' component={LoginScreen} />
+            <Route component={NotFoundScreen} />
+          </Switch>
         </main>
         <footer>
           <Footer />
