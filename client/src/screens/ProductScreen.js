@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENTS
-import { Button, Card, Col, Container, Form, Image, ListGroup, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Image, ListGroup, Row, Spinner } from "react-bootstrap";
 
 //  COMPONENTS
 import Rating from "../components/Rating";
@@ -12,7 +12,7 @@ import Message from "../components/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById, clearProduct } from "../store/actions/productActions";
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ history, match }) => {
   // STATE
   const [qty, setQty] = useState(1);
 
@@ -21,6 +21,12 @@ const ProductScreen = ({ match }) => {
 
   // REDUX STATE
   const { product, errorMessage, isLoading } = useSelector((state) => state.productReducer);
+
+  // FUNCTIONS
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   useEffect(() => {
     dispatch(fetchProductById(match.params.id));
@@ -115,7 +121,7 @@ const ProductScreen = ({ match }) => {
                     )}
 
                     <ListGroup.Item>
-                      <Button className='btn-block' disabled={product.countInStock === 0} type='button'>
+                      <Button onClick={addToCartHandler} className='btn-block' disabled={product.countInStock === 0} type='button'>
                         Add To Cart
                       </Button>
                     </ListGroup.Item>
