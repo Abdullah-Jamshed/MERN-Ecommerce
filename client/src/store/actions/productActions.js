@@ -7,7 +7,7 @@ const fetchProduct = () => {
       const { data } = await API.get("/api/products");
       dispatch({ type: "PRODUCTS", payload: { products: data || [] } });
     } catch (err) {
-      console.log(err.response.data);
+      // console.log(err.response.data);
       // console.log(err.message);
       dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg } });
     }

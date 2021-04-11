@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENTS
-import { Button, Card, Col, Container, Image, ListGroup, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Image, ListGroup, Row, Spinner } from "react-bootstrap";
 
 //  COMPONENTS
 import Rating from "../components/Rating";
@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById, clearProduct } from "../store/actions/productActions";
 
 const ProductScreen = ({ match }) => {
+  // STATE
+  const [qty, setQty] = useState(1);
+
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
@@ -69,6 +72,48 @@ const ProductScreen = ({ match }) => {
                         </Col>
                       </Row>
                     </ListGroup.Item>
+
+                    {product.countInStock > 0 && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col xs={12} xl={6}>
+                            Qty :
+                          </Col>
+                          <Col xs={12} xl={6} className='mt-2'>
+                            {/* <Form.Control
+                              as='select'
+                              value={qty}
+                              onChange={(e) => {
+                                setQty(e.target.value);
+                              }}>
+                              {[...Array(product.countInStock).keys()].map((x) => (
+                                <option key={x + 1}>{x + 1}</option>
+                              ))}
+                            </Form.Control> */}
+                            <Button
+                              onClick={() => {
+                                if (qty > 1) setQty(qty - 1);
+                              }}
+                              className='px-2 py-1'
+                              style={{ fontSize: "16px" }}
+                              variant='dark'>
+                              -
+                            </Button>
+                            <p className='d-inline px-3'>{qty}</p>
+                            <Button
+                              onClick={() => {
+                                if (qty <= product.countInStock) setQty(qty + 1);
+                              }}
+                              className='px-2 py-1'
+                              style={{ fontSize: "16px" }}
+                              variant='dark'>
+                              +
+                            </Button>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    )}
+
                     <ListGroup.Item>
                       <Button className='btn-block' disabled={product.countInStock === 0} type='button'>
                         Add To Cart
