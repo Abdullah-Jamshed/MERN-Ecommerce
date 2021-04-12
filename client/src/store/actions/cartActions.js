@@ -1,10 +1,10 @@
 import API from "../../api";
 
 const addCartItem = (id, qty) => {
-  return async (dispacth, getState) => {
+  return async (dispatch, getState) => {
     try {
       const { data } = await API.get(`/api/products/${id}`);
-      dispacth({
+      dispatch({
         type: "ADD_CART_ITEM",
         payload: {
           product: { productId: id, name: data.name, image: data.image, price: data.price, countInStock: data.countInStock, qty },
@@ -17,4 +17,15 @@ const addCartItem = (id, qty) => {
   };
 };
 
-export { addCartItem };
+const removeCartItem = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "REMOVE_CART_ITEM",
+      payload: {
+        productId: id,
+      },
+    });
+  };
+};
+
+export { addCartItem, removeCartItem };

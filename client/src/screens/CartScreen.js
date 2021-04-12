@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Button, Col, Container, Image, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Image, ListGroup, Row } from "react-bootstrap";
 
 // COMPONENTS
 import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../store/actions/cartActions";
+import { addCartItem, removeCartItem } from "../store/actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   // REDUX DISPATCH HOOK
@@ -20,16 +20,21 @@ const CartScreen = ({ match, location, history }) => {
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
+  // HANDLER FUNCTIONS
+  const removeCartHandler = (id) => {
+    dispatch(removeCartItem(id));
+  };
+
   useEffect(() => {
     if (match.params.id) dispatch(addCartItem(match.params.id, qty));
   }, [dispatch, match, qty]);
 
   return (
     <>
-      <h1 className='text-center pt-4'>Shopping Cart</h1>
-      <Container>
-        <Row>
+      <Container className='text-center mt-2 pt-4'>
+        <Row className='mt-4'>
           <Col md={8}>
+            <h1 className='text-left mb-4'>Shopping Cart</h1>
             {cartItems.length === 0 ? (
               <Message>
                 Your Cart is Empty <Link to='/'>Go Back</Link>
@@ -70,6 +75,11 @@ const CartScreen = ({ match, location, history }) => {
                           +
                         </Button>
                       </Col>
+                      <Col md={1}>
+                        <Button type='button' variant='ligth' onClick={() => removeCartHandler(product.productId)}>
+                          <i style={{ fontSize: "16px" }} className='fa fa-trash' />
+                        </Button>
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                 ))}
@@ -77,8 +87,16 @@ const CartScreen = ({ match, location, history }) => {
             )}
           </Col>
 
-          <Col md={2}></Col>
-          <Col md={2}></Col>
+          <Col md={4}>
+            <Card>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <h4>Subtotals ({cartItems.reduce((acc, product) => acc + product.qty, 0)}) items</h4>$
+                  {cartItems.reduce((acc, product) => acc + (product.qty * product.price), 0).toFixed(2)}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </>

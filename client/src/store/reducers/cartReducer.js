@@ -20,9 +20,13 @@ const productReducer = (state = INITIAL_STATE, action) => {
       }
 
     case "REMOVE_CART_ITEM":
+      const newcardItems = state.cartItems.filter((item) => item.productId !== action.payload.productId);
+      localStorage.setItem("cartItems", JSON.stringify(newcardItems));
+      // console.log(newcardItems);
       return {
         ...state,
-        products: action.payload.products,
+        cartItems: newcardItems,
+        // products: action.payload.products,
       };
 
     default:
