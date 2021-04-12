@@ -9,7 +9,7 @@ const fetchProduct = () => {
     } catch (err) {
       // console.log(err.response.data);
       // console.log(err.message);
-      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg } });
+      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response?.data.msg || "Some thing Went Wrong" } });
     }
   };
 };
@@ -21,7 +21,7 @@ const fetchProductById = (id) => {
       const { data } = await API.get(`/api/products/${id}`);
       dispatch({ type: "PRODUCT", payload: { product: data || null } });
     } catch (err) {
-      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg } });
+      dispatch({ type: "FETCH_FAILED", payload: { msg: err.response.data.msg || "Some thing Went Wrong" } });
     }
   };
 };
