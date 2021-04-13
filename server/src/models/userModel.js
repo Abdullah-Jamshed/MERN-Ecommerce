@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bycrypt from "bcryptjs"
 
 const userSchema = mongoose.Schema(
   {
@@ -27,5 +28,10 @@ const userSchema = mongoose.Schema(
 );
 
 const User = mongoose.model("user", userSchema);
+
+userSchema.methods.matchPassword = async (enteredPassword) => {
+  return await bycrypt.compare(enteredPassword,this.password)
+}
+
 
 export default User;

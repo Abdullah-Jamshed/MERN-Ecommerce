@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 // MODELS
 import Product from "../models/productModel.js";
 
-import dotenv from "dotenv";
-dotenv.config();
 
 // @desc   Fetch all products
 // @route  GET /api/product

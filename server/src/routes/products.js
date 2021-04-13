@@ -1,4 +1,3 @@
-// const productsRoute = require("express").Router();
 import express from "express";
 const productsRoute = express.Router();
 

@@ -5,12 +5,14 @@
 // const productsRoute = require("./routes/products");
 
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 // ROUTES
 import productsRoute from "./routes/products.js";
+import userRoute from "./routes/user.js";
 
 // MODELS
 import Product from "./models/productModel.js";
@@ -36,10 +38,9 @@ mongoose.connection
   });
 
 const app = express();
-dotenv.config();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 app.set("port", process.env.PORT || 3001);
 
 app.get("/", (req, res) => {
@@ -64,13 +65,12 @@ app.get("/", (req, res) => {
 //   }
 // });
 
+app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
-
 
 app.use("*", (req, res) => {
   res.json({ msg: "invalid Route" });
 });
-
 
 app.listen(app.get("port"), () => {
   console.log(`Express Started on: http://localhost:${app.get("port")}`);
