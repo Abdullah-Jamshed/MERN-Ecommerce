@@ -25,6 +25,10 @@ const CartScreen = ({ match, location, history }) => {
     dispatch(removeCartItem(id));
   };
 
+  const checkOutHandler = () => {
+    history.push("/login?redirect=shipping")
+  };
+
   useEffect(() => {
     if (match.params.id) dispatch(addCartItem(match.params.id, qty));
   }, [dispatch, match, qty]);
@@ -75,7 +79,7 @@ const CartScreen = ({ match, location, history }) => {
                           +
                         </Button>
                       </Col>
-                      <Col md={1}>
+                      <Col className="text-right" md={1}>
                         <Button type='button' variant='ligth' onClick={() => removeCartHandler(product.productId)}>
                           <i style={{ fontSize: "16px" }} className='fa fa-trash' />
                         </Button>
@@ -92,7 +96,12 @@ const CartScreen = ({ match, location, history }) => {
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h4>Subtotals ({cartItems.reduce((acc, product) => acc + product.qty, 0)}) items</h4>$
-                  {cartItems.reduce((acc, product) => acc + (product.qty * product.price), 0).toFixed(2)}
+                  {cartItems.reduce((acc, product) => acc + product.qty * product.price, 0).toFixed(2)}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button type='button' className='btn-block' onClick={checkOutHandler}>
+                    Proceed to Checkout
+                  </Button>
                 </ListGroup.Item>
               </ListGroup>
             </Card>
