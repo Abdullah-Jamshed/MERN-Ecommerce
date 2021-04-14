@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 // UI LIBRARY COMPONENTS
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 
+// REDUX
+import { useSelector } from "react-redux";
+
 const Header = () => {
+  // REDUX STATE HOOK
+  const { user } = useSelector((state) => state.userReducer);
+
   return (
     <Navbar className='' bg='dark' variant='dark' expand='lg' collapseOnSelect>
       <Container>
@@ -24,19 +30,21 @@ const Header = () => {
             <Nav.Link as={Link} to='/login'>
               <i className='fa fa-user mr-1' aria-hidden='true'></i>SignIn
             </Nav.Link>
-            <NavDropdown title='Admin' id='basic-nav-dropdown'>
-              <NavDropdown.Item as={Link} to='/users'>
-                Users
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/orders'>
-                Order
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to='/something'>
-                Something
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='/link'>Separated link</NavDropdown.Item>
-            </NavDropdown>
+            {user && user.isAdmin && (
+              <NavDropdown title='Admin' id='basic-nav-dropdown'>
+                <NavDropdown.Item as={Link} to='/users'>
+                  Users
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/orders'>
+                  Order
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/something'>
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href='/link'>Separated link</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
