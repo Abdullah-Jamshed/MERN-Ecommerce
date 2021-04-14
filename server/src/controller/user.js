@@ -60,20 +60,18 @@ const createUser = async (req, res) => {
   try {
     const exists = await User.findOne({ email });
     if (exists) return res.json({ msg: "user already register" });
+    // HASHING PASSWORD
     const hashPass = await hashPassword(password);
-    const user = new User({
-      name,
-      email,
-      password: hashPass,
-    });
-    await User.create(user);
-    res.json({ msg: "user created" });
+    // CREATING USER
+    const user = await User.create({  email, password: hashPass });
+    // GENERATING TOKEN
+    const token = await generateToken(user._id);
+
+
+    res.status(201).json({ user, token });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
 
 export { userAuthentication, getUserProfile, createUser };
-
-// create user
-// signIn user
