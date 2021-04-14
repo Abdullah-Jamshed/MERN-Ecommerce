@@ -63,12 +63,12 @@ const createUser = async (req, res) => {
     // HASHING PASSWORD
     const hashPass = await hashPassword(password);
     // CREATING USER
-    const user = await User.create({  email, password: hashPass });
+    const user = await User.create({ name, email, password: hashPass });
     // GENERATING TOKEN
     const token = await generateToken(user._id);
 
-
-    res.status(201).json({ user, token });
+    if (user) return res.status(201).json({ user, token });
+    res.status(400).json({ msg: "Invalid user data" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
