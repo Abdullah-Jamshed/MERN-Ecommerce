@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bycrypt from "bcryptjs";
 
+// UTILS
 import generateToken from "../utils/generateToken.js";
 
 // MODELS
@@ -11,7 +12,7 @@ import User from "../models/userModel.js";
 // @access Public
 
 const userAuthentication = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
 
@@ -34,11 +35,20 @@ const userAuthentication = async (req, res) => {
   }
 };
 
-// @desc   Fetch Single Product
-// @route  GET /api/product/:id
-// @access Public
+// @desc   Fetch User Profile
+// @route  GET /api/profile/
+// @access Private
 
-export { userAuthentication };
+const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.sub._id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.json({ msg: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile };
 
 // create user
 // signIn user
