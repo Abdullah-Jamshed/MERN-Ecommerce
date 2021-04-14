@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import bycrypt from "bcryptjs";
 
 // UTILS
-import generateToken from "../utils/generateToken.js";
+import { generateToken } from "../utils/jwtTokenUtils.js";
+import hashPassword from "../utils/hashPassword.js";
 
 // MODELS
 import User from "../models/userModel.js";
@@ -36,19 +37,43 @@ const userAuthentication = async (req, res) => {
 };
 
 // @desc   Fetch User Profile
-// @route  GET /api/profile/
+// @route  GET /api/user/profile/
 // @access Private
 
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.sub._id).select("-password");
-    res.json(user);
+    if (user) return res.json(user);
+    res.status(404).json({ msg: "User Not Found" });
   } catch (error) {
-    res.json({ msg: error.message });
+    res.status(500).json({ msg: error.message });
   }
 };
 
-export { userAuthentication, getUserProfile };
+// @desc   Create New User
+// @route  POST /api/user/profile/
+// @access Public
+
+const createUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    const exists = await User.findOne({ email });
+    if (exists) return res.json({ msg: "user already register" });
+    const hashPass = await hashPassword(password);
+    const user = new User({
+      name,
+      email,
+      password: hashPass,
+    });
+    await User.create(user);
+    res.json({ msg: "user created" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile, createUser };
 
 // create user
 // signIn user

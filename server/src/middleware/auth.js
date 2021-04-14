@@ -1,5 +1,5 @@
 // UTLIS
-import verifyToken from "../utils/verifyToken.js";
+import { verifyToken } from "../utils/jwtTokenUtils.js";
 
 const auth = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];

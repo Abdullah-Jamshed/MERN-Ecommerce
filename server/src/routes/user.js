@@ -5,10 +5,10 @@ const userRoute = express.Router();
 import auth from "../middleware/auth.js";
 
 // CONTROLLER
-import { userAuthentication, getUserProfile } from "../controller/user.js";
+import { userAuthentication, getUserProfile,createUser } from "../controller/user.js";
 
+userRoute.post("/", createUser);
 userRoute.post("/login", userAuthentication);
-
 userRoute.get("/profile", auth, getUserProfile);
 
 // userRoute.get("/:id", fetchProductsById);
