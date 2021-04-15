@@ -40,9 +40,12 @@ const Header = () => {
               <i className='fa fa-shopping-cart mr-1' aria-hidden='true'></i>Cart
             </Nav.Link>
             {user ? (
-              <Nav.Link as={Link} to='/' onClick={logout}>
-                <i className='fa fa-user mr-1' aria-hidden='true'></i>Logout
-              </Nav.Link>
+              <NavDropdown title={user.name} id='username'>
+                <NavDropdown.Item as={Link} to='/profile'>
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+              </NavDropdown>
             ) : (
               <Nav.Link as={Link} to='/login'>
                 <i className='fa fa-user mr-1' aria-hidden='true'></i>SignIn
