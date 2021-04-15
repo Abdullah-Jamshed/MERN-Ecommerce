@@ -24,7 +24,6 @@ const HomeScreen = () => {
 
   // REDUX STATE
   const { products, errorMessage, isLoading } = useSelector((state) => state.productReducer);
-  const { token } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(isUserLogin());
