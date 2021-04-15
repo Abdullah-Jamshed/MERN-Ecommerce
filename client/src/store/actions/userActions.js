@@ -41,7 +41,6 @@ const userSignUp = ({ name, email, password }) => {
     try {
       dispatch({ type: "USER_LOADER" });
       const { data } = await API.post(`/api/user/`, { name, email, password });
-      console.log(data);
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_SIGNUP_SUCCESS", payload: { user: data } });
     } catch (error) {
@@ -50,10 +49,23 @@ const userSignUp = ({ name, email, password }) => {
     }
   };
 };
+const userUpdate = ({ name, email, password }) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "USER_LOADER" });
+      const { data } = await API.put(`/api/user/`, { name, email, password });
+      dispatch({ type: "USER_UPDATE_SUCCESS", payload: { user: data } });
+    } catch (error) {
+      //   console.log(error);
+        dispatch({ type: "USER_UPDATE_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
 const clearErrorMessage = () => {
   return async (dispatch) => {
     dispatch({ type: "CLEAR_ERROR_MESSAGE" });
   };
 };
 
-export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage };
+export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage, userUpdate };

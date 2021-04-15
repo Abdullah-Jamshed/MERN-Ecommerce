@@ -8,6 +8,7 @@ import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/LoginScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -41,6 +42,7 @@ const Routes = () => {
             <Route exact path='/cart/:id?' component={CartScreen} />
             <Route exact path='/login' component={LoginScreen} />
             <Route exact path='/register' component={RegisterScreen} />
+            <Route exact path='/profile' component={ProfileScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

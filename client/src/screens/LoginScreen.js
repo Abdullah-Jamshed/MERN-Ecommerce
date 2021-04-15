@@ -40,6 +40,9 @@ const LoginScreen = ({ history, location }) => {
 
   useEffect(() => {
     errorMessage && dispatch(clearErrorMessage());
+  }, []);
+
+  useEffect(() => {
     if (user) {
       history.push(redirect);
     }

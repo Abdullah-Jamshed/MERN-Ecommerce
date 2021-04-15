@@ -79,4 +79,35 @@ const createUser = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
-export { userAuthentication, getUserProfile, createUser };
+
+const updateUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    
+    if (password) {
+      user.password = await hashPassword(password);
+    }
+
+    const updatedUser = await user.save();
+
+    // GENERATING TOKEN
+    // const token = await generateToken(user._id);
+
+    if (user) {
+      return res.json({
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
+    }
+    res.status(404).json({ msg: "user not found" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile, createUser, updateUser };
