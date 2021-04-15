@@ -24,6 +24,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
 
     case "USER_LOAD_FAIL":
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        isLoading: false,
+      };
     case "USER_SIGNUP_FAIL":
     case "USER_LOGIN_FAIL":
       return {
@@ -35,6 +40,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: null,
+      };
+    case "CLEAR_ERROR_MESSAGE":
+      return {
+        ...state,
+        errorMessage: null,
       };
 
     default:

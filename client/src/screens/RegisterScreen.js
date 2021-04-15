@@ -14,10 +14,12 @@ import Message from "../components/Message";
 
 const RegisterScreen = ({ history, location }) => {
   // STATE;
+  const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
@@ -36,6 +38,8 @@ const RegisterScreen = ({ history, location }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (form.password !== form.confirmPassword) return setErrorMsg("Password Not Match");
+    errorMsg && setErrorMsg("");
     dispatch(userSignUp(form));
   };
 
@@ -49,10 +53,10 @@ const RegisterScreen = ({ history, location }) => {
     <Container className='py-4'>
       <FormContainer>
         <h1>Sign Up</h1>
-        {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+        {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
-            <Form.Label>Name </Form.Label>
+            <Form.Label>Name : </Form.Label>
             <Form.Control type='name' placeholder='name' value={form.name} name='name' onChange={formHandler}></Form.Control>
           </Form.Group>
           <Form.Group controlId='email'>
@@ -63,12 +67,25 @@ const RegisterScreen = ({ history, location }) => {
             <Form.Label>Password : </Form.Label>
             <Form.Control type='password' placeholder='password' value={form.password} name='password' onChange={formHandler}></Form.Control>
           </Form.Group>
+          <Form.Group controlId='confirmPassword'>
+            <Form.Label>Confirm Password : </Form.Label>
+            <Form.Control
+              type='password'
+              placeholder='confirmPassword'
+              value={form.confirmPassword}
+              name='confirmPassword'
+              onChange={formHandler}></Form.Control>
+          </Form.Group>
           <Row>
             <Col>
               Already Have Account?<Link to={redirect ? `/login?redirect=${redirect}` : "/login"}> login</Link>
+              {/* Already Have Account?<Link to={"/login"}>Login</Link> */}
             </Col>
           </Row>
-          <Button type='submit' className='mt-2' disabled={isLoading}>
+          <Button
+            type='submit'
+            className='mt-2 btn-block'
+            disabled={isLoading || form.name === "" || form.email === "" || form.password === "" || form.confirmPassword === ""}>
             SignUp {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
           </Button>
         </Form>

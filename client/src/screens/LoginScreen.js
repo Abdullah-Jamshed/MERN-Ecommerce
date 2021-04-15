@@ -9,7 +9,7 @@ import FormContainer from "../components/FormContainer";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin } from "../store/actions/userActions";
+import { userLogin, clearErrorMessage } from "../store/actions/userActions";
 import Message from "../components/Message";
 
 const LoginScreen = ({ history, location }) => {
@@ -39,6 +39,7 @@ const LoginScreen = ({ history, location }) => {
   };
 
   useEffect(() => {
+    errorMessage && dispatch(clearErrorMessage());
     if (user) {
       history.push(redirect);
     }
@@ -63,7 +64,7 @@ const LoginScreen = ({ history, location }) => {
               Dont Have Account?<Link to={redirect ? `/register?redirect=${redirect}` : "/register"}> create account</Link>
             </Col>
           </Row>
-          <Button type='submit' className='mt-2' disabled={isLoading}>
+          <Button type='submit' className='mt-2 btn-block' disabled={isLoading || form.email === "" || form.password === ""}>
             Login {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
           </Button>
         </Form>

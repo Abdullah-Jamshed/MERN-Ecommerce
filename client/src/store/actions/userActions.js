@@ -31,7 +31,7 @@ const isUserLogin = () => {
         dispatch({ type: "USER_LOADED", payload: { user: data } });
       }
     } catch (error) {
-      dispatch({ type: "USER_LOAD_FAIL", payload: { errorMessage: error.response.data.msg } });
+      dispatch({ type: "USER_LOAD_FAIL" });
     }
   };
 };
@@ -50,5 +50,10 @@ const userSignUp = ({ name, email, password }) => {
     }
   };
 };
+const clearErrorMessage = () => {
+  return async (dispatch) => {
+    dispatch({ type: "CLEAR_ERROR_MESSAGE" });
+  };
+};
 
-export { userLogin, userLogout, isUserLogin, userSignUp };
+export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage };
