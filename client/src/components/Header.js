@@ -5,11 +5,23 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 // REDUX
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../store/actions/userActions";
 
 const Header = () => {
   // REDUX STATE HOOK
   const { user } = useSelector((state) => state.userReducer);
+
+  // REDUX DISPATCH HOOK
+  const dispatch = useDispatch();
+
+  // HANDLER FUNCTIONS
+
+  const logout = () => {
+    // console.log("logout");
+    dispatch(userLogout());
+  };
 
   return (
     <Navbar className='' bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -27,9 +39,15 @@ const Header = () => {
             <Nav.Link as={Link} to='/cart'>
               <i className='fa fa-shopping-cart mr-1' aria-hidden='true'></i>Cart
             </Nav.Link>
-            <Nav.Link as={Link} to='/login'>
-              <i className='fa fa-user mr-1' aria-hidden='true'></i>SignIn
-            </Nav.Link>
+            {user ? (
+              <Nav.Link as={Link} to='/' onClick={logout}>
+                <i className='fa fa-user mr-1' aria-hidden='true'></i>Logout
+              </Nav.Link>
+            ) : (
+              <Nav.Link as={Link} to='/login'>
+                <i className='fa fa-user mr-1' aria-hidden='true'></i>SignIn
+              </Nav.Link>
+            )}
             {user && user.isAdmin && (
               <NavDropdown title='Admin' id='basic-nav-dropdown'>
                 <NavDropdown.Item as={Link} to='/users'>

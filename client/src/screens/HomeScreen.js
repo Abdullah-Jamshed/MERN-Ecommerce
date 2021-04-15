@@ -16,6 +16,7 @@ import Message from "../components/Message";
 // actions
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/actions/productActions";
+import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = () => {
   // REDUX DISPATCH HOOK
@@ -23,6 +24,11 @@ const HomeScreen = () => {
 
   // REDUX STATE
   const { products, errorMessage, isLoading } = useSelector((state) => state.productReducer);
+  const { token } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    dispatch(isUserLogin());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchProduct());

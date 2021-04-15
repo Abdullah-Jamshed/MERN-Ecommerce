@@ -5,22 +5,33 @@ const userLogin = ({ email, password }) => {
     try {
       dispatch({ type: "USER_LOGIN_REQUEST" });
       const { data } = await API.post(`/api/user/login`, { email, password });
+      localStorage.setItem("token", data.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
     } catch (error) {
+      console.log(error);
       dispatch({ type: "USER_LOGIN_FAIL", payload: { errorMessage: error.response.data.msg } });
     }
   };
 };
 
-const removeCartItem = (id) => {
+const userLogout = () => {
   return async (dispatch) => {
-    dispatch({
-      type: "REMOVE_CART_ITEM",
-      payload: {
-        productId: id,
-      },
-    });
+    dispatch({ type: "USER_LOGOUT" });
   };
 };
 
-export { userLogin, removeCartItem };
+const isUserLogin = () => {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().userReducer.token;
+      if (token) {
+        const { data } = await API.get(`/api/user/profile`);
+        dispatch({ type: "USER_LOADED", payload: { user: data } });
+      }
+    } catch (error) {
+      dispatch({ type: "USER_LOAD_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+export { userLogin, userLogout, isUserLogin };
