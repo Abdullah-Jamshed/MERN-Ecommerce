@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // SCREEN
@@ -15,7 +15,19 @@ import Footer from "./Footer";
 // STYLES
 import "../styles/App.css";
 
+// REDUX
+// actions
+import { useDispatch } from "react-redux";
+import { isUserLogin } from "../store/actions/userActions";
+
 const Routes = () => {
+  // REDUX DISPATCH HOOK
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(isUserLogin());
+  }, [dispatch]);
+
   return (
     <Router>
       <div className='App'>

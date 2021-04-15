@@ -16,6 +16,7 @@ const userLogin = ({ email, password }) => {
 
 const userLogout = () => {
   return async (dispatch) => {
+    localStorage.removeItem("token");
     dispatch({ type: "USER_LOGOUT" });
   };
 };
