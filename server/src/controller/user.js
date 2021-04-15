@@ -59,7 +59,7 @@ const createUser = async (req, res) => {
 
   try {
     const exists = await User.findOne({ email });
-    if (exists) return res.json({ msg: "user already register" });
+    if (exists) return res.status(409).json({ msg: "user already register" });
     // HASHING PASSWORD
     const hashPass = await hashPassword(password);
     // CREATING USER
@@ -67,7 +67,13 @@ const createUser = async (req, res) => {
     // GENERATING TOKEN
     const token = await generateToken(user._id);
 
-    if (user) return res.status(201).json({ user, token });
+    if (user)
+      return res.status(201).json({
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token,
+      });
     res.status(400).json({ msg: "Invalid user data" });
   } catch (error) {
     res.status(500).json({ msg: error.message });

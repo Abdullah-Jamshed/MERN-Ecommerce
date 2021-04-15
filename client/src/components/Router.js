@@ -6,7 +6,8 @@ import HomeScreen from "../screens/HomeScreen";
 import ProductScreen from "../screens/ProductScreen";
 import CartScreen from "../screens/CartScreen";
 import LoginScreen from "../screens/LoginScreen";
-import NotFoundScreen from "./NotFoundScreen";
+import NotFoundScreen from "../screens/NotFoundScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -39,6 +40,7 @@ const Routes = () => {
             {/* <Route exact path='/cart' component={CartScreen} /> */}
             <Route exact path='/cart/:id?' component={CartScreen} />
             <Route exact path='/login' component={LoginScreen} />
+            <Route exact path='/register' component={RegisterScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

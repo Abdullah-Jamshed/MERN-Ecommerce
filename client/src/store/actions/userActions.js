@@ -3,9 +3,10 @@ import API from "../../api";
 const userLogin = ({ email, password }) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: "USER_LOGIN_REQUEST" });
+      dispatch({ type: "USER_LOADER" });
       const { data } = await API.post(`/api/user/login`, { email, password });
-      localStorage.setItem("token", data.token);
+      console.log(data);
+      localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
     } catch (error) {
       console.log(error);
@@ -35,4 +36,19 @@ const isUserLogin = () => {
   };
 };
 
-export { userLogin, userLogout, isUserLogin };
+const userSignUp = ({ name, email, password }) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "USER_LOADER" });
+      const { data } = await API.post(`/api/user/`, { name, email, password });
+      console.log(data);
+      localStorage.setItem("token", data?.token);
+      dispatch({ type: "USER_SIGNUP_SUCCESS", payload: { user: data } });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: "USER_SIGNUP_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+export { userLogin, userLogout, isUserLogin, userSignUp };

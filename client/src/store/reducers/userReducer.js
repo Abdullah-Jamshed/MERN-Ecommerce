@@ -5,14 +5,15 @@ const INITIAL_STATE = {
   token: localStorage.getItem("token"),
 };
 
-const productReducer = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "USER_LOGIN_REQUEST":
+    case "USER_LOADER":
       return {
         ...state,
         isLoading: true,
       };
 
+    case "USER_SIGNUP_SUCCESS":
     case "USER_LOGIN_SUCCESS":
     case "USER_LOADED":
       return {
@@ -21,8 +22,9 @@ const productReducer = (state = INITIAL_STATE, action) => {
         errorMessage: null,
         user: action.payload.user,
       };
-      
+
     case "USER_LOAD_FAIL":
+    case "USER_SIGNUP_FAIL":
     case "USER_LOGIN_FAIL":
       return {
         ...state,
@@ -40,4 +42,4 @@ const productReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default productReducer;
+export default userReducer;
