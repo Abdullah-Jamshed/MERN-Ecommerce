@@ -83,7 +83,7 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const user = await User.findOne({ emai });
+    const user = await User.findOne({ email });
 
     user.name = name || user.name;
     user.email = email || user.email;
