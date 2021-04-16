@@ -18,7 +18,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case "USER_LOGIN_SUCCESS":
     case "USER_UPDATE_SUCCESS":
     case "USER_LOADED":
-      console.log(action.payload.success);
       return {
         ...state,
         isLoading: false,
@@ -33,7 +32,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
       };
-    case "USER_UPDATE_FAIL":
     case "USER_SIGNUP_FAIL":
     case "USER_LOGIN_FAIL":
     case "USER_UPDATE_FAIL":

@@ -13,7 +13,7 @@ import { userSignUp } from "../store/actions/userActions";
 import Message from "../components/Message";
 
 const RegisterScreen = ({ history, location }) => {
-  
+
   // STATE;
   const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({
@@ -43,6 +43,9 @@ const RegisterScreen = ({ history, location }) => {
     errorMsg && setErrorMsg("");
     dispatch(userSignUp(form));
   };
+
+
+  // LIFECYCLE
 
   useEffect(() => {
     if (user) {
