@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   isLoading: false,
   errorMessage: null,
   token: localStorage.getItem("token"),
+  success: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -30,9 +31,10 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
       };
+    case "USER_UPDATE_FAIL":
     case "USER_SIGNUP_FAIL":
     case "USER_LOGIN_FAIL":
-    case "USER_UPDATE__FAIL":
+    case "USER_UPDATE_FAIL":
       return {
         ...state,
         isLoading: false,

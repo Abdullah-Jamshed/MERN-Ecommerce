@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // SCREEN
@@ -43,6 +43,7 @@ const Routes = () => {
             <Route exact path='/login' component={LoginScreen} />
             <Route exact path='/register' component={RegisterScreen} />
             <Route exact path='/profile' component={ProfileScreen} />
+            <Route exact path='/shipping' component={() => <h1>Shipping</h1>} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

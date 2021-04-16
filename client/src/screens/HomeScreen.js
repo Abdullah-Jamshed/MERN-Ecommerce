@@ -25,6 +25,8 @@ const HomeScreen = () => {
   // REDUX STATE
   const { products, errorMessage, isLoading } = useSelector((state) => state.productReducer);
 
+  // LIFECYCLES
+
   useEffect(() => {
     dispatch(isUserLogin());
   }, [dispatch]);

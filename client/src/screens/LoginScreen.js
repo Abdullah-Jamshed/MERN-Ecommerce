@@ -38,6 +38,9 @@ const LoginScreen = ({ history, location }) => {
     dispatch(userLogin(form));
   };
 
+
+  // LIFECYCLES
+
   useEffect(() => {
     errorMessage && dispatch(clearErrorMessage());
   }, []);

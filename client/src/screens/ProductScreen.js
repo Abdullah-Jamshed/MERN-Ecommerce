@@ -22,11 +22,13 @@ const ProductScreen = ({ history, match }) => {
   // REDUX STATE
   const { product, errorMessage, isLoading } = useSelector((state) => state.productReducer);
 
-  // FUNCTIONS
+  // HANDLER FUNCTIONS
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
+
+  // LIFECYCLES
 
   useEffect(() => {
     dispatch(fetchProductById(match.params.id));
