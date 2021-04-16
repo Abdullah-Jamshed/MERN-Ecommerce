@@ -5,21 +5,21 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 // REDUX
-
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../store/actions/userActions";
 
 const Header = () => {
-  // REDUX STATE HOOK
+  // REDUX STATE
   const { user } = useSelector((state) => state.userReducer);
 
+  
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
+
 
   // HANDLER FUNCTIONS
 
   const logout = () => {
-    // console.log("logout");
     dispatch(userLogout());
   };
 

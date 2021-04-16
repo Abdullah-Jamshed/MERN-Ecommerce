@@ -54,7 +54,7 @@ const userUpdate = ({ name, email, password }) => {
     try {
       dispatch({ type: "USER_LOADER" });
       const { data } = await API.put(`/api/user/profile`, { name, email, password });
-      dispatch({ type: "USER_UPDATE_SUCCESS", payload: { user: data } });
+      dispatch({ type: "USER_UPDATE_SUCCESS", payload: { user: data, success: true } });
     } catch (error) {
       //   console.log(error);
       dispatch({ type: "USER_UPDATE_FAIL", payload: { errorMessage: error.response.data.msg } });

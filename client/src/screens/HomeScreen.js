@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
 
-// import API from "../api";
 
 // UI LIBRARY COMPONENTS
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-
-// DUMMY DATA
-// import products from "../dummyData/products";
 
 // COMPONENTS
 import Product from "../components/Product";
 import Message from "../components/Message";
 
 // REDUX
-// actions
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = () => {
+  
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 

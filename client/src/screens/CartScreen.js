@@ -20,7 +20,9 @@ const CartScreen = ({ match, location, history }) => {
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
+
   // HANDLER FUNCTIONS
+
   const removeCartHandler = (id) => {
     dispatch(removeCartItem(id));
   };
@@ -28,6 +30,8 @@ const CartScreen = ({ match, location, history }) => {
   const checkOutHandler = () => {
     history.push("/login?redirect=shipping")
   };
+
+  // LIFECYCLE
 
   useEffect(() => {
     if (match.params.id) dispatch(addCartItem(match.params.id, qty));

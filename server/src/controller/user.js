@@ -83,11 +83,11 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ emai });
 
     user.name = name || user.name;
     user.email = email || user.email;
-    
+
     if (password) {
       user.password = await hashPassword(password);
     }
@@ -106,7 +106,7 @@ const updateUser = async (req, res) => {
     }
     res.status(404).json({ msg: "user not found" });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
   }
 };
 

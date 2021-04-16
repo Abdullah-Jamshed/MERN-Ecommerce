@@ -18,11 +18,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case "USER_LOGIN_SUCCESS":
     case "USER_UPDATE_SUCCESS":
     case "USER_LOADED":
+      console.log(action.payload.success);
       return {
         ...state,
         isLoading: false,
         errorMessage: null,
         user: action.payload.user,
+        success: action.payload.success || false,
       };
 
     case "USER_LOAD_FAIL":
@@ -39,6 +41,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         errorMessage: action.payload.errorMessage,
+        success: false,
       };
     case "USER_LOGOUT":
       return {

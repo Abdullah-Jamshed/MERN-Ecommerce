@@ -1,4 +1,6 @@
 import React from "react";
+
+// UI LIBRARY COMPONENTSs
 import { Alert } from "react-bootstrap";
 
 const Message = ({ variant, children }) => {

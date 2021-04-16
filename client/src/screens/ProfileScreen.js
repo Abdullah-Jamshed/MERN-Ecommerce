@@ -24,7 +24,7 @@ const ProfileScreen = ({ history, location }) => {
 
   // const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  // REDUX STATE HOOK
+  // REDUX STATE
   const { user, errorMessage, success, isLoading } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
@@ -57,7 +57,9 @@ const ProfileScreen = ({ history, location }) => {
         <Col md={6} className='mb-2'>
           <FormContainer>
             <h1>Profile</h1>
-            {(success || errorMsg) && <Message variant={success ? "success" : "danger"}>{success ? "User Updated" : errorMsg}</Message>}
+            {errorMsg && <Message variant={"danger"}>{errorMsg}</Message>}
+            {/* {success && <Message variant={"success"}>{"User Updated"}</Message>} */}
+            {(errorMessage || success) && <Message variant={success ? "success" : "danger"}>{success ? "User Updated" : errorMessage}</Message>}
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='name'>
                 <Form.Label>Name : </Form.Label>

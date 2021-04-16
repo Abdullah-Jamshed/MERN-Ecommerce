@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById, clearProduct } from "../store/actions/productActions";
 
 const ProductScreen = ({ history, match }) => {
+  
   // STATE
   const [qty, setQty] = useState(1);
 

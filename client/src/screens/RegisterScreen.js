@@ -13,6 +13,7 @@ import { userSignUp } from "../store/actions/userActions";
 import Message from "../components/Message";
 
 const RegisterScreen = ({ history, location }) => {
+  
   // STATE;
   const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({

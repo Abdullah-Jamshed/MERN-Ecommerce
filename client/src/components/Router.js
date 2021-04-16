@@ -9,6 +9,7 @@ import LoginScreen from "../screens/LoginScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import ShippingScreen from "../screens/ShippingScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -18,11 +19,11 @@ import Footer from "./Footer";
 import "../styles/App.css";
 
 // REDUX
-// actions
 import { useDispatch } from "react-redux";
 import { isUserLogin } from "../store/actions/userActions";
 
 const Routes = () => {
+  
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
@@ -38,12 +39,11 @@ const Routes = () => {
           <Switch>
             <Route exact path='/' component={HomeScreen} />
             <Route exact path='/product/:id' component={ProductScreen} />
-            {/* <Route exact path='/cart' component={CartScreen} /> */}
             <Route exact path='/cart/:id?' component={CartScreen} />
             <Route exact path='/login' component={LoginScreen} />
             <Route exact path='/register' component={RegisterScreen} />
             <Route exact path='/profile' component={ProfileScreen} />
-            <Route exact path='/shipping' component={() => <h1>Shipping</h1>} />
+            <Route exact path='/shipping' component={ShippingScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

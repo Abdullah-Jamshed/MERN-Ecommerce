@@ -13,15 +13,16 @@ import { userLogin, clearErrorMessage } from "../store/actions/userActions";
 import Message from "../components/Message";
 
 const LoginScreen = ({ history, location }) => {
+
   //STATE
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-
+  
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  // REDUX STATE HOOK
+  // REDUX STATE 
   const { user, errorMessage, isLoading } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
