@@ -28,4 +28,14 @@ const removeCartItem = (id) => {
   };
 };
 
-export { addCartItem, removeCartItem };
+
+
+const saveShippingAddress = (shippingAddress) => {
+  return (dispatch) => {
+    localStorage.setItem("shipping_address", JSON.stringify(shippingAddress));
+    dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: shippingAddress });
+  };
+};
+
+
+export { addCartItem, removeCartItem,saveShippingAddress };

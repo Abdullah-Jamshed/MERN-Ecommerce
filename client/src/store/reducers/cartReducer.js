@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
+  shippingAddress: JSON.parse(localStorage.getItem("shipping_address")) || null,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +28,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: newcardItems,
         // products: action.payload.products,
+      };
+
+    case "SAVE_SHIPPING_ADDRESS":
+      return {
+        ...state,
+        shippingAddress: action.payload.shippingAddress,
       };
 
     default:

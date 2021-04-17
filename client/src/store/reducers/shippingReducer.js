@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 const shippingReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SAVE_SHIPPING_ADDRESS":
+      console.log("shippingAddress ==>>>", action.payload.shippingAddress);
       return {
         ...state,
         shippingAddress: action.payload.shippingAddress,

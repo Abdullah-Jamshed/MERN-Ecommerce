@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
 import { Container, Button, Form, Row, Col, Spinner } from "react-bootstrap";
@@ -11,48 +10,26 @@ import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { saveShippingAddress } from "../store/actions/shippingActions";
 
-const ShippingScreen = ({ history, location }) => {
-  // STATE;
-  //   const [errorMsg, setErrorMsg] = useState("");
-
-  const [form, setForm] = useState({
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "",
-  });
-
-  //   const redirect = location.search ? location.search.split("=")[1] : "/";
-
+const PaymentScreen = ({ history, location }) => {
   // REDUX STATE HOOK
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
 
   // REDUX DISPATCH HOOK
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
 
   // HANDLER FUNCTIONS
-  const formHandler = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("submit");
-    dispatch(saveShippingAddress(form));
-    history.push("/payment");
-  };
 
   // LIFECYCLE
 
-  useEffect(() => {
-    console.log("shipping useEffect ==>>> ", shippingAddress);
-    if (shippingAddress) {
-      setForm(shippingAddress);
-    }
-  }, [shippingAddress]);
+  //   useEffect(() => {
+  //     console.log("payment useEffect ==>>> ", shippingAddress);
+
+  //     if (shippingAddress) {
+  //       //   console.log(shippingAddress);
+  //       // setForm(shippingAddress);
+  //     }
+  //   }, [shippingAddress]);
 
   return (
     <Container className='py-4'>
@@ -60,13 +37,13 @@ const ShippingScreen = ({ history, location }) => {
         <CheckoutSteps step1 step2 />
         <h1>Shipping</h1>
         {/* {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>} */}
-        <Form onSubmit={submitHandler}>
+        {/* <Form onSubmit={submitHandler}>
           <Form.Group controlId='address'>
             <Form.Label>Address : </Form.Label>
             <Form.Control type='address' placeholder='address' value={form.address} name='address' onChange={formHandler}></Form.Control>
           </Form.Group>
           <Form.Group controlId='city'>
-            <Form.Label>City : </Form.Label>
+            <Form.Label>City </Form.Label>
             <Form.Control type='city' placeholder='city' value={form.city} name='city' onChange={formHandler}></Form.Control>
           </Form.Group>
           <Form.Group controlId='postalCode'>
@@ -84,10 +61,10 @@ const ShippingScreen = ({ history, location }) => {
             disabled={form.address === "" || form.city === "" || form.postalCode === "" || form.country === ""}>
             Continue
           </Button>
-        </Form>
+        </Form> */}
       </FormContainer>
     </Container>
   );
 };
 
-export default ShippingScreen;
+export default PaymentScreen;
