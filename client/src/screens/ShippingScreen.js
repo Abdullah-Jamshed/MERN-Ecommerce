@@ -57,7 +57,7 @@ const ShippingScreen = ({ history, location }) => {
   return (
     <Container className='py-4'>
       <FormContainer>
-        <CheckoutSteps step1 step2 />
+        <CheckoutSteps step1 step2 history={history} />
         <h1>Shipping</h1>
         {/* {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>} */}
         <Form onSubmit={submitHandler}>
