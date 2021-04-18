@@ -40,7 +40,6 @@ const ShippingScreen = ({ history, location }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submit");
     dispatch(saveShippingAddress(form));
     history.push("/payment");
   };
@@ -48,7 +47,6 @@ const ShippingScreen = ({ history, location }) => {
   // LIFECYCLE
 
   useEffect(() => {
-    console.log("shipping useEffect ==>>> ", shippingAddress);
     if (shippingAddress) {
       setForm(shippingAddress);
     }

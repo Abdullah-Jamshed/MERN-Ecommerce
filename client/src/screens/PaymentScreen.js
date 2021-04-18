@@ -10,22 +10,44 @@ import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
+import {saveShippingAddress} from '../store/actions/shippingActions';
 
 const PaymentScreen = ({ history, location }) => {
   // REDUX STATE HOOK
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
 
+
+
+  const [form, setForm] = useState({
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "",
+  });
+
+
   // REDUX DISPATCH HOOK
-  //   const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
   // HANDLER FUNCTIONS
+
+  const formHandler = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    dispatch(saveShippingAddress(form));
+    history.push("/payment");
+  };
 
   // LIFECYCLE
 
   useEffect(() => {
     if (shippingAddress) {
-      console.log(shippingAddress);
-      // setForm(shippingAddress);
+      setForm(shippingAddress);
     }
   }, [shippingAddress]);
 
@@ -33,9 +55,9 @@ const PaymentScreen = ({ history, location }) => {
     <Container className='py-4'>
       <FormContainer>
         <CheckoutSteps step1 step2 step3 />
-        <h1>Shipping</h1>
+        <h1>Payment</h1>
         {/* {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>} */}
-        {/* <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler}>
           <Form.Group controlId='address'>
             <Form.Label>Address : </Form.Label>
             <Form.Control type='address' placeholder='address' value={form.address} name='address' onChange={formHandler}></Form.Control>
@@ -59,7 +81,7 @@ const PaymentScreen = ({ history, location }) => {
             disabled={form.address === "" || form.city === "" || form.postalCode === "" || form.country === ""}>
             Continue
           </Button>
-        </Form> */}
+        </Form>
       </FormContainer>
     </Container>
   );
