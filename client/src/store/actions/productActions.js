@@ -5,6 +5,7 @@ const fetchProduct = () => {
     try {
       dispatch({ type: "LOADING", payload: { flag: true } });
       const { data } = await API.get("/api/products");
+      console.log("products ====>>>>> ", data);
       dispatch({ type: "PRODUCTS", payload: { products: data || [] } });
     } catch (err) {
       // console.log(err.response.data);

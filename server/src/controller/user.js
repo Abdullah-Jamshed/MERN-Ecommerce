@@ -32,7 +32,7 @@ const userAuthentication = async (req, res) => {
       });
     }
   } catch (error) {
-    res.json({ msg: error.message });
+    res.status(500).json({ msg: "Something Went Wrong" });
   }
 };
 

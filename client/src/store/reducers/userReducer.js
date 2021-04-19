@@ -37,6 +37,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case "USER_UPDATE_FAIL":
       return {
         ...state,
+        // user: null,
         isLoading: false,
         errorMessage: action.payload.errorMessage,
         success: false,
