@@ -2,7 +2,7 @@ const INITIAL_STATE = {
   paymentMethod: localStorage.getItem("payment_method") || null,
 };
 
-const shippingReducer = (state = INITIAL_STATE, action) => {
+const paymentReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SAVE_PAYMENT_METHOD":
       return {
@@ -16,4 +16,4 @@ const shippingReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default shippingReducer;
+export default paymentReducer;

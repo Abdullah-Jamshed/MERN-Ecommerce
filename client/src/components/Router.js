@@ -11,6 +11,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ShippingScreen from "../screens/ShippingScreen";
 import PaymentScreen from "../screens/PaymentScreen";
+import PlaceOrderScreen from "../screens/PlaceOrderScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -45,6 +46,7 @@ const Routes = () => {
             <Route exact path='/profile' component={ProfileScreen} />
             <Route exact path='/shipping' component={ShippingScreen} />
             <Route exact path='/payment' component={PaymentScreen} />
+            <Route exact path='/placeOrder' component={PlaceOrderScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

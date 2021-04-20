@@ -17,7 +17,7 @@ const PaymentScreen = ({ history, location }) => {
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
   const { paymentMethod } = useSelector((state) => state.paymentReducer);
 
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [method, setPaymentMethod] = useState("");
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -31,8 +31,8 @@ const PaymentScreen = ({ history, location }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    // history.push("/payment");
+    dispatch(savePaymentMethod(method));
+    history.push("/placeOrder");
   };
 
   // LIFECYCLE
@@ -58,25 +58,27 @@ const PaymentScreen = ({ history, location }) => {
         <Form onSubmit={submitHandler}>
           <Form.Group>
             <Form.Label as='legend'>Select Method </Form.Label>
+            <Col>
+              <Form.Check
+                id='PayPal'
+                type='radio'
+                label='PayPal or Credit Card'
+                value='PayPal'
+                name='paymentMethod'
+                checked={method === "PayPal"}
+                onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
+              <Form.Check
+                id='Stripe'
+                type='radio'
+                label='Stripe'
+                value='Stripe'
+                name='paymentMethod'
+                checked={method === "Stripe"}
+                onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
+            </Col>
           </Form.Group>
-          <Col>
-            <Form.Check
-              id='PayPal'
-              type='radio'
-              label='PayPal or Credit Card'
-              value='PayPal'
-              name='paymentMethod'
-              onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
-            <Form.Check
-              id='Stripe'
-              type='radio'
-              label='Stripe'
-              value='Stripe'
-              name='paymentMethod'
-              onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
-          </Col>
 
-          <Button type='submit' className='mt-2 btn-block' disabled={paymentMethod === ""}>
+          <Button type='submit' className='mt-2 btn-block' disabled={method === ""}>
             Continue
           </Button>
         </Form>
