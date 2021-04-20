@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 // MODELS
 import Product from "../models/productModel.js";
 
-
 // @desc   Fetch all products
 // @route  GET /api/product
 // @access Public
@@ -13,7 +12,7 @@ const fetchProducts = async (req, res) => {
     const products = await Product.find({});
     res.json(products);
   } catch (error) {
-    res.status(404).json({ msg: "Something Went Wrong" });
+    res.status(500).json({ msg: "Something Went Wrong" });
   }
 };
 
@@ -30,7 +29,7 @@ const fetchProductsById = async (req, res) => {
     res.status(404).json({ msg: "Product Not Found" });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ msg: "Something Went Wrong" });
+    res.status(500).json({ msg: "Something Went Wrong" });
   }
 };
 

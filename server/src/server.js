@@ -7,6 +7,7 @@ dotenv.config();
 // ROUTES
 import productsRoute from "./routes/products.js";
 import userRoute from "./routes/user.js";
+import orderRoute from "./routes/order.js";
 
 console.log(process.env.MONGODB_URI);
 
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
+app.use("/api/order", orderRoute);
 
 app.use("*", (req, res) => {
   res.json({ msg: "invalid Route" });

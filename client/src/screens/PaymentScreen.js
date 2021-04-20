@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Button, Form, Col } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
@@ -12,7 +12,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { savePaymentMethod } from "../store/actions/paymentActions";
 
-const PaymentScreen = ({ history, location }) => {
+const PaymentScreen = ({ history }) => {
   // REDUX STATE HOOK
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
   const { paymentMethod } = useSelector((state) => state.paymentReducer);
@@ -41,7 +41,7 @@ const PaymentScreen = ({ history, location }) => {
     if (!shippingAddress) {
       history.push("/shipping");
     }
-  }, [shippingAddress]);
+  }, [shippingAddress,history]);
 
   useEffect(() => {
     if (paymentMethod) {
