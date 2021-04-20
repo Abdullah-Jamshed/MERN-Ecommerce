@@ -20,7 +20,6 @@ const CartScreen = ({ match, location, history }) => {
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-
   // HANDLER FUNCTIONS
 
   const removeCartHandler = (id) => {
@@ -28,7 +27,7 @@ const CartScreen = ({ match, location, history }) => {
   };
 
   const checkOutHandler = () => {
-    history.push("/login?redirect=shipping")
+    history.push("/login?redirect=shipping");
   };
 
   // LIFECYCLE
@@ -83,7 +82,7 @@ const CartScreen = ({ match, location, history }) => {
                           +
                         </Button>
                       </Col>
-                      <Col className="text-right" md={1}>
+                      <Col className='text-right' md={1}>
                         <Button type='button' variant='ligth' onClick={() => removeCartHandler(product.productId)}>
                           <i style={{ fontSize: "16px" }} className='fa fa-trash' />
                         </Button>
@@ -103,7 +102,7 @@ const CartScreen = ({ match, location, history }) => {
                   {cartItems.reduce((acc, product) => acc + product.qty * product.price, 0).toFixed(2)}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button type='button' className='btn-block' onClick={checkOutHandler}>
+                  <Button type='button' className='btn-block' onClick={checkOutHandler} disabled={cartItems.length === 0}>
                     Proceed to Checkout
                   </Button>
                 </ListGroup.Item>

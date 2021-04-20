@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
 import CheckoutSteps from "../components/CheckoutSteps";
-import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../store/actions/shippingActions";
 
-const ShippingScreen = ({ history, location }) => {
+const ShippingScreen = ({ history }) => {
   // STATE;
-  //   const [errorMsg, setErrorMsg] = useState("");
 
   const [form, setForm] = useState({
     address: "",
@@ -24,10 +21,10 @@ const ShippingScreen = ({ history, location }) => {
     country: "",
   });
 
-  //   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   // REDUX STATE HOOK
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
+  const { user } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -52,12 +49,17 @@ const ShippingScreen = ({ history, location }) => {
     }
   }, [shippingAddress]);
 
+  useEffect(() => {
+    if (!user) {
+      history.push("/cart");
+    }
+  }, [user]);
+
   return (
     <Container className='py-4'>
       <FormContainer>
         <CheckoutSteps step1 step2 history={history} />
         <h1>Shipping</h1>
-        {/* {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>} */}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='address'>
             <Form.Label>Address : </Form.Label>
