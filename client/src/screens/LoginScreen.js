@@ -44,6 +44,7 @@ const LoginScreen = ({ history, location }) => {
 
   useEffect(() => {
     errorMessage && dispatch(clearErrorMessage());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

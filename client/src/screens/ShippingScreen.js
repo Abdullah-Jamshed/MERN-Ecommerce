@@ -21,7 +21,6 @@ const ShippingScreen = ({ history }) => {
     country: "",
   });
 
-
   // REDUX STATE HOOK
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
   const { user } = useSelector((state) => state.userReducer);
@@ -53,7 +52,7 @@ const ShippingScreen = ({ history }) => {
     if (!user) {
       history.push("/cart");
     }
-  }, [user]);
+  }, [user, history]);
 
   return (
     <Container className='py-4'>

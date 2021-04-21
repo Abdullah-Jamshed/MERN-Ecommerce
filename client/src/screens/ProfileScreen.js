@@ -49,6 +49,7 @@ const ProfileScreen = ({ history, location }) => {
     if (user) {
       setForm({ ...form, name: user.name, email: user.email });
     }
+    // eslint-disable-next-line
   }, [user]);
 
   return (

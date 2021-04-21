@@ -53,10 +53,12 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/order/${order._id}`);
     }
+    // eslint-disable-next-line
   }, [success, history]);
 
   useEffect(() => {
     priceCalculator();
+    // eslint-disable-next-line
   }, []);
 
   return (
