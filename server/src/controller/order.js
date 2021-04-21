@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // MODELS
-import Order from "../models/productModel.js";
+import Order from "../models/orderModel.js";
 
 // @desc   Create new Order
 // @route  POST /api/order
@@ -23,9 +23,10 @@ const createOrder = async (req, res) => {
     });
 
     const createdOrder = await order.save();
+
     res.status(201).json(createdOrder);
   } catch (error) {
-    res.status(500).json({ msg: "Something Went Wrong" });
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
   }
 };
 

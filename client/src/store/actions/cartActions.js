@@ -7,7 +7,14 @@ const addCartItem = (id, qty) => {
       dispatch({
         type: "ADD_CART_ITEM",
         payload: {
-          product: { productId: id, name: data.name, image: data.image, price: data.price, countInStock: data.countInStock, qty },
+          product: {
+            productId: id,
+            name: data.name,
+            image: data.image,
+            price: data.price,
+            countInStock: data.countInStock,
+            qty,
+          },
         },
       });
       localStorage.setItem("cartItems", JSON.stringify(getState().cartReducer.cartItems));
@@ -28,8 +35,6 @@ const removeCartItem = (id) => {
   };
 };
 
-
-
 const saveShippingAddress = (shippingAddress) => {
   return (dispatch) => {
     localStorage.setItem("shipping_address", JSON.stringify(shippingAddress));
@@ -37,5 +42,4 @@ const saveShippingAddress = (shippingAddress) => {
   };
 };
 
-
-export { addCartItem, removeCartItem,saveShippingAddress };
+export { addCartItem, removeCartItem, saveShippingAddress };

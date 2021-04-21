@@ -5,7 +5,6 @@ const userLogin = ({ email, password }) => {
     try {
       dispatch({ type: "USER_LOADER" });
       const { data } = await API.post(`/api/user/login`, { email, password });
-      console.log(data);
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
     } catch (error) {
