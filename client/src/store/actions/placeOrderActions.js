@@ -1,12 +1,10 @@
 import API from "../../api/";
 
-const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice }) => {
+const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice, shippingAddress, cartItems, paymentMethod }) => {
   return async (dispatch, getState) => {
     try {
-      const { cartItems } = getState().cartReducer;
-      const { shippingAddress } = getState().shippingReducer;
-      const { paymentMethod } = getState().paymentReducer;
-      const res = await API.post("/api/order", {
+      dispatch({ type: "ORDER_CREATE_REQUEST" });
+      const { data } = await API.post("/api/order", {
         orderItems: cartItems,
         paymentMethod,
         shippingAddress,
@@ -15,11 +13,12 @@ const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice }) => {
         taxPrice,
         totalPrice,
       });
-      console.log(res);
+      console.log(data);
+      dispatch({ type: "ORDER_CREATE_SUCCESS", payload: { data } });
     } catch (error) {
       console.log(error.response.data);
+      dispatch({ type: "ORDER_CREATE_FAILED", payload: { errorMessage: error.response?.data.msg } });
     }
-    //   dispatch({ type: "SAVE_PAYMENT_METHOD", payload: { method } });
     //   localStorage.setItem("payment_method", method);
   };
 };

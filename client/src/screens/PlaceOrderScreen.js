@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Container, Button, Row, Col, ListGroup, Image, Card, Spinner } from "react-bootstrap";
 
 //  COMPONENT
 import CheckoutSteps from "../components/CheckoutSteps";
@@ -26,6 +26,7 @@ const PlaceOrderScreen = ({ history }) => {
   const { shippingAddress } = useSelector((state) => state.shippingReducer);
   const { cartItems } = useSelector((state) => state.cartReducer);
   const { paymentMethod } = useSelector((state) => state.paymentReducer);
+  const { order, isLoading, success, errorMessage } = useSelector((state) => state.placeOrderReducer);
   //   const { user } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
@@ -43,10 +44,16 @@ const PlaceOrderScreen = ({ history }) => {
   // HANDLER FUNCTIONS
 
   const placeOrderHandler = () => {
-    dispatch(createOrder(prices));
+    dispatch(createOrder({ ...prices, shippingAddress, cartItems, paymentMethod }));
   };
 
   // LIFECYCLE
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+    }
+  }, [success, history]);
 
   useEffect(() => {
     priceCalculator();
@@ -131,9 +138,10 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
 
+              <ListGroup.Item>{errorMessage && <Message variant={"danger"}>{errorMessage}</Message>}</ListGroup.Item>
               <ListGroup.Item>
                 <Button type='button' className='btn-block' disabled={cartItems.length === 0} onClick={placeOrderHandler}>
-                  Place Order
+                  Place Order {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
                 </Button>
               </ListGroup.Item>
             </ListGroup>
