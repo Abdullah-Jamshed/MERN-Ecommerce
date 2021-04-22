@@ -28,6 +28,13 @@ const placeOrderReducer = (state = INITIAL_STATE, action) => {
         errorMessage: action.payload.msg,
       };
 
+    case "ORDER_CREATE_RESET":
+      return {
+        order: null,
+        isLoading: false,
+        errorMessage: "",
+        success: false,
+      };
     default:
       return { ...state };
   }

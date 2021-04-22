@@ -10,7 +10,7 @@ import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder,orderCreateReset } from "../store/actions/placeOrderActions";
+import { createOrder,createOrderReset } from "../store/actions/placeOrderActions";
 
 const PlaceOrderScreen = ({ history }) => {
   // STATE;
@@ -52,7 +52,7 @@ const PlaceOrderScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
-      dispatch(orderCreateReset());
+      dispatch(createOrderReset());
     }
     // eslint-disable-next-line
   }, [success, history]);
