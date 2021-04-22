@@ -12,7 +12,7 @@ const createOrder = async (req, res) => {
   try {
     if (orderItems && orderItems.length === 0) return res.status(400).json();
     const order = new Order({
-      userId: req.sub._id,
+      user: req.sub._id,
       orderItems,
       paymentMethod,
       shippingAddress,
@@ -30,4 +30,15 @@ const createOrder = async (req, res) => {
   }
 };
 
-export { createOrder };
+const getOrderById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const order = await Order.findById(id).populate("user", "name email");
+    if (!order) return res.status(404).json({ msg: "Order Not Found" });
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { createOrder, getOrderById };

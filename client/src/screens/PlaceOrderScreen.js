@@ -37,7 +37,7 @@ const PlaceOrderScreen = ({ history }) => {
     const itemPrice = Number(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2));
     const shippingPrice = itemPrice > 130 ? 0 : 100;
     const taxPrice = Number(((itemPrice + itemPrice * 15) / 100).toFixed(2));
-    const totalPrice = itemPrice + shippingPrice + taxPrice;
+    const totalPrice = Number((itemPrice + shippingPrice + taxPrice).toFixed(2));
     setPrices({ itemPrice, shippingPrice, taxPrice, totalPrice });
   };
 
@@ -67,7 +67,7 @@ const PlaceOrderScreen = ({ history }) => {
       <Row>
         <Col md={8}>
           <ListGroup variant={"flush"}>
-            <ListGroup.Item>
+            <ListGroup.Item className='pt-4'>
               <h4>Shipping</h4>
               <p>
                 <strong>Address : </strong>
@@ -75,30 +75,32 @@ const PlaceOrderScreen = ({ history }) => {
               </p>
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className='pt-4'>
               <h4>Payment Method</h4>
               <strong>Method : </strong>
               {paymentMethod}
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className='pt-4'>
               <h4>Order Items</h4>
               {cartItems.length === 0 ? (
                 <Message>Your Cart is Empty</Message>
               ) : (
                 <ListGroup variant='flush'>
                   {cartItems.map((item) => (
-                    <Row key={item.productId}>
-                      <Col md={1}>
-                        <Image src={item.image} alt={item.name} fluid rounded />
-                      </Col>
-                      <Col>
-                        <Link to={`/product/${item.productId}`}>{item.name}</Link>
-                      </Col>
-                      <Col md={4}>
-                        {item.qty} x {item.price} = ${(item.qty * item.price).toFixed(2)}
-                      </Col>
-                    </Row>
+                    <ListGroup.Item>
+                      <Row key={item.productId}>
+                        <Col md={1}>
+                          <Image src={item.image} alt={item.name} fluid rounded />
+                        </Col>
+                        <Col>
+                          <Link to={`/product/${item.productId}`}>{item.name}</Link>
+                        </Col>
+                        <Col md={4}>
+                          {item.qty} x {item.price} = ${(item.qty * item.price).toFixed(2)}
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
                   ))}
                 </ListGroup>
               )}
