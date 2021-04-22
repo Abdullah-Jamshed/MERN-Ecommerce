@@ -23,4 +23,10 @@ const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice, shippingA
   };
 };
 
-export { createOrder };
+const createOrderReset = () => {
+  return (dispatch) => {
+    dispatch({ type: "ORDER_CREATE_RESET" });
+  };
+};
+
+export { createOrder, createOrderReset };

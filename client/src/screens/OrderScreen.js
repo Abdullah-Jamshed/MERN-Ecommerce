@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Row, Col, ListGroup, Image, Card, Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 //  COMPONENT
-import Message from "../components/Message";
+// import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderById } from "../store/actions/orderDetailActions";
 
-// STATE;
-
 const OrderScreen = ({ history, match }) => {
+  // STATE;
+
   // REDUX STATE HOOK
-  //   const { user } = useSelector((state) => state.userReducer);
+  const { order, isLoading } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -25,9 +25,11 @@ const OrderScreen = ({ history, match }) => {
     dispatch(getOrderById(match.params.id));
   }, []);
   return (
-    <div>
-      <h1>Order id == {match.params.id}</h1>
-    </div>
+    <Container>
+      <div className='text-center py-4'>{isLoading && <Spinner className='mt-4' animation='grow' />}</div>
+      {/* <h1>Order id == {match.params.id}</h1> */}
+      {order && order.orderItems.map((item) => <p>{item.name}</p>)}
+    </Container>
   );
 };
 

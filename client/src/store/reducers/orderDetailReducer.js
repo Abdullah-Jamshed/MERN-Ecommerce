@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+  order: null,
   orderItems: [],
   shippingAdress: null,
   isLoading: false,
@@ -20,7 +21,7 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
         ...state,
         success: true,
         isLoading: false,
-        orderItems: action.payload.data ,
+        order: action.payload.data,
       };
     case "ORDER_DETAIL_FAIL":
       return {
