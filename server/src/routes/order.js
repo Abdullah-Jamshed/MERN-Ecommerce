@@ -4,11 +4,12 @@ import { Router } from "express";
 import auth from "../middleware/auth.js";
 
 // controllers
-import { createOrder,getOrderById } from "../controller/order.js";
+import { createOrder, getOrderById, updateOrderPayment } from "../controller/order.js";
 
 const orderRoute = Router();
 
-orderRoute.post("/",auth,createOrder);
-orderRoute.get("/:id",auth,getOrderById);
+orderRoute.post("/", auth, createOrder);
+orderRoute.get("/:id", auth, getOrderById);
+orderRoute.put("/:id/pay", auth, updateOrderPayment);
 
 export default orderRoute;

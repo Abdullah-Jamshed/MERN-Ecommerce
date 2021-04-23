@@ -31,6 +31,10 @@ const createOrder = async (req, res) => {
   }
 };
 
+// @desc   Fetch Order By Id
+// @route  GET /api/order/:id
+// @access Private
+
 const getOrderById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -43,4 +47,33 @@ const getOrderById = async (req, res) => {
   }
 };
 
-export { createOrder, getOrderById };
+// @desc   Update Order Payment status
+// @route  PUT /api/order/:id/pay
+// @access Private
+
+const updateOrderPayment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      id: paymentId,
+      status,
+      update_time,
+      payer: { email_address },
+    } = req.body;
+
+    const paymentResult = {
+      id: paymentId,
+      status,
+      update_time,
+      email_address,
+    };
+
+    const order = await Order.findOneAndUpdate({ _id: id }, { isPaid: true, paidAt: Date.now(), paymentResult }, { new: true });
+    if (!order) return res.status(404).json({ msg: "Order Not Found" });
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { createOrder, getOrderById, updateOrderPayment };

@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/order", orderRoute);
+app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
 app.use("*", (req, res) => {
   res.json({ msg: "invalid Route" });

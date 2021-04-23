@@ -1,5 +1,9 @@
 const INITIAL_STATE = {
   paymentMethod: localStorage.getItem("payment_method") || null,
+  successPay: false,
+  isLoading: false,
+  // successPay
+  // successDeliver
 };
 
 const paymentReducer = (state = INITIAL_STATE, action) => {
@@ -9,6 +13,34 @@ const paymentReducer = (state = INITIAL_STATE, action) => {
         ...state,
         paymentMethod: action.payload.method,
       };
+
+    case "ORDER_PAY_REQUEST":
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+
+    case "ORDER_PAY_SUCCESS":
+      return {
+        ...state,
+        successPay: true,
+        isLoading: false,
+      };
+    case "ORDER_PAY_FAILED":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.payload.errorMessage,
+      };
+    case "ORDER_PAY_RESET":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: "",
+        successPay: false,
+      };
+
     default:
       return {
         ...state,
