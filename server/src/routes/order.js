@@ -9,8 +9,8 @@ import { createOrder, getOrderById, updateOrderPayment, getUserOrders } from "..
 const orderRoute = Router();
 
 orderRoute.post("/", auth, createOrder);
+orderRoute.get("/myorders", auth, getUserOrders);
 orderRoute.get("/:id", auth, getOrderById);
 orderRoute.put("/:id/pay", auth, updateOrderPayment);
-orderRoute.get("/:id/myorders", auth, getUserOrders);
 
 export default orderRoute;
