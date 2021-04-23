@@ -1,10 +1,12 @@
 const INITIAL_STATE = {
   order: null,
-  orderItems: [],
-  shippingAdress: null,
+  // orderItems: [], // extra
+  // shippingAdress: null, // extra
   isLoading: false,
   errorMessage: "",
   success: false,
+  listLoader: false,
+  ordersList: [],
 };
 
 const orderDetailReducer = (state = INITIAL_STATE, action) => {
@@ -30,6 +32,25 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
         errorMessage: action.payload.errorMessage,
       };
 
+    case "MY_ORDER_LIST_REQUEST":
+      return {
+        ...state,
+        listLoader: true,
+        errorMessage: "",
+      };
+    case "MY_ORDER_LIST_SUCCESS":
+      return {
+        ...state,
+        listLoader: false,
+        ordersList: action.payload.data,
+      };
+
+    case "MY_ORDER_LIST_FAILED":
+      return {
+        ...state,
+        listLoader: false,
+        errorMessage: action.payload.errorMessage,
+      };
     default:
       return { ...state };
   }

@@ -174,7 +174,7 @@ const OrderScreen = ({ history, match }) => {
                       </Row>
                     </ListGroup.Item>
                     {!order.isPaid && (
-                      <ListGroup.Item>
+                      <ListGroup.Item className='text-center'>
                         {(loadingPay || !sdkReady) && (
                           <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />
                         )}

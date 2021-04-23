@@ -10,6 +10,7 @@ import FormContainer from "../components/FormContainer";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdate } from "../store/actions/userActions";
+import { getUserOrder } from "../store/actions/orderDetailActions";
 import Message from "../components/Message";
 
 const ProfileScreen = ({ history, location }) => {
@@ -26,6 +27,7 @@ const ProfileScreen = ({ history, location }) => {
 
   // REDUX STATE
   const { user, errorMessage, success, isLoading } = useSelector((state) => state.userReducer);
+  const { listLoader, ordersList } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -46,11 +48,19 @@ const ProfileScreen = ({ history, location }) => {
   // LIFECYCLES
 
   useEffect(() => {
-    if (user) {
-      setForm({ ...form, name: user.name, email: user.email });
+    if (!user) {
+      history.push("/login?redirect=profile");
+    } else {
+      if (user.name) {
+        setForm({ ...form, name: user.name, email: user.email });
+      }
     }
     // eslint-disable-next-line
   }, [user]);
+
+  useEffect(() => {
+    dispatch(getUserOrder());
+  }, [dispatch]);
 
   return (
     <Container className='py-4' fluid>
@@ -101,6 +111,14 @@ const ProfileScreen = ({ history, location }) => {
         </Col>
         <Col md={6}>
           <h1>My Order</h1>
+          <div className='text-center'>{listLoader && <Spinner animation='border' />}</div>
+          {!listLoader && ordersList.length !== 0 && (
+            <>
+              {ordersList.map((item) => (
+                <h3 key={item._id}>{item.paymentMethod}</h3>
+              ))}
+            </>
+          )}
         </Col>
       </Row>
     </Container>
