@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Row, Col, ListGroup, Spinner, Image, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Spinner, Image, Card } from "react-bootstrap";
 
 //  COMPONENT
 import Message from "../components/Message";
@@ -10,7 +10,7 @@ import Message from "../components/Message";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderById } from "../store/actions/orderDetailActions";
-import { clearErrorMessage } from "../store/actions/userActions";
+import {} from "../store/actions/userActions";
 
 const OrderScreen = ({ history, match }) => {
   // STATE;
@@ -38,30 +38,42 @@ const OrderScreen = ({ history, match }) => {
       ) : (
         order && (
           <>
-            <h3>ORDER {match.params.id}</h3>
+            <h3>ORDER ID : {match.params.id}</h3>
             <Row>
               <Col md={8}>
                 <ListGroup variant={"flush"}>
                   <ListGroup.Item className='pt-4'>
-                    <h4>Shipping</h4>
-                    <p>
+                    <h3>Shipping</h3>
+                    <p className='mt-2'>
                       <strong>Name : </strong>
                       {order.user.name}
                     </p>
-                    <p>
+                    <p className='mt-2'>
                       <strong>Email : </strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
                     </p>
-                    <p>
+                    <p className='mt-2'>
                       <strong>Address : </strong>
                       {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.postalCode},{" "}
                       {order.shippingAddress.country}
                     </p>
+                    <div className='mt-2'>
+                      {order.isDelivered ? (
+                        <Message variant='success'>Delivered on {order.deliveredAt}</Message>
+                      ) : (
+                        <Message variant='danger'>Not Delivered</Message>
+                      )}
+                    </div>
                   </ListGroup.Item>
 
                   <ListGroup.Item className='pt-4'>
                     <h4>Payment Method</h4>
-                    <strong>Method : </strong>
-                    {order.paymentMethod}
+                    <p>
+                      <strong>Method : </strong>
+                      {order.paymentMethod}
+                    </p>
+                    <div className='mt-2'>
+                      {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='danger'>Not Paid</Message>}
+                    </div>
                   </ListGroup.Item>
 
                   <ListGroup.Item className='pt-4'>
@@ -71,7 +83,7 @@ const OrderScreen = ({ history, match }) => {
                     ) : (
                       <ListGroup variant='flush'>
                         {order.orderItems.map((item) => (
-                          <ListGroup.Item>
+                          <ListGroup.Item key={item._id}>
                             <Row key={item.productId}>
                               <Col md={1}>
                                 <Image src={item.image} alt={item.name} fluid rounded />
@@ -124,17 +136,6 @@ const OrderScreen = ({ history, match }) => {
                         <Col>${order.totalPrice}</Col>
                       </Row>
                     </ListGroup.Item>
-                    {/* 
-                {errorMessage && (
-                  <ListGroup.Item>
-                    <Message variant={"danger"}>{errorMessage}</Message>
-                  </ListGroup.Item>
-                )}
-                <ListGroup.Item>
-                  <Button type='button' className='btn-block' disabled={[].length === 0} onClick={() => {}}>
-                    Place Order {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
-                  </Button>
-                </ListGroup.Item> */}
                   </ListGroup>
                 </Card>
               </Col>
@@ -142,8 +143,6 @@ const OrderScreen = ({ history, match }) => {
           </>
         )
       )}
-
-      {/* <h1>Order id == {match.params.id}</h1> */}
     </Container>
   );
 };
