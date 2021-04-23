@@ -23,11 +23,11 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         order: action.payload.data,
       };
-    case "ORDER_DETAIL_FAIL":
+    case "ORDER_DETAIL_FAILED":
       return {
         ...state,
         isLoading: false,
-        errorMessage: action.payload.msg,
+        errorMessage: action.payload.errorMessage,
       };
 
     default:

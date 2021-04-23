@@ -10,13 +10,13 @@ import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder,createOrderReset } from "../store/actions/placeOrderActions";
+import { createOrder, createOrderReset } from "../store/actions/placeOrderActions";
 
 const PlaceOrderScreen = ({ history }) => {
   // STATE;
 
   const [prices, setPrices] = useState({
-    itemPrice: 0,
+    itemsPrice: 0,
     shippingPrice: 0,
     taxPrice: 0,
     totalPrice: 0,
@@ -34,15 +34,14 @@ const PlaceOrderScreen = ({ history }) => {
 
   // Price Calculator  Function
   const priceCalculator = () => {
-    const itemPrice = Number(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2));
-    const shippingPrice = itemPrice > 130 ? 0 : 100;
-    const taxPrice = Number(((itemPrice + itemPrice * 15) / 100).toFixed(2));
-    const totalPrice = Number((itemPrice + shippingPrice + taxPrice).toFixed(2));
-    setPrices({ itemPrice, shippingPrice, taxPrice, totalPrice });
+    const itemsPrice = Number(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2));
+    const shippingPrice = itemsPrice > 130 ? 0 : 100;
+    const taxPrice = Number(((itemsPrice + itemsPrice * 15) / 100).toFixed(2));
+    const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
+    setPrices({ itemsPrice, shippingPrice, taxPrice, totalPrice });
   };
 
   // HANDLER FUNCTIONS
-
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...prices, shippingAddress, cartItems, paymentMethod }));
   };
@@ -118,7 +117,7 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${prices.itemPrice}</Col>
+                  <Col>${prices.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -143,7 +142,12 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>{errorMessage && <Message variant={"danger"}>{errorMessage}</Message>}</ListGroup.Item>
+              {errorMessage && (
+                <ListGroup.Item>
+                  {" "}
+                  <Message variant={"danger"}>{errorMessage}</Message>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Button type='button' className='btn-block' disabled={cartItems.length === 0} onClick={placeOrderHandler}>
                   Place Order {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}

@@ -1,6 +1,6 @@
 import API from "../../api/";
 
-const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice, shippingAddress, cartItems, paymentMethod }) => {
+const createOrder = ({ itemsPrice, shippingPrice, taxPrice, totalPrice, shippingAddress, cartItems, paymentMethod }) => {
   return async (dispatch, getState) => {
     try {
       dispatch({ type: "ORDER_CREATE_REQUEST" });
@@ -8,7 +8,7 @@ const createOrder = ({ itemPrice, shippingPrice, taxPrice, totalPrice, shippingA
         orderItems: cartItems,
         paymentMethod,
         shippingAddress,
-        itemPrice,
+        itemsPrice,
         shippingPrice,
         taxPrice,
         totalPrice,

@@ -8,7 +8,8 @@ import Order from "../models/orderModel.js";
 // @access Private
 
 const createOrder = async (req, res) => {
-  const { orderItems, paymentMethod, shippingAddress, itemPrice, shippingPrice, taxPrice, totalPrice } = req.body;
+  const { orderItems, paymentMethod, shippingAddress, itemsPrice, shippingPrice, taxPrice, totalPrice } = req.body;
+  console.log(itemsPrice);
   try {
     if (orderItems && orderItems.length === 0) return res.status(400).json();
     const order = new Order({
@@ -16,7 +17,7 @@ const createOrder = async (req, res) => {
       orderItems,
       paymentMethod,
       shippingAddress,
-      itemPrice,
+      itemsPrice,
       shippingPrice,
       taxPrice,
       totalPrice,
@@ -33,6 +34,7 @@ const createOrder = async (req, res) => {
 const getOrderById = async (req, res) => {
   const { id } = req.params;
   try {
+    if (!mongoose.isValidObjectId(id)) return res.status(400).json({ msg: "Invalid Order Id" });
     const order = await Order.findById(id).populate("user", "name email");
     if (!order) return res.status(404).json({ msg: "Order Not Found" });
     res.json(order);
