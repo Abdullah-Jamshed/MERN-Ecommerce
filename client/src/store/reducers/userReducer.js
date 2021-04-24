@@ -28,7 +28,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
     case "USER_LOAD_FAIL":
       localStorage.removeItem("token");
-      return { 
+      console.log("USER_LOAD_FAIL");
+      return {
         ...state,
         isLoading: false,
       };
@@ -47,6 +48,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         user: null,
       };
+
     case "CLEAR_ERROR_MESSAGE":
       return {
         ...state,

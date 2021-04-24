@@ -9,7 +9,7 @@ import FormContainer from "../components/FormContainer";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdate } from "../store/actions/userActions";
+import { userUpdate, isUserLogin } from "../store/actions/userActions";
 import { getUserOrder } from "../store/actions/orderDetailActions";
 import Message from "../components/Message";
 
@@ -24,7 +24,7 @@ const ProfileScreen = ({ history }) => {
   });
 
   // REDUX STATE
-  const { user, errorMessage, success, isLoading } = useSelector((state) => state.userReducer);
+  const { user, errorMessage, success, isLoading, token } = useSelector((state) => state.userReducer);
   const { listLoader, ordersList, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
@@ -46,19 +46,18 @@ const ProfileScreen = ({ history }) => {
   // LIFECYCLES
 
   useEffect(() => {
-    if (!user) {
+    if (!token) {
       history.push("/login?redirect=profile");
     } else {
-      if (user.name) {
-        setForm({ ...form, name: user.name, email: user.email });
+      if (user) {
+        dispatch(getUserOrder());
+        if (user.name) {
+          setForm({ ...form, name: user.name, email: user.email });
+        }
       }
     }
     // eslint-disable-next-line
-  }, [user]);
-
-  useEffect(() => {
-    dispatch(getUserOrder());
-  }, [dispatch]);
+  }, [user, token]);
 
   return (
     <Container className='py-4' fluid>
