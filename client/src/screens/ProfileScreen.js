@@ -13,7 +13,7 @@ import { userUpdate } from "../store/actions/userActions";
 import { getUserOrder } from "../store/actions/orderDetailActions";
 import Message from "../components/Message";
 
-const ProfileScreen = ({ history, location }) => {
+const ProfileScreen = ({ history }) => {
   // STATE;
   const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({
@@ -22,8 +22,6 @@ const ProfileScreen = ({ history, location }) => {
     password: "",
     confirmPassword: "",
   });
-
-  // const redirect = location.search ? location.search.split("=")[1] : "/";
 
   // REDUX STATE
   const { user, errorMessage, success, isLoading } = useSelector((state) => state.userReducer);
@@ -69,7 +67,6 @@ const ProfileScreen = ({ history, location }) => {
           <FormContainer>
             <h1>Profile</h1>
             {errorMsg && <Message variant={"danger"}>{errorMsg}</Message>}
-            {/* {success && <Message variant={"success"}>{"User Updated"}</Message>} */}
             {(errorMessage || success) && <Message variant={success ? "success" : "danger"}>{success ? "User Updated" : errorMessage}</Message>}
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='name'>
@@ -135,7 +132,7 @@ const ProfileScreen = ({ history, location }) => {
                       <td>{item.isPaid ? item.paidAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
                       <td>{item.isDelivered ? item.deliveredAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
                       <td>
-                        <Button className="btn-sm" as={Link} to={`/order/${item._id}`} variant='light'>
+                        <Button className='btn-sm' as={Link} to={`/order/${item._id}`} variant='light'>
                           Details
                         </Button>
                       </td>

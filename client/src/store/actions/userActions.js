@@ -8,7 +8,7 @@ const userLogin = ({ email, password }) => {
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
       dispatch({ type: "USER_LOGIN_FAIL", payload: { errorMessage: error.response.data.msg } });
     }
   };
@@ -55,7 +55,6 @@ const userUpdate = ({ name, email, password }) => {
       const { data } = await API.put(`/api/user/profile`, { name, email, password });
       dispatch({ type: "USER_UPDATE_SUCCESS", payload: { user: data, success: true } });
     } catch (error) {
-      //   console.log(error);
       dispatch({ type: "USER_UPDATE_FAIL", payload: { errorMessage: error.response.data.msg } });
     }
   };
