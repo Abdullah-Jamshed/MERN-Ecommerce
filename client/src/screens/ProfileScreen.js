@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Button, Form, Row, Col, Spinner, Table } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
@@ -112,12 +112,37 @@ const ProfileScreen = ({ history, location }) => {
         <Col md={6}>
           <h1>My Order</h1>
           <div className='text-center'>{listLoader && <Spinner animation='border' />}</div>
-          {errorMessage && <Message>{errorMessage}</Message>}
+          {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
           {!listLoader && ordersList.length !== 0 && (
             <>
-              {ordersList.map((item) => (
-                <h3 key={item._id}>{item.paymentMethod}</h3>
-              ))}
+              <Table striped bordered hover responsive className='table-sm'>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                    <th>PAID</th>
+                    <th>DELIVERED</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ordersList.map((item) => (
+                    <tr key={item._id}>
+                      <td>{item._id}</td>
+                      <td>{item.createdAt.substring(0, 10)}</td>
+                      <td>{item.totalPrice}</td>
+                      <td>{item.isPaid ? item.paidAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
+                      <td>{item.isDelivered ? item.deliveredAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
+                      <td>
+                        <Button className="btn-sm" as={Link} to={`/order/${item._id}`} variant='light'>
+                          Details
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </>
           )}
         </Col>
