@@ -112,6 +112,7 @@ const ProfileScreen = ({ history, location }) => {
         <Col md={6}>
           <h1>My Order</h1>
           <div className='text-center'>{listLoader && <Spinner animation='border' />}</div>
+          {errorMessage && <Message>{errorMessage}</Message>}
           {!listLoader && ordersList.length !== 0 && (
             <>
               {ordersList.map((item) => (

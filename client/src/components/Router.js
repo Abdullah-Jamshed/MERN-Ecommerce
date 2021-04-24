@@ -14,6 +14,9 @@ import PaymentScreen from "../screens/PaymentScreen";
 import PlaceOrderScreen from "../screens/PlaceOrderScreen";
 import OrderScreen from "../screens/OrderScreen";
 
+// UI LIBRARY COMPONENT
+import { Spinner } from "react-bootstrap";
+
 // COMPONENTS
 import Header from "./Header";
 import Footer from "./Footer";
@@ -22,12 +25,15 @@ import Footer from "./Footer";
 import "../styles/App.css";
 
 // REDUX
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isUserLogin } from "../store/actions/userActions";
 
 const Routes = () => {
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
+
+  // REDUX STATE
+  const { isLoading } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(isUserLogin());
@@ -38,19 +44,25 @@ const Routes = () => {
       <div className='App'>
         <main>
           <Header />
-          <Switch>
-            <Route exact path='/' component={HomeScreen} />
-            <Route exact path='/product/:id' component={ProductScreen} />
-            <Route exact path='/cart/:id?' component={CartScreen} />
-            <Route exact path='/login' component={LoginScreen} />
-            <Route exact path='/register' component={RegisterScreen} />
-            <Route exact path='/profile' component={ProfileScreen} />
-            <Route exact path='/shipping' component={ShippingScreen} />
-            <Route exact path='/payment' component={PaymentScreen} />
-            <Route exact path='/placeOrder' component={PlaceOrderScreen} />
-            <Route exact path='/order/:id' component={OrderScreen} />
-            <Route component={NotFoundScreen} />
-          </Switch>
+          {isLoading ? (
+            <div className='text-center mt-4'>
+              <Spinner animation='border' />
+            </div>
+          ) : (
+            <Switch>
+              <Route exact path='/' component={HomeScreen} />
+              <Route exact path='/product/:id' component={ProductScreen} />
+              <Route exact path='/cart/:id?' component={CartScreen} />
+              <Route exact path='/login' component={LoginScreen} />
+              <Route exact path='/register' component={RegisterScreen} />
+              <Route exact path='/profile' component={ProfileScreen} />
+              <Route exact path='/shipping' component={ShippingScreen} />
+              <Route exact path='/payment' component={PaymentScreen} />
+              <Route exact path='/placeOrder' component={PlaceOrderScreen} />
+              <Route exact path='/order/:id' component={OrderScreen} />
+              <Route component={NotFoundScreen} />
+            </Switch>
+          )}
         </main>
         <footer>
           <Footer />

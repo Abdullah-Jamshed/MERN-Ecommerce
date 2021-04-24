@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   user: null,
-  isLoading: false,
+  isLoading: true,
   errorMessage: null,
   token: localStorage.getItem("token"),
   success: false,
