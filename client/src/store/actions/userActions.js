@@ -17,6 +17,7 @@ const userLogin = ({ email, password }) => {
 const userLogout = () => {
   return async (dispatch) => {
     localStorage.removeItem("token");
+    dispatch({ type: "MY_ORDER_LIST_RESET" });
     dispatch({ type: "USER_LOGOUT" });
   };
 };

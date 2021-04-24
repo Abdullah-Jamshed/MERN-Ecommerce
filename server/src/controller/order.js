@@ -10,7 +10,7 @@ import Order from "../models/orderModel.js";
 const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.sub._id });
-    if (!orders) return res.status(404).json({ msg: "No Order Any Found" });
+    if (orders.length === 0) return res.status(404).json({ msg: "No Order Any Found" });
     res.json(orders);
   } catch (error) {
     res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });

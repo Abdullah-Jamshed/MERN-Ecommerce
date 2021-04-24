@@ -19,7 +19,6 @@ const getUserOrder = () => {
       const { data } = await API.get(`/api/order/myorders`);
       dispatch({ type: "MY_ORDER_LIST_SUCCESS", payload: { data } });
     } catch (error) {
-      console.log(error)
       dispatch({ type: "MY_ORDER_LIST_FAILED", payload: { errorMessage: error.response.data?.msg } });
     }
   };

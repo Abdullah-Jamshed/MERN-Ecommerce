@@ -25,7 +25,7 @@ const ProfileScreen = ({ history }) => {
 
   // REDUX STATE
   const { user, errorMessage, success, isLoading } = useSelector((state) => state.userReducer);
-  const { listLoader, ordersList } = useSelector((state) => state.orderDetailReducer);
+  const { listLoader, ordersList, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -109,7 +109,7 @@ const ProfileScreen = ({ history }) => {
         <Col md={6}>
           <h1>My Order</h1>
           <div className='text-center'>{listLoader && <Spinner animation='border' />}</div>
-          {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+          {orderErrorMessage && <Message variant='danger'>{orderErrorMessage}</Message>}
           {!listLoader && ordersList.length !== 0 && (
             <>
               <Table striped bordered hover responsive className='table-sm'>

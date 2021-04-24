@@ -51,6 +51,12 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
         listLoader: false,
         errorMessage: action.payload.errorMessage,
       };
+    case "MY_ORDER_LIST_RESET":
+      return {
+        ...state,
+        listLoader: false,
+        ordersList: [],
+      };
     default:
       return { ...state };
   }
