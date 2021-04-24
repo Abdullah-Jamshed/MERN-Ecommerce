@@ -24,6 +24,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: null,
         user: action.payload.user,
         success: action.payload.success || false,
+        token: action.payload.user.token || localStorage.getItem("token"),
       };
 
     case "USER_LOAD_FAIL":
@@ -47,6 +48,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: null,
+        token: null,
       };
 
     case "CLEAR_ERROR_MESSAGE":

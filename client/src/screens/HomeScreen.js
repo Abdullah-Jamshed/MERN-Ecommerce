@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-
 // UI LIBRARY COMPONENTS
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 
@@ -14,7 +13,6 @@ import { fetchProduct } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = () => {
-  
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
@@ -45,9 +43,9 @@ const HomeScreen = () => {
               ))}
             </Row>
           </>
-        ) : (
+        ) : errorMessage ? (
           <Message variant='danger'>{errorMessage}</Message>
-        )
+        ) : null
       ) : (
         <Spinner className='mt-4' animation='grow' />
       )}
