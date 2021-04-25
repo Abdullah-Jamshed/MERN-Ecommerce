@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById, clearProduct } from "../store/actions/productActions";
 
 const ProductScreen = ({ history, match }) => {
-  
   // STATE
   const [qty, setQty] = useState(1);
 
@@ -82,13 +81,16 @@ const ProductScreen = ({ history, match }) => {
                       </Row>
                     </ListGroup.Item>
 
+                    <ListGroup.Item className='border-bottom-0 pb-0'>
+                      <Row>
+                        <Col>Quantity</Col>
+                      </Row>
+                    </ListGroup.Item>
+
                     {product.countInStock > 0 && (
-                      <ListGroup.Item>
+                      <ListGroup.Item className='pt-1'>
                         <Row>
-                          <Col xs={12} xl={6}>
-                            Qty :
-                          </Col>
-                          <Col xs={12} xl={6} className='mt-2'>
+                          <Col xs={12} className='mt-2'>
                             {/* <Form.Control
                               as='select'
                               value={qty}
@@ -108,7 +110,8 @@ const ProductScreen = ({ history, match }) => {
                               variant='dark'>
                               -
                             </Button>
-                            <p className='d-inline px-3'>{qty}</p>
+                            {/* <p className='d-inline px-3'>{qty}</p> */}
+                            <span className='d-inline px-3'>{qty}</span>
                             <Button
                               onClick={() => {
                                 if (qty <= product.countInStock) setQty(qty + 1);

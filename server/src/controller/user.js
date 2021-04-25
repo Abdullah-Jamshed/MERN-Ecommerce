@@ -110,4 +110,17 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { userAuthentication, getUserProfile, createUser, updateUser };
+// @desc   Fetch All users
+// @route  GET /api/users
+// @access Public/Admin
+
+const getUsers = async (req, res) => {
+  try {
+    const data = await User.find({});
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile, createUser, updateUser, getUsers };

@@ -3,10 +3,12 @@ const userRoute = express.Router();
 
 // MIDDLEWARE
 import auth from "../middleware/auth.js";
+import admin from "../middleware/admin.js";
 
 // CONTROLLER
-import { userAuthentication, getUserProfile, createUser, updateUser } from "../controller/user.js";
+import { userAuthentication, getUserProfile, createUser, updateUser, getUsers } from "../controller/user.js";
 
+userRoute.get("/all", auth, admin, getUsers);
 userRoute.post("/", createUser);
 userRoute.post("/login", userAuthentication);
 userRoute.get("/profile", auth, getUserProfile);
