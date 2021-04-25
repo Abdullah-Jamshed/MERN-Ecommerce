@@ -14,9 +14,6 @@ import PaymentScreen from "../screens/PaymentScreen";
 import PlaceOrderScreen from "../screens/PlaceOrderScreen";
 import OrderScreen from "../screens/OrderScreen";
 
-// UI LIBRARY COMPONENT
-import { Spinner } from "react-bootstrap";
-
 // COMPONENTS
 import Header from "./Header";
 import Footer from "./Footer";
@@ -25,15 +22,12 @@ import Footer from "./Footer";
 import "../styles/App.css";
 
 // REDUX
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { isUserLogin } from "../store/actions/userActions";
 
 const Routes = () => {
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
-
-  // REDUX STATE
-  const { isLoading } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     dispatch(isUserLogin());
