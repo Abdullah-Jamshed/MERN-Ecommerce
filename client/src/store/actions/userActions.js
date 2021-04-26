@@ -97,4 +97,47 @@ const deleteUser = (id) => {
   };
 };
 
-export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage, userUpdate, getUsers, deleteUser };
+const getUserDetails = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "USER_LOADER" });
+      const { data } = await API.get(`/api/user/${id}`);
+      dispatch({ type: "USER_DETAIL_SUCCESS", payload: { userDetails: data } });
+    } catch (error) {
+      dispatch({ type: "USER_DETAIL_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+const clearUserDetail = () => {
+  return (dispatch) => {
+    dispatch({ type: "USER_DETAIL_RESET" });
+  };
+};
+
+const userUpdateByAdmin = (id, form) => {
+  return async (dispatch) => {
+    try {
+      // dispatch({ type: "USER_LOADER" });
+      dispatch({ type: "BUTTON_LOADER" });
+      const { data } = await API.put(`/api/user/${id}`, form);
+      dispatch({ type: "USER_DETAIL_UPDATE_SUCCESS", payload: { userDetails: data } });
+    } catch (error) {
+      dispatch({ type: "USER_DETAIL_UPDATE_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+export {
+  userLogin,
+  userLogout,
+  isUserLogin,
+  userSignUp,
+  clearErrorMessage,
+  userUpdate,
+  getUsers,
+  deleteUser,
+  getUserDetails,
+  clearUserDetail,
+  userUpdateByAdmin,
+};

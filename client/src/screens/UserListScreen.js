@@ -46,7 +46,8 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push("/login");
     }
-  }, [dispatch, user, history, deleteSuccess]);
+    // eslint-disable-next-line
+  }, [dispatch, user, history, deleteSuccess, token]);
 
   return (
     <Container className='py-4'>
@@ -85,11 +86,11 @@ const UserListScreen = ({ history }) => {
                     {user.isAdmin ? <i className='fa fa-check' style={{ color: "green" }} /> : <i className='fa fa-times' style={{ color: "red" }} />}
                   </td>
                   <td>
-                    <Button as={Link} to={`/user/${user._id}`}>
+                    <Button as={Link} to={`/admin/user/${user._id}/edit`}>
                       <i className='fa fa-edit' />
                     </Button>
                     {/* <Button onClick={() => deleteUserHandler(user._id)} to={`/user/${user._id}`}> */}
-                    <Button onClick={() => modalHandler(user._id)} to={`/user/${user._id}`}>
+                    <Button onClick={() => modalHandler(user._id)}>
                       <i className='fa fa-trash ' />
                     </Button>
                   </td>

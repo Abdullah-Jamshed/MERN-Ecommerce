@@ -97,7 +97,7 @@ const RegisterScreen = ({ history, location }) => {
             <Button
               type='submit'
               className='mt-2 btn-block'
-              disabled={isLoading || form.name === "" || form.email === "" || form.password === "" || form.confirmPassword === ""}>
+              disabled={buttonLoader || form.name === "" || form.email === "" || form.password === "" || form.confirmPassword === ""}>
               SignUp {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
             </Button>
           </Form>

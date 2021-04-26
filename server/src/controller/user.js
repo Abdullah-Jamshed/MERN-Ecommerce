@@ -148,10 +148,10 @@ const deleteUser = async (req, res) => {
 // @route  GET /api/user/:id
 // @access Private/Admin
 
-const getUserById = (req, res) => {
+const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = User.findById(id).select("-password");
+    const user = await User.findById(id).select("name email isAdmin");
     if (!user) return res.status(404).json({ msg: "User not found" });
     res.json(user);
   } catch (error) {

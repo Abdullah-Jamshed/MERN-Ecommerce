@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   success: false,
   usersList: [],
   deleteSuccess: false,
+  userDetails: null,
+  successUpdate: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +18,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: true,
         deleteSuccess: false,
+        successUpdate: false,
       };
 
     case "BUTTON_LOADER":
@@ -102,6 +105,43 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         errorMessage: null,
+      };
+
+    case "USER_DETAIL_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        userDetails: action.payload.userDetails,
+      };
+    case "USER_DETAIL_FAIL":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.payload.errorMessage,
+      };
+    case "USER_DETAIL_RESET":
+      return {
+        ...state,
+        userDetails: null,
+        successUpdate: false,
+      };
+
+    case "USER_DETAIL_UPDATE_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        userDetails: action.payload.userDetails,
+        successUpdate: true,
+        buttonLoader: false,
+      };
+
+    case "USER_DETAIL_UPDATE_FAIL":
+      return {
+        ...state,
+        isLoading: false,
+        userDetails: null,
+        buttonLoader: false,
+        successUpdate: false,
       };
 
     default:
