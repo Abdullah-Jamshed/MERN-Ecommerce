@@ -21,7 +21,7 @@ const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   // REDUX STATE HOOK
-  const { isLoading, errorMessage, usersList, user, token } = useSelector((state) => state.userReducer);
+  const { isLoading, errorMessage, usersList, user, token, deleteSuccess } = useSelector((state) => state.userReducer);
 
   // HANDLER FUNCTIONS
 
@@ -36,15 +36,17 @@ const UserListScreen = ({ history }) => {
 
   useEffect(() => {
     if (token) {
-      if (user && user.isAdmin) {
-        dispatch(getUsers());
-      } else {
-        history.push("/login");
+      if (!isLoading) {
+        if (user && user.isAdmin) {
+          dispatch(getUsers());
+        } else {
+          history.push("/login");
+        }
       }
     } else {
       history.push("/login");
     }
-  }, [dispatch, user, history]);
+  }, [dispatch, user, history, deleteSuccess]);
 
   return (
     <Container className='py-4'>

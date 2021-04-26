@@ -112,7 +112,7 @@ const updateUser = async (req, res) => {
 
 // @desc   Fetch All users
 // @route  GET /api/users
-// @access Public/Admin
+// @access Private/Admin
 
 const getUsers = async (req, res) => {
   try {
@@ -123,12 +123,20 @@ const getUsers = async (req, res) => {
   }
 };
 
+
+
+// @desc   delete user by id
+// @route  DELETE /api/user/:id
+// @access Private/Admin
+
+
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const exists = User.findById(id);
     if (!exists) return res.status.json({ msg: "user not found" });
-    await User.findOneAndDelete({ _id: id });
+    await exists.remove()
+    // await User.findOneAndDelete({ _id: id });
     res.json({ msg: "delete successfully" });
   } catch (error) {
     res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });

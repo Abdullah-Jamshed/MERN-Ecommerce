@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   token: localStorage.getItem("token"),
   success: false,
   usersList: [],
+  deleteSuccess: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
+        deleteSuccess: false,
       };
 
     case "BUTTON_LOADER":
@@ -75,18 +77,19 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
 
     case "USER_LIST_UPDATE":
-      console.log(action.payload.id);
-      const newList = state.usersList.filter((user) => user._id !== action.payload.id);
+      // const newList = state.usersList.filter((user) => user._id !== action.payload.id);
       return {
         ...state,
         isLoading: false,
-        usersList: newList,
+        // usersList: newList,
+        deleteSuccess: true,
       };
 
     case "USER_LIST_FAIL":
       return {
         ...state,
         isLoading: false,
+        deleteSuccess: false,
         errorMessage: action.payload.errorMessage,
       };
     case "USER_LIST_RESET":

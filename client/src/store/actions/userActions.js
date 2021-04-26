@@ -88,7 +88,7 @@ const deleteUser = (id) => {
   return async (dispatch) => {
     try {
       dispatch({ type: "USER_LOADER" });
-      await API.delete(`/api/user/del`, { data: { id } });
+      await API.delete(`/api/user/${id}`);
       dispatch({ type: "USER_LIST_UPDATE", payload: { id } });
     } catch (error) {
       console.log(error);

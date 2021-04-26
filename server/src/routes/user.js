@@ -13,7 +13,7 @@ userRoute.post("/", createUser);
 userRoute.post("/login", userAuthentication);
 userRoute.get("/profile", auth, getUserProfile);
 userRoute.put("/profile", auth, updateUser);
-userRoute.delete("/del", auth, admin, deleteUser);
+userRoute.delete("/:id", auth, admin, deleteUser);
 
 // userRoute.get("/:id", fetchProductsById);
 
