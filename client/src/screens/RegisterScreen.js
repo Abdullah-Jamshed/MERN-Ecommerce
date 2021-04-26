@@ -9,11 +9,10 @@ import FormContainer from "../components/FormContainer";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { userSignUp } from "../store/actions/userActions";
+import { userSignUp, clearErrorMessage } from "../store/actions/userActions";
 import Message from "../components/Message";
 
 const RegisterScreen = ({ history, location }) => {
-
   // STATE;
   const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({
@@ -44,7 +43,6 @@ const RegisterScreen = ({ history, location }) => {
     dispatch(userSignUp(form));
   };
 
-
   // LIFECYCLE
 
   useEffect(() => {
@@ -52,6 +50,11 @@ const RegisterScreen = ({ history, location }) => {
       history.push(redirect);
     }
   }, [history, user, redirect]);
+
+  useEffect(() => {
+    errorMessage && dispatch(clearErrorMessage());
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Container className='py-4'>

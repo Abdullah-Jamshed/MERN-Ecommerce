@@ -123,4 +123,16 @@ const getUsers = async (req, res) => {
   }
 };
 
-export { userAuthentication, getUserProfile, createUser, updateUser, getUsers };
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const exists = User.findById(id);
+    if (!exists) return res.status.json({ msg: "user not found" });
+    await User.findOneAndDelete({ _id: id });
+    res.json({ msg: "delete successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile, createUser, updateUser, getUsers, deleteUser };

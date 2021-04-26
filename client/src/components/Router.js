@@ -13,6 +13,7 @@ import ShippingScreen from "../screens/ShippingScreen";
 import PaymentScreen from "../screens/PaymentScreen";
 import PlaceOrderScreen from "../screens/PlaceOrderScreen";
 import OrderScreen from "../screens/OrderScreen";
+import UserListScreen from "../screens/UserListScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -49,6 +50,7 @@ const Routes = () => {
             <Route exact path='/payment' component={PaymentScreen} />
             <Route exact path='/placeOrder' component={PlaceOrderScreen} />
             <Route exact path='/order/:id' component={OrderScreen} />
+            <Route exact path='/admin/users' component={UserListScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>

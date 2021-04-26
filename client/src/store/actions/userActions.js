@@ -8,7 +8,6 @@ const userLogin = ({ email, password }) => {
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
     } catch (error) {
-      console.log(error.response);
       dispatch({ type: "USER_LOGIN_FAIL", payload: { errorMessage: error.response.data.msg } });
     }
   };
@@ -28,7 +27,7 @@ const isUserLogin = () => {
       const token = getState().userReducer.token;
       if (token) {
         const { data } = await API.get(`/api/user/profile`);
-        dispatch({ type: "USER_LOADED", payload: { user: data } });
+        dispatch({ type: "USER_LOADED_SUCCESS", payload: { user: data } });
       }
     } catch (error) {
       dispatch({ type: "USER_LOAD_FAIL" });
@@ -67,4 +66,29 @@ const clearErrorMessage = () => {
   };
 };
 
-export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage, userUpdate };
+const getUsers = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "USER_LOADER" });
+      const { data } = await API.get(`/api/user/all`);
+      dispatch({ type: "USER_LIST_SUCCESS", payload: { users: data } });
+    } catch (error) {
+      dispatch({ type: "USER_LIST_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "USER_LOADER" });
+      await API.delete(`/api/user/del`, { data: { id } });
+      dispatch({ type: "USER_LIST_UPDATE", payload: { id } });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: "USER_LIST_FAIL", payload: { errorMessage: error.response.data.msg } });
+    }
+  };
+};
+
+export { userLogin, userLogout, isUserLogin, userSignUp, clearErrorMessage, userUpdate, getUsers, deleteUser };

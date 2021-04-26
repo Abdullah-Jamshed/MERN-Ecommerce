@@ -128,8 +128,12 @@ const ProfileScreen = ({ history }) => {
                       <td>{item._id}</td>
                       <td>{item.createdAt.substring(0, 10)}</td>
                       <td>{item.totalPrice}</td>
-                      <td>{item.isPaid ? item.paidAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
-                      <td>{item.isDelivered ? item.deliveredAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}</td>
+                      <td className='text-center'>
+                        {item.isPaid ? item.paidAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}
+                      </td>
+                      <td className='text-center'>
+                        {item.isDelivered ? item.deliveredAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}
+                      </td>
                       <td>
                         <Button className='btn-sm' as={Link} to={`/order/${item._id}`} variant='light'>
                           Details

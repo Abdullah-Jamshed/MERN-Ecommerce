@@ -12,10 +12,8 @@ const Header = () => {
   // REDUX STATE
   const { user } = useSelector((state) => state.userReducer);
 
-  
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
-
 
   // HANDLER FUNCTIONS
 
@@ -53,14 +51,14 @@ const Header = () => {
             )}
             {user && user.isAdmin && (
               <NavDropdown title='Admin' id='basic-nav-dropdown'>
-                <NavDropdown.Item as={Link} to='/users'>
+                <NavDropdown.Item as={Link} to='/admin/users'>
                   Users
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/orders'>
-                  Order
+                <NavDropdown.Item as={Link} to='/admin/products'>
+                  Products
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to='/something'>
-                  Something
+                <NavDropdown.Item as={Link} to='/admin/orders'>
+                  Order
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href='/link'>Separated link</NavDropdown.Item>
