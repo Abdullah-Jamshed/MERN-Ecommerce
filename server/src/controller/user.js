@@ -80,6 +80,10 @@ const createUser = async (req, res) => {
   }
 };
 
+// @desc   User user
+// @route  PUT /api/user/profile
+// @access Private
+
 const updateUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -123,19 +127,16 @@ const getUsers = async (req, res) => {
   }
 };
 
-
-
 // @desc   delete user by id
 // @route  DELETE /api/user/:id
 // @access Private/Admin
-
 
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const exists = User.findById(id);
     if (!exists) return res.status.json({ msg: "user not found" });
-    await exists.remove()
+    await exists.remove();
     // await User.findOneAndDelete({ _id: id });
     res.json({ msg: "delete successfully" });
   } catch (error) {
@@ -143,4 +144,50 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { userAuthentication, getUserProfile, createUser, updateUser, getUsers, deleteUser };
+// @desc   get user by id
+// @route  GET /api/user/:id
+// @access Private/Admin
+
+const getUserById = (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = User.findById(id).select("-password");
+    if (!user) return res.status(404).json({ msg: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+// @desc   update user
+// @route  PUT /api/user/:id
+// @access Private/Admin
+
+const updateUserById = async (req, res) => {
+  try {
+    const { name, email, isAdmin } = req.body;
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ msg: "User not found" });
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.isAdmin = isAdmin;
+
+    const updatedUser = await user.save();
+
+    if (updatedUser) {
+      return res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
+    }
+    res.status(404).json({ msg: "user not found" });
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { userAuthentication, getUserProfile, createUser, updateUser, getUsers, deleteUser, getUserById, updateUserById };
