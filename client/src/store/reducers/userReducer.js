@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   user: null,
+  buttonLoader: false,
   isLoading: false,
   errorMessage: null,
   token: localStorage.getItem("token"),
@@ -15,6 +16,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isLoading: true,
       };
 
+    case "BUTTON_LOADER":
+      return {
+        ...state,
+        buttonLoader: true,
+      };
+
     case "USER_SIGNUP_SUCCESS":
     case "USER_LOGIN_SUCCESS":
     case "USER_UPDATE_SUCCESS":
@@ -26,6 +33,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         user: action.payload.user,
         success: action.payload.success || false,
         token: action.payload.user.token || localStorage.getItem("token"),
+        buttonLoader: false,
       };
 
     case "USER_LOAD_FAIL":
@@ -44,6 +52,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         errorMessage: action.payload.errorMessage,
         success: false,
+        buttonLoader: false,
       };
     case "USER_LOGOUT":
       return {
@@ -63,10 +72,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         usersList: action.payload.users,
+        buttonLoader: false,
       };
 
     case "USER_LIST_UPDATE":
-      console.log(action.payload.id)
+      console.log(action.payload.id);
       const newList = state.usersList.filter((user) => user._id !== action.payload.id);
       return {
         ...state,
@@ -79,6 +89,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         errorMessage: action.payload.errorMessage,
+      };
+    case "USER_LIST_RESET":
+      return {
+        ...state,
+        usersList: [],
       };
 
     case "CLEAR_ERROR_MESSAGE":

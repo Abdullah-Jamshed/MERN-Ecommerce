@@ -3,7 +3,8 @@ import API from "../../api";
 const userLogin = ({ email, password }) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: "USER_LOADER" });
+      // dispatch({ type: "USER_LOADER" });
+      dispatch({ type: "BUTTON_LOADER" });
       const { data } = await API.post(`/api/user/login`, { email, password });
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_LOGIN_SUCCESS", payload: { user: data } });
@@ -17,6 +18,7 @@ const userLogout = () => {
   return async (dispatch) => {
     localStorage.removeItem("token");
     dispatch({ type: "MY_ORDER_LIST_RESET" });
+    // dispatch({ type: "USER_LIST_RESET" });
     dispatch({ type: "USER_LOGOUT" });
   };
 };
@@ -38,7 +40,8 @@ const isUserLogin = () => {
 const userSignUp = ({ name, email, password }) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: "USER_LOADER" });
+      // dispatch({ type: "USER_LOADER" });
+      dispatch({ type: "BUTTON_LOADER" });
       const { data } = await API.post(`/api/user`, { name, email, password });
       localStorage.setItem("token", data?.token);
       dispatch({ type: "USER_SIGNUP_SUCCESS", payload: { user: data } });
@@ -51,7 +54,8 @@ const userSignUp = ({ name, email, password }) => {
 const userUpdate = ({ name, email, password }) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: "USER_LOADER" });
+      // dispatch({ type: "USER_LOADER" });
+      dispatch({ type: "BUTTON_LOADER" });
       const { data } = await API.put(`/api/user/profile`, { name, email, password });
       dispatch({ type: "USER_UPDATE_SUCCESS", payload: { user: data, success: true } });
     } catch (error) {

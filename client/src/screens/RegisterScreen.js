@@ -25,7 +25,7 @@ const RegisterScreen = ({ history, location }) => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   // REDUX STATE HOOK
-  const { user, errorMessage, isLoading } = useSelector((state) => state.userReducer);
+  const { user, errorMessage, isLoading, buttonLoader } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -58,45 +58,51 @@ const RegisterScreen = ({ history, location }) => {
 
   return (
     <Container className='py-4'>
-      <FormContainer>
-        <h1>Sign Up</h1>
-        {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
-            <Form.Label>Name : </Form.Label>
-            <Form.Control type='name' placeholder='name' value={form.name} name='name' onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address : </Form.Label>
-            <Form.Control type='email' placeholder='email' value={form.email} name='email' onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='password'>
-            <Form.Label>Password : </Form.Label>
-            <Form.Control type='password' placeholder='password' value={form.password} name='password' onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='confirmPassword'>
-            <Form.Label>Confirm Password : </Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='confirmPassword'
-              value={form.confirmPassword}
-              name='confirmPassword'
-              onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Row>
-            <Col>
-              Already Have Account?<Link to={redirect ? `/login?redirect=${redirect}` : "/login"}> login</Link>
-              {/* Already Have Account?<Link to={"/login"}>Login</Link> */}
-            </Col>
-          </Row>
-          <Button
-            type='submit'
-            className='mt-2 btn-block'
-            disabled={isLoading || form.name === "" || form.email === "" || form.password === "" || form.confirmPassword === ""}>
-            SignUp {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
-          </Button>
-        </Form>
-      </FormContainer>
+      {isLoading ? (
+        <div className='text-center'>
+          <Spinner as='span' animation='border' size='lg' role='status' aria-hidden='true' className='ml-2' />
+        </div>
+      ) : (
+        <FormContainer>
+          <h1>Sign Up</h1>
+          {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>}
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId='name'>
+              <Form.Label>Name : </Form.Label>
+              <Form.Control type='name' placeholder='name' value={form.name} name='name' onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='email'>
+              <Form.Label>Email Address : </Form.Label>
+              <Form.Control type='email' placeholder='email' value={form.email} name='email' onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='password'>
+              <Form.Label>Password : </Form.Label>
+              <Form.Control type='password' placeholder='password' value={form.password} name='password' onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='confirmPassword'>
+              <Form.Label>Confirm Password : </Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='confirmPassword'
+                value={form.confirmPassword}
+                name='confirmPassword'
+                onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Row>
+              <Col>
+                Already Have Account?<Link to={redirect ? `/login?redirect=${redirect}` : "/login"}> login</Link>
+                {/* Already Have Account?<Link to={"/login"}>Login</Link> */}
+              </Col>
+            </Row>
+            <Button
+              type='submit'
+              className='mt-2 btn-block'
+              disabled={isLoading || form.name === "" || form.email === "" || form.password === "" || form.confirmPassword === ""}>
+              SignUp {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
+            </Button>
+          </Form>
+        </FormContainer>
+      )}
     </Container>
   );
 };

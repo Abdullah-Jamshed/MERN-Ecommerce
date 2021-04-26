@@ -22,7 +22,7 @@ const LoginScreen = ({ history, location }) => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   // REDUX STATE
-  const { user, errorMessage, isLoading } = useSelector((state) => state.userReducer);
+  const { user, errorMessage, isLoading, buttonLoader } = useSelector((state) => state.userReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -53,28 +53,34 @@ const LoginScreen = ({ history, location }) => {
 
   return (
     <Container className='py-4'>
-      <FormContainer>
-        <h1>Sign In</h1>
-        {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address : </Form.Label>
-            <Form.Control type='email' placeholder='email' value={form.email} name='email' onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='password'>
-            <Form.Label>Password : </Form.Label>
-            <Form.Control type='password' placeholder='password' value={form.password} name='password' onChange={formHandler}></Form.Control>
-          </Form.Group>
-          <Row>
-            <Col>
-              Dont Have Account?<Link to={redirect ? `/register?redirect=${redirect}` : "/register"}> create account</Link>
-            </Col>
-          </Row>
-          <Button type='submit' className='mt-2 btn-block' disabled={isLoading || form.email === "" || form.password === ""}>
-            Login {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
-          </Button>
-        </Form>
-      </FormContainer>
+      {isLoading ? (
+        <div className='text-center'>
+          <Spinner as='span' animation='border' size='lg' role='status' aria-hidden='true' className='ml-2' />
+        </div>
+      ) : (
+        <FormContainer>
+          <h1>Sign In</h1>
+          {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId='email'>
+              <Form.Label>Email Address : </Form.Label>
+              <Form.Control type='email' placeholder='email' value={form.email} name='email' onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='password'>
+              <Form.Label>Password : </Form.Label>
+              <Form.Control type='password' placeholder='password' value={form.password} name='password' onChange={formHandler}></Form.Control>
+            </Form.Group>
+            <Row>
+              <Col>
+                Dont Have Account?<Link to={redirect ? `/register?redirect=${redirect}` : "/register"}> create account</Link>
+              </Col>
+            </Row>
+            <Button type='submit' className='mt-2 btn-block' disabled={isLoading || form.email === "" || form.password === ""}>
+              Login {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
+            </Button>
+          </Form>
+        </FormContainer>
+      )}
     </Container>
   );
 };

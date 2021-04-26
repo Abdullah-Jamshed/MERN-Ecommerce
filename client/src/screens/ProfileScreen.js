@@ -24,7 +24,7 @@ const ProfileScreen = ({ history }) => {
   });
 
   // REDUX STATE
-  const { user, errorMessage, success, isLoading, token } = useSelector((state) => state.userReducer);
+  const { user, errorMessage, success, isLoading, token, buttonLoader } = useSelector((state) => state.userReducer);
   const { listLoader, ordersList, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
@@ -94,13 +94,13 @@ const ProfileScreen = ({ history }) => {
                 type='submit'
                 className='mt-2 btn-block'
                 disabled={
-                  isLoading ||
+                  buttonLoader ||
                   form.name === "" ||
                   form.email === "" ||
                   (form.password !== "" && form.confirmPassword === "") ||
                   (form.confirmPassword !== "" && form.password === "")
                 }>
-                Update {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
+                Update {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
               </Button>
             </Form>
           </FormContainer>
