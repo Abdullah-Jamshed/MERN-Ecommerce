@@ -35,8 +35,12 @@ const UserListScreen = ({ history }) => {
   };
 
   useEffect(() => {
-    if (user && user.isAdmin) {
-      dispatch(getUsers());
+    if (token) {
+      if (user && user.isAdmin) {
+        dispatch(getUsers());
+      } else {
+        history.push("/login");
+      }
     } else {
       history.push("/login");
     }

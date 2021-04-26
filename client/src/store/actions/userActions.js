@@ -18,7 +18,7 @@ const userLogout = () => {
   return async (dispatch) => {
     localStorage.removeItem("token");
     dispatch({ type: "MY_ORDER_LIST_RESET" });
-    // dispatch({ type: "USER_LIST_RESET" });
+    dispatch({ type: "USER_LIST_RESET" });
     dispatch({ type: "USER_LOGOUT" });
   };
 };
@@ -30,6 +30,8 @@ const isUserLogin = () => {
       if (token) {
         const { data } = await API.get(`/api/user/profile`);
         dispatch({ type: "USER_LOADED_SUCCESS", payload: { user: data } });
+      } else {
+        dispatch({ type: "USER_LOAD_FAIL" });
       }
     } catch (error) {
       dispatch({ type: "USER_LOAD_FAIL" });

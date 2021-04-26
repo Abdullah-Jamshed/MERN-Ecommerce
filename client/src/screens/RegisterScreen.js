@@ -6,11 +6,11 @@ import { Container, Button, Form, Row, Col, Spinner } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
+import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { userSignUp, clearErrorMessage } from "../store/actions/userActions";
-import Message from "../components/Message";
 
 const RegisterScreen = ({ history, location }) => {
   // STATE;

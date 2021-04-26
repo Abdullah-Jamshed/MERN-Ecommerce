@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   user: null,
   buttonLoader: false,
-  isLoading: false,
+  isLoading: true,
   errorMessage: null,
   token: localStorage.getItem("token"),
   success: false,
@@ -38,7 +38,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
     case "USER_LOAD_FAIL":
       localStorage.removeItem("token");
-      console.log("USER_LOAD_FAIL");
       return {
         ...state,
         isLoading: false,

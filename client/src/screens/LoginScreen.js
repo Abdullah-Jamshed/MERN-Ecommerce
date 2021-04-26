@@ -49,7 +49,10 @@ const LoginScreen = ({ history, location }) => {
     if (user) {
       history.push(redirect);
     }
-  }, [history, user, redirect]);
+    // else{
+    //   dispatch(isUserLogin())
+    // }
+  }, [dispatch,history, user, redirect]);
 
   return (
     <Container className='py-4'>

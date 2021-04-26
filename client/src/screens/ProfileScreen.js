@@ -24,7 +24,7 @@ const ProfileScreen = ({ history }) => {
   });
 
   // REDUX STATE
-  const { user, errorMessage, success, isLoading, token, buttonLoader } = useSelector((state) => state.userReducer);
+  const { user, errorMessage, success, token, buttonLoader } = useSelector((state) => state.userReducer);
   const { listLoader, ordersList, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
