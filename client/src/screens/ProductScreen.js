@@ -37,10 +37,15 @@ const ProductScreen = ({ history, match }) => {
   return (
     <>
       <div className='p-4'>
-        <Link onClick={() => dispatch(clearProduct())} to='/' style={{ fontSize: "22px", textDecoration: "none" }}>
+        <h4
+          onClick={() => {
+            dispatch(clearProduct());
+            history.goBack();
+          }}
+          style={{ fontSize: "22px", textDecoration: "none" }}>
           <i className='fa fa-chevron-left mr-4' />
           Go Back
-        </Link>
+        </h4>
       </div>
       <Container className='text-center'>
         {!isLoading ? (

@@ -34,4 +34,8 @@ const clearProduct = (id) => {
   };
 };
 
-export { fetchProduct, fetchProductById, clearProduct };
+const deleteProduct = (id) => {
+  return async (dispatch) => {};
+};
+
+export { fetchProduct, fetchProductById, clearProduct, deleteProduct };

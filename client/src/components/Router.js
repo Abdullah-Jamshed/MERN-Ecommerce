@@ -15,6 +15,7 @@ import PlaceOrderScreen from "../screens/PlaceOrderScreen";
 import OrderScreen from "../screens/OrderScreen";
 import UserListScreen from "../screens/UserListScreen";
 import UserEditScreen from "../screens/UserEditScreen";
+import ProductsListScreen from "../screens/ProductsListScreen";
 
 // COMPONENTS
 import Header from "./Header";
@@ -53,6 +54,8 @@ const Routes = () => {
             <Route exact path='/order/:id' component={OrderScreen} />
             <Route exact path='/admin/users' component={UserListScreen} />
             <Route exact path='/admin/user/:id/edit' component={UserEditScreen} />
+            <Route exact path='/admin/products' component={ProductsListScreen} />
+            <Route exact path='/admin/product/:id/edit' component={ProductsListScreen} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>
