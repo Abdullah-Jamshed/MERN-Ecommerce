@@ -8,6 +8,7 @@ dotenv.config();
 import productsRoute from "./routes/products.js";
 import userRoute from "./routes/user.js";
 import orderRoute from "./routes/order.js";
+import Product from "./models/productModel.js";
 
 console.log(process.env.MONGODB_URI);
 
@@ -30,7 +31,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("port", process.env.PORT || 3001);
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const product = await Product.create({
+    name: "Amazon Echo Dot 3rd Generation",
+    image: "/images/alexa.jpg",
+    description:
+      "Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
+    brand: "Amazon",
+    category: "Electronics",
+    price: 29.99,
+    countInStock: 0,
+    rating: 4,
+    numReviews: 12,
+    user: "60720236d887333716d74889",
+  });
   res.json({ msg: "hello from my shop server" });
 });
 

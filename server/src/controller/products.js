@@ -23,9 +23,8 @@ const fetchProducts = async (req, res) => {
 const fetchProductsById = async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) res.status(404).json({ msg: "Product Not Found" });
-    console.log("data");
     const product = await Product.findById(req.params.id);
-    if (product) res.json(product);
+    if (product) return res.json(product);
     res.status(404).json({ msg: "Product Not Found" });
   } catch (error) {
     console.log(error);
@@ -33,4 +32,21 @@ const fetchProductsById = async (req, res) => {
   }
 };
 
-export { fetchProducts, fetchProductsById };
+// @desc   Delete Product by Id
+// @route  DELETE /api/product/:id
+// @access Private/Admin
+
+const deleteProductsById = async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) res.status(404).json({ msg: "Product Not Found" });
+    const product = await Product.findById(req.params.id);
+    await product.remove();
+    if (product) return res.json({ msg: "delete product successfully" });
+    res.status(404).json({ msg: "Product Not Found" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Something Went Wrong" });
+  }
+};
+
+export { fetchProducts, fetchProductsById, deleteProductsById };
