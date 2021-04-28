@@ -50,21 +50,9 @@ const ProductsListScreen = ({ history }) => {
     // eslint-disable-next-line
   }, [dispatch, user, history, token]);
 
-
   useEffect(() => {
-    if (token) {
-      if (!isUserLoading) {
-        if (user && user.isAdmin) {
-          if (deleteSuccess) dispatch(fetchProduct());
-        } else {
-          history.push("/login");
-        }
-      }
-    } else {
-      history.push("/login");
-    }
-    // eslint-disable-next-line
-  }, [dispatch, user, history, deleteSuccess, token]);
+    if (deleteSuccess) dispatch(fetchProduct());
+  }, [deleteSuccess]);
 
   return (
     <Container fluid className='p-4'>
