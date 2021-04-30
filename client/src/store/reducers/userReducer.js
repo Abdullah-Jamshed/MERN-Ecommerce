@@ -25,7 +25,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         buttonLoader: true,
-        
       };
 
     case "USER_SIGNUP_SUCCESS":
