@@ -119,7 +119,7 @@ const ProductScreen = ({ history, match }) => {
                             <span className='d-inline px-3'>{qty}</span>
                             <Button
                               onClick={() => {
-                                if (qty <= product.countInStock) setQty(qty + 1);
+                                if (qty < product.countInStock) setQty(qty + 1);
                               }}
                               className='px-2 py-1'
                               style={{ fontSize: "16px" }}
