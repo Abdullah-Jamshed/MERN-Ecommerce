@@ -50,21 +50,6 @@ const ProductsListScreen = ({ history }) => {
     dispatch(createProduct({ ...product, user: user._id }));
   };
 
-  // useEffect(() => {
-  //   if (token) {
-  //     if (!isUserLoading) {
-  //       if (user && user.isAdmin) {
-  //         dispatch(fetchProduct());
-  //       } else {
-  //         history.push("/login");
-  //       }
-  //     }
-  //   } else {
-  //     history.push("/login");
-  //   }
-  //   // eslint-disable-next-line
-  // }, [dispatch, user, history, token]);
-
   useEffect(() => {
     if (token) {
       if (!isUserLoading) {
