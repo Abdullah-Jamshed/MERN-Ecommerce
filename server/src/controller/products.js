@@ -71,8 +71,8 @@ const createProduct = async (req, res) => {
     const product = await Product.create({ name, image, description, brand, category, price, countInStock, user });
 
     const newProduct = await product.save();
-    
-    if (newProduct) return res.status(201).json({ msg: "create product successfully", data: newProduct });
+
+    if (newProduct) return res.status(201).json(newProduct);
     res.status(401).json({ msg: "Product Not Created" });
   } catch (error) {
     res.status(500).json({ msg: "Something Went Wrong", error: error.message });

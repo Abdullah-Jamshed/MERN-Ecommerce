@@ -61,7 +61,6 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         buttonLoader: true,
         successCreate: false,
-        createdProduct: null,
       };
     case "PRODUCT_CREATE_SUCCESS":
       return {
@@ -73,7 +72,6 @@ const productReducer = (state = INITIAL_STATE, action) => {
     case "PRODUCT_CREATE_FAIL":
       return {
         ...state,
-        createdProduct: null,
         errorMessage: action.payload.msg,
         buttonLoader: false,
         successCreate: false,
@@ -86,7 +84,6 @@ const productReducer = (state = INITIAL_STATE, action) => {
         buttonLoader: false,
         successCreate: false,
       };
-
     default:
       return { ...state };
   }

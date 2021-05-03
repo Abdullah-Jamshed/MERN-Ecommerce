@@ -10,19 +10,30 @@ import ModalComponent from "../components/ModalComponent";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, fetchProduct } from "../store/actions/productActions";
+import { deleteProduct, fetchProduct, createProduct } from "../store/actions/productActions";
 
 const ProductsListScreen = ({ history }) => {
-  //STATE
-  const [modalShow, setModalShow] = useState(false);
-  const [id, setId] = useState("");
-
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
   // REDUX STATE HOOK
   const { isLoading: isUserLoading, user, token } = useSelector((state) => state.userReducer);
   const { isLoading, products, errorMessage, deleteSuccess, createdProduct, successCreate } = useSelector((state) => state.productReducer);
+
+  //STATE
+  const [modalShow, setModalShow] = useState(false);
+  const [id, setId] = useState("");
+
+  const [product, setProduct] = useState({
+    price: 250.99,
+    countInStock: 5,
+    name: "HP Envy core i7 9th generation Laptop",
+    image: "/images/laptop.jpg",
+    description: "HP Envy7 core i7 9th generation Laptop",
+    brand: "HP",
+    category: "Sample category",
+    user: "",
+  });
 
   // HANDLER FUNCTIONS
 
@@ -33,6 +44,10 @@ const ProductsListScreen = ({ history }) => {
   const modalHandler = (id) => {
     setId(id);
     setModalShow(true);
+  };
+
+  const createProductHandler = () => {
+    dispatch(createProduct({ ...product, user: user._id }));
   };
 
   // useEffect(() => {
@@ -57,6 +72,7 @@ const ProductsListScreen = ({ history }) => {
           history.push("/login");
         } else if (successCreate) {
           history.push(`/admin/product/${createdProduct._id}/edit`);
+          dispatch({ type: "PRODUCT_CREATE_RESET" });
         } else {
           dispatch(fetchProduct());
         }
@@ -65,11 +81,11 @@ const ProductsListScreen = ({ history }) => {
       history.push("/login");
     }
     // eslint-disable-next-line
-  }, [dispatch, user, history, token]);
+  }, [dispatch, user, history, token, successCreate, createdProduct]);
 
   useEffect(() => {
     if (deleteSuccess) dispatch(fetchProduct());
-  }, [deleteSuccess]);
+  }, [dispatch, deleteSuccess]);
 
   return (
     <Container fluid className='p-4'>
@@ -82,7 +98,7 @@ const ProductsListScreen = ({ history }) => {
           <h1>Products</h1>
         </Col>
         <Col className='text-right'>
-          <Button>
+          <Button onClick={createProductHandler}>
             <i className='fa fa-plus mr-1' /> Create Product
           </Button>
         </Col>

@@ -78,7 +78,7 @@ const LoginScreen = ({ history, location }) => {
                 Dont Have Account?<Link to={redirect ? `/register?redirect=${redirect}` : "/register"}> create account</Link>
               </Col>
             </Row>
-            <Button type='submit' className='mt-2 btn-block' disabled={isLoading || form.email === "" || form.password === ""}>
+            <Button type='submit' className='mt-2 btn-block' disabled={buttonLoader || form.email === "" || form.password === ""}>
               Login {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
             </Button>
           </Form>

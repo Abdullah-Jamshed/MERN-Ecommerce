@@ -55,7 +55,7 @@ const Routes = () => {
             <Route exact path='/admin/users' component={UserListScreen} />
             <Route exact path='/admin/user/:id/edit' component={UserEditScreen} />
             <Route exact path='/admin/products' component={ProductsListScreen} />
-            <Route exact path='/admin/product/:id/edit' component={ProductsListScreen} />
+            <Route exact path='/admin/product/:id/edit' component={() => <h1>Product</h1>} />
             <Route component={NotFoundScreen} />
           </Switch>
         </main>
