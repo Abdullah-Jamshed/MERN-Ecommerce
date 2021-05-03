@@ -4,6 +4,9 @@ const INITIAL_STATE = {
   isLoading: false,
   errorMessage: "",
   deleteSuccess: false,
+  createdProduct: null,
+  successCreate: false,
+  buttonLoader: false,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -52,6 +55,38 @@ const productReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         // deleteSuccess: false,
       };
+
+    case "PRODUCT_CREATE_REQUEST":
+      return {
+        ...state,
+        buttonLoader: true,
+        successCreate: false,
+        createdProduct: null,
+      };
+    case "PRODUCT_CREATE_SUCCESS":
+      return {
+        ...state,
+        createdProduct: action.payload.product,
+        buttonLoader: false,
+        successCreate: true,
+      };
+    case "PRODUCT_CREATE_FAIL":
+      return {
+        ...state,
+        createdProduct: null,
+        errorMessage: action.payload.msg,
+        buttonLoader: false,
+        successCreate: false,
+      };
+    case "PRODUCT_CREATE_RESET":
+      return {
+        ...state,
+        createdProduct: null,
+        errorMessage: null,
+        buttonLoader: false,
+        successCreate: false,
+      };
+
     default:
       return { ...state };
   }
