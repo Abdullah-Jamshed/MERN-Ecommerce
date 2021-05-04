@@ -57,6 +57,7 @@ const createProduct = (product) => {
     }
   };
 };
+
 const productUpdate = (id, form) => {
   return async (dispatch) => {
     try {
