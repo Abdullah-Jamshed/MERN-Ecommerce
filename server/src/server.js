@@ -56,7 +56,7 @@ app.use("/api/order", orderRoute);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
 app.use("*", (req, res) => {
-  res.json({ msg: "invalid Route" });
+  res.status(404).json({ msg: "invalid Route" });
 });
 
 app.listen(app.get("port"), () => {

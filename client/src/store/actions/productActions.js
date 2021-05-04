@@ -57,5 +57,16 @@ const createProduct = (product) => {
     }
   };
 };
+const productUpdate = (id, form) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "PRODUCT_UPDATE_REQUEST" });
+      const { data } = await API.put(`/api/products/${id}`, form);
+      dispatch({ type: "PRODUCT_UPDATE_SUCCESS", payload: { product: data } });
+    } catch (error) {
+      dispatch({ type: "PRODUCT_UPDATE_FAIL", payload: { msg: error.response.data.msg } });
+    }
+  };
+};
 
-export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct };
+export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate };

@@ -69,6 +69,11 @@ const ProductsListScreen = ({ history }) => {
   }, [dispatch, user, history, token, successCreate, createdProduct]);
 
   useEffect(() => {
+    errorMessage && dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     if (deleteSuccess) dispatch(fetchProduct());
   }, [dispatch, deleteSuccess]);
 

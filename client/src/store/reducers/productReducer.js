@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   createdProduct: null,
   successCreate: false,
   buttonLoader: false,
+  successUpdate: false,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -84,6 +85,38 @@ const productReducer = (state = INITIAL_STATE, action) => {
         buttonLoader: false,
         successCreate: false,
       };
+    case "PRODUCT_CLEAR_ERROR_MESSAGE":
+      return {
+        ...state,
+        errorMessage: "",
+      };
+
+    case "PRODUCT_UPDATE_REQUEST":
+      return {
+        ...state,
+        buttonLoader: true,
+        successUpdate: false,
+      };
+    case "PRODUCT_UPDATE_SUCCESS":
+      return {
+        ...state,
+        successUpdate: true,
+        buttonLoader: false,
+      };
+    case "PRODUCT_UPDATE_FAIL":
+      return {
+        ...state,
+        errorMessage: action.payload.msg,
+        buttonLoader: false,
+      };
+    case "PRODUCT_UPDATE_RESET":
+      return {
+        ...state,
+        product: null,
+        buttonLoader: false,
+        successUpdate: false,
+      };
+
     default:
       return { ...state };
   }

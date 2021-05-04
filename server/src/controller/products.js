@@ -80,7 +80,7 @@ const createProduct = async (req, res) => {
 };
 
 // @desc   Update Product
-// @route  PUT /api/product/:id
+// @route  PUT /api/products/:id
 // @access Private/Admin
 
 const updateProduct = async (req, res) => {

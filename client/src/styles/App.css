@@ -8,3 +8,7 @@
 p {
   margin: 0;
 }
+
+.descriptionText textarea {
+  resize: none;
+}
