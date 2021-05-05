@@ -69,5 +69,17 @@ const productUpdate = (id, form) => {
     }
   };
 };
+const fileUpload = (file) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const { data } = await API.post(`/api/upload/`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+      console.log("DATA ===>>>>", data);
+    } catch (error) {
+      console.log("Error", error.response);
+    }
+  };
+};
 
-export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate };
+export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate, fileUpload };

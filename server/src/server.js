@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import path from "path";
+import path, { dirname } from "path";
 dotenv.config();
 
 // ROUTES
@@ -12,8 +12,7 @@ import orderRoute from "./routes/order.js";
 import uploadRouter from "./routes/fileUploadRoute.js";
 
 // import Product from "./models/productModel.js";
-
-console.log(process.env.MONGODB_URI);
+// console.log(process.env.MONGODB_URI);
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -51,9 +50,11 @@ app.get("/", async (req, res) => {
   res.json({ msg: "hello from my shop server" });
 });
 
+const __dirname = path.resolve();
+
 // static folder
-// app.use('/public', express.static(__dirname + '/public'));
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+// app.use(express.static(__dirname + "/uploads"));
 
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);

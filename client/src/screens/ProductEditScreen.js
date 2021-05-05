@@ -11,11 +11,12 @@ import Message from "../components/Message";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 // import {  } from "../store/actions/userActions";
-import { fetchProductById, clearProduct, productUpdate } from "../store/actions/productActions";
+import { fetchProductById, clearProduct, productUpdate, fileUpload } from "../store/actions/productActions";
 
-const ProductEditScreen = ({ match, history, location }) => {
+const ProductEditScreen = ({ match, history }) => {
   const { id } = match.params;
   // STATE;
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     price: "",
     countInStock: 0,
@@ -39,8 +40,12 @@ const ProductEditScreen = ({ match, history, location }) => {
 
   const formHandler = (e) => {
     const { name, value, type } = e.target;
+    console.log(type);
     if (type === "number") {
       setForm({ ...form, [name]: Number(value) });
+    } else if (type === "file") {
+      const file = e.target.files[0];
+      dispatch(fileUpload(file));
     } else {
       setForm({ ...form, [name]: value });
     }
@@ -105,17 +110,24 @@ const ProductEditScreen = ({ match, history, location }) => {
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='name'>
                 <Form.Label>Name : </Form.Label>
-                <Form.Control type='name' placeholder='name' value={form.name} name='name' onChange={formHandler}></Form.Control>
+                <Form.Control type='text' placeholder='name' value={form.name} name='name' onChange={formHandler}></Form.Control>
               </Form.Group>
 
               <Form.Group controlId='price'>
                 <Form.Label>Price : </Form.Label>
-                <Form.Control type='price' placeholder='price' value={form.price} name='price' onChange={formHandler}></Form.Control>
+                <Form.Control type='text' placeholder='price' value={form.price} name='price' onChange={formHandler}></Form.Control>
               </Form.Group>
+
+              {/* <Form.Group controlId='image'>
+                <Form.Label>Image : </Form.Label>
+                <Form.Control type='text' placeholder='upload image' value={form.image} name='image' onChange={formHandler}></Form.Control>
+              </Form.Group> */}
 
               <Form.Group controlId='image'>
                 <Form.Label>Image : </Form.Label>
                 <Form.Control type='text' placeholder='upload image' value={form.image} name='image' onChange={formHandler}></Form.Control>
+                <Form.File id='image-file' label='Choose File' custom onChange={formHandler}></Form.File>
+                {/* {uploading && <Spinner animation='border' />} */}
               </Form.Group>
 
               <Form.Group controlId='brand'>
@@ -139,7 +151,7 @@ const ProductEditScreen = ({ match, history, location }) => {
                   as='textarea'
                   rows={6}
                   maxLength={350}
-                  type='description'
+                  //   type='text'
                   placeholder='description'
                   value={form.description}
                   name='description'
@@ -148,7 +160,7 @@ const ProductEditScreen = ({ match, history, location }) => {
 
               <Form.Group controlId='category'>
                 <Form.Label>category : </Form.Label>
-                <Form.Control type='category' placeholder='category' value={form.category} name='category' onChange={formHandler}></Form.Control>
+                <Form.Control type='text' placeholder='category' value={form.category} name='category' onChange={formHandler}></Form.Control>
               </Form.Group>
 
               {/* <Form.Group controlId='adminCheck'>
