@@ -72,12 +72,15 @@ const productUpdate = (id, form) => {
 const fileUpload = (file) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: "IMAGE_URL_REQUEST" });
       const formData = new FormData();
+      formData.append("name", "abd");
       formData.append("image", file);
       const { data } = await API.post(`/api/upload/`, formData, { headers: { "Content-Type": "multipart/form-data" } });
-      console.log("DATA ===>>>>", data);
+      dispatch({ type: "IMAGE_URL_SUCCESS", payload: { imageUrl: data } });
     } catch (error) {
-      console.log("Error", error.response);
+      console.log("Error", error);
+      dispatch({ type: "IMAGE_URL_FAIL" });
     }
   };
 };

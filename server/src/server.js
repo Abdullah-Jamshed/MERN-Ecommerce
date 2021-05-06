@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import path, { dirname } from "path";
+import path from "path";
 dotenv.config();
 
 // ROUTES
@@ -51,16 +51,19 @@ app.get("/", async (req, res) => {
 });
 
 const __dirname = path.resolve();
-
+console.log(path.join(__dirname, "public"));
 // static folder
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-// app.use(express.static(__dirname + "/uploads"));
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+// app.use(express.static(path.join(__dirname, "public/images")));
 
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/upload", uploadRouter);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
+
+app.use("/upload", express.static(path.join(__dirname, "public")));
+app.use("/css", express.static("./public/css"));
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "invalid Route" });

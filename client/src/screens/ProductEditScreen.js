@@ -31,14 +31,14 @@ const ProductEditScreen = ({ match, history }) => {
 
   // REDUX STATE HOOK
   const { user, isLoading, token } = useSelector((state) => state.userReducer);
-  const { product, errorMessage, successUpdate, buttonLoader } = useSelector((state) => state.productReducer);
+  const { product, errorMessage, successUpdate, buttonLoader, imageUrl } = useSelector((state) => state.productReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
   // HANDLER FUNCTIONS
 
-  const formHandler = (e) => {
+  const formHandler = async (e) => {
     const { name, value, type } = e.target;
     console.log(type);
     if (type === "number") {
@@ -89,6 +89,13 @@ const ProductEditScreen = ({ match, history }) => {
       setForm(product);
     }
   }, [product]);
+
+  useEffect(() => {
+    console.log(imageUrl);
+    if (imageUrl) {
+      setForm({ ...form, image: imageUrl });
+    }
+  }, [imageUrl]);
 
   return (
     <Container className='py-4'>

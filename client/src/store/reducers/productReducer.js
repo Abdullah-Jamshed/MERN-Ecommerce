@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   successCreate: false,
   buttonLoader: false,
   successUpdate: false,
+  imageUrl: "",
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -117,6 +118,22 @@ const productReducer = (state = INITIAL_STATE, action) => {
         successUpdate: false,
       };
 
+    case "IMAGE_URL_REQUEST":
+      return {
+        ...state,
+        imageUrl: "",
+      };
+    case "IMAGE_URL_SUCCESS":
+      return {
+        ...state,
+        imageUrl: action.payload.imageUrl,
+      };
+
+    case "IMAGE_URL_FAIL":
+      return {
+        ...state,
+        imageUrl: "",
+      };
     default:
       return { ...state };
   }
