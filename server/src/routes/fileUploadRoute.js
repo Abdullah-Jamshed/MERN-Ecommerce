@@ -7,7 +7,7 @@ const __dirname = path.resolve();
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "public/images");
+    cb(null, "uploads/");
     // cb(null, path.join(__dirname, "/src/uploads"));
   },
   filename(req, file, cb) {
@@ -38,7 +38,7 @@ router.post("/", upload.single("image"), (req, res) => {
   try {
     res.send(`/${req.file.path}`);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 

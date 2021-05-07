@@ -45,7 +45,9 @@ const ProductEditScreen = ({ match, history }) => {
       setForm({ ...form, [name]: Number(value) });
     } else if (type === "file") {
       const file = e.target.files[0];
-      dispatch(fileUpload(file));
+      const formData = new FormData();
+      formData.append("image", file);
+      dispatch(fileUpload(formData));
     } else {
       setForm({ ...form, [name]: value });
     }
