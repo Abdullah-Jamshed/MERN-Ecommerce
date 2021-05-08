@@ -95,7 +95,7 @@ const ProductEditScreen = ({ match, history }) => {
     if (imageUrl) {
       setForm({ ...form, image: imageUrl });
     }
-    //.. eslint-disable-next-line
+    // eslint-disable-next-line
   }, [imageUrl]);
 
   useEffect(() => {
