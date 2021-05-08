@@ -73,10 +73,19 @@ const fileUpload = (formData) => {
   return async (dispatch) => {
     try {
       dispatch({ type: "IMAGE_URL_REQUEST" });
-      const { data } = await API.post(`/api/uploads`, formData, { headers: { "Content-Type": "multipart/form-data" } });
+      dispatch({ type: "PROGRESS", payload: { progress: 0 } });
+
+      const { data } = await API.post(`/api/uploads`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          const progress = (progressEvent.loaded / progressEvent.total) * 100;
+          console.log(">>>>", progress);
+          dispatch({ type: "PROGRESS", payload: { progress } });
+        },
+      });
       dispatch({ type: "IMAGE_URL_SUCCESS", payload: { imageUrl: data } });
     } catch (error) {
-      console.log("Error", error.response);
+      console.log("Error", error);
       dispatch({ type: "IMAGE_URL_FAIL" });
     }
   };

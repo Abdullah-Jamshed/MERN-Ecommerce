@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Spinner } from "react-bootstrap";
+import { Container, Button, Form, Spinner, ProgressBar } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
@@ -15,8 +15,8 @@ import { fetchProductById, clearProduct, productUpdate, fileUpload } from "../st
 
 const ProductEditScreen = ({ match, history }) => {
   const { id } = match.params;
+
   // STATE;
-  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     price: "",
     countInStock: 0,
@@ -31,7 +31,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   // REDUX STATE HOOK
   const { user, isLoading, token } = useSelector((state) => state.userReducer);
-  const { product, errorMessage, successUpdate, buttonLoader, imageUrl } = useSelector((state) => state.productReducer);
+  const { product, errorMessage, successUpdate, buttonLoader, imageUrl, progress } = useSelector((state) => state.productReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -40,7 +40,6 @@ const ProductEditScreen = ({ match, history }) => {
 
   const formHandler = async (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
     if (type === "number") {
       setForm({ ...form, [name]: Number(value) });
     } else if (type === "file") {
@@ -93,11 +92,19 @@ const ProductEditScreen = ({ match, history }) => {
   }, [product]);
 
   useEffect(() => {
-    console.log(imageUrl);
     if (imageUrl) {
       setForm({ ...form, image: imageUrl });
     }
+    //.. eslint-disable-next-line
   }, [imageUrl]);
+
+  useEffect(() => {
+    if (progress === 100) {
+      setTimeout(() => {
+        dispatch({ type: "PROGRESS", payload: { progress: 0 } });
+      }, 5000);
+    }
+  }, [dispatch, progress]);
 
   return (
     <Container className='py-4'>
@@ -114,6 +121,7 @@ const ProductEditScreen = ({ match, history }) => {
             </Link>
           </div>
           <FormContainer>
+            {progress !== 0 && <ProgressBar now={progress} label={`${progress}%`} className='mb-4' />}
             <h1>Update Product</h1>
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             <Form onSubmit={submitHandler}>

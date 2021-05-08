@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   buttonLoader: false,
   successUpdate: false,
   imageUrl: "",
+  progress: 0,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -133,6 +134,11 @@ const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         imageUrl: "",
+      };
+    case "PROGRESS":
+      return {
+        ...state,
+        progress:action.payload.progress
       };
     default:
       return { ...state };
