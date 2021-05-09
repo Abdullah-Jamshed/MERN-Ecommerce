@@ -26,7 +26,7 @@ const ProductCreateScreen = ({ match, history }) => {
 
   // REDUX STATE HOOK
   const { user, isLoading, token } = useSelector((state) => state.userReducer);
-  const { product, errorMessage, successCreate, buttonLoader, imageUrl, progress } = useSelector((state) => state.productReducer);
+  const { errorMessage, successCreate, buttonLoader, imageUrl, progress } = useSelector((state) => state.productReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();

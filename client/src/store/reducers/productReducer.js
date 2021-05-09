@@ -89,24 +89,22 @@ const productReducer = (state = INITIAL_STATE, action) => {
         product: null,
         buttonLoader: false,
         successUpdate: false,
+        imageUrl: "",
       };
 
     case "IMAGE_URL_REQUEST":
+    case "IMAGE_URL_FAIL":
       return {
         ...state,
         imageUrl: "",
       };
+
     case "IMAGE_URL_SUCCESS":
       return {
         ...state,
         imageUrl: action.payload.imageUrl,
       };
 
-    case "IMAGE_URL_FAIL":
-      return {
-        ...state,
-        imageUrl: "",
-      };
     case "PROGRESS":
       return {
         ...state,
@@ -131,8 +129,8 @@ const productReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         errorMessage: action.payload.msg,
-        imageUrl: "",
         buttonLoader: false,
+        imageUrl: "",
       };
     case "PRODUCT_CREATE_RESET":
       return {
