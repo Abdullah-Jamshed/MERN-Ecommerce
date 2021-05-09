@@ -59,34 +59,6 @@ const productReducer = (state = INITIAL_STATE, action) => {
         // deleteSuccess: false,
       };
 
-    case "PRODUCT_CREATE_REQUEST":
-      return {
-        ...state,
-        buttonLoader: true,
-        successCreate: false,
-      };
-    case "PRODUCT_CREATE_SUCCESS":
-      return {
-        ...state,
-        createdProduct: action.payload.product,
-        buttonLoader: false,
-        successCreate: true,
-      };
-    case "PRODUCT_CREATE_FAIL":
-      return {
-        ...state,
-        errorMessage: action.payload.msg,
-        buttonLoader: false,
-        successCreate: false,
-      };
-    case "PRODUCT_CREATE_RESET":
-      return {
-        ...state,
-        createdProduct: null,
-        errorMessage: null,
-        buttonLoader: false,
-        successCreate: false,
-      };
     case "PRODUCT_CLEAR_ERROR_MESSAGE":
       return {
         ...state,
@@ -140,6 +112,36 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         progress: action.payload.progress,
       };
+
+    case "PRODUCT_CREATE_REQUEST":
+      return {
+        ...state,
+        buttonLoader: true,
+        successCreate: false,
+      };
+
+    case "PRODUCT_CREATE_SUCCESS":
+      return {
+        ...state,
+        successCreate: true,
+        buttonLoader: false,
+      };
+
+    case "PRODUCT_CREATE_FAIL":
+      return {
+        ...state,
+        errorMessage: action.payload.msg,
+        imageUrl: "",
+        buttonLoader: false,
+      };
+    case "PRODUCT_CREATE_RESET":
+      return {
+        ...state,
+        successCreate: false,
+        buttonLoader: false,
+        imageUrl: "",
+      };
+
     default:
       return { ...state };
   }

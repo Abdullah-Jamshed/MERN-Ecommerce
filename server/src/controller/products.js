@@ -54,18 +54,14 @@ const deleteProductsById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    console.log(req.body)
     const { name, image, description, brand, category, price, countInStock, user } = req.body;
     const product = await Product.create({ name, image, description, brand, category, price, countInStock, user });
-    // const product = Product.create({ name, image, description, brand, category, price, countInStock, user });
-
 
     const newProduct = await product.save();
 
     if (newProduct) return res.status(201).json(newProduct);
     res.status(401).json({ msg: "Product Not Created" });
   } catch (error) {
-    console.log("@@@@@@@@@@###########33333", error.message);
     res.status(500).json({ msg: "Something Went Wrong", error: error.message });
   }
 };
