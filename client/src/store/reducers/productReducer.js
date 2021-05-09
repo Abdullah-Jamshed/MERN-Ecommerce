@@ -138,7 +138,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
     case "PROGRESS":
       return {
         ...state,
-        progress:action.payload.progress
+        progress: action.payload.progress,
       };
     default:
       return { ...state };

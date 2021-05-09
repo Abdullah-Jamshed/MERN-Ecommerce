@@ -10,7 +10,7 @@ import ModalComponent from "../components/ModalComponent";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, fetchProduct, createProduct } from "../store/actions/productActions";
+import { deleteProduct, fetchProduct } from "../store/actions/productActions";
 
 const ProductsListScreen = ({ history }) => {
   // REDUX DISPATCH HOOK
@@ -24,17 +24,6 @@ const ProductsListScreen = ({ history }) => {
   const [modalShow, setModalShow] = useState(false);
   const [id, setId] = useState("");
 
-  const [product, setProduct] = useState({
-    price: 250.99,
-    countInStock: 5,
-    name: "HP Envy core i7 9th generation Laptop",
-    image: "/images/laptop.jpg",
-    description: "HP Envy7 core i7 9th generation Laptop",
-    brand: "HP",
-    category: "Sample category",
-    user: "",
-  });
-
   // HANDLER FUNCTIONS
 
   const deleteProductHandler = (id) => {
@@ -44,10 +33,6 @@ const ProductsListScreen = ({ history }) => {
   const modalHandler = (id) => {
     setId(id);
     setModalShow(true);
-  };
-
-  const createProductHandler = () => {
-    dispatch(createProduct({ ...product, user: user._id }));
   };
 
   useEffect(() => {
@@ -88,7 +73,7 @@ const ProductsListScreen = ({ history }) => {
           <h1>Products</h1>
         </Col>
         <Col className='text-right'>
-          <Button onClick={createProductHandler}>
+          <Button as={Link} to='/admin/product/create'>
             <i className='fa fa-plus mr-1' /> Create Product
           </Button>
         </Col>

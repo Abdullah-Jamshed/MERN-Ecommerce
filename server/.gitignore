@@ -23,4 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 
+/uploads/*.jpeg
+/uploads/*.jpg
+/uploads/*.png
+
 .env

@@ -2,8 +2,6 @@ const INITIAL_STATE = {
   paymentMethod: localStorage.getItem("payment_method") || null,
   successPay: false,
   isLoading: false,
-  // successPay
-  // successDeliver
 };
 
 const paymentReducer = (state = INITIAL_STATE, action) => {

@@ -79,7 +79,6 @@ const fileUpload = (formData) => {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const progress = (progressEvent.loaded / progressEvent.total) * 100;
-          console.log(">>>>", progress);
           dispatch({ type: "PROGRESS", payload: { progress } });
         },
       });

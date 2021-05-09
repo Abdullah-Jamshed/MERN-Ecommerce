@@ -10,11 +10,9 @@ import Message from "../components/Message";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductById, productUpdate, fileUpload } from "../store/actions/productActions";
+import { createProduct, fileUpload } from "../store/actions/productActions";
 
-const ProductEditScreen = ({ match, history }) => {
-  const { id } = match.params;
-
+const ProductCreateScreen = ({ match, history }) => {
   // STATE;
   const [form, setForm] = useState({
     price: "",
@@ -28,7 +26,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   // REDUX STATE HOOK
   const { user, isLoading, token } = useSelector((state) => state.userReducer);
-  const { product, errorMessage, successUpdate, buttonLoader, imageUrl, progress } = useSelector((state) => state.productReducer);
+  const { product, errorMessage, successCreate, buttonLoader, imageUrl, progress } = useSelector((state) => state.productReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -51,42 +49,30 @@ const ProductEditScreen = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(productUpdate(id, form));
+    dispatch(createProduct({ ...form, user: user._id }));
     dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
   };
 
   // LIFECYCLE
 
   useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: "PRODUCT_UPDATE_RESET" });
+    if (successCreate) {
+      dispatch({ type: "PRODUCT_CREATE_RESET" });
       history.push("/admin/products");
     } else {
-      if (token) {
-        if (!isLoading) {
-          if (user && user.isAdmin) {
-            dispatch(fetchProductById(id));
-          } else {
-            history.push("/");
-          }
+      if (token && !isLoading) {
+        if (!user && !user.isAdmin) {
+          history.push("/");
         }
-      } else {
-        history.push("/");
       }
     }
     // eslint-disable-next-line
-  }, [dispatch, user, token, history, id, successUpdate]);
+  }, [dispatch, user, token, history, successCreate]);
 
   useEffect(() => {
     errorMessage && dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (product) {
-      setForm(product);
-    }
-  }, [product]);
 
   useEffect(() => {
     if (imageUrl) {
@@ -118,8 +104,8 @@ const ProductEditScreen = ({ match, history }) => {
             </Link>
           </div>
           <FormContainer>
-            {progress !== 0 && <ProgressBar now={progress} label={`${progress}%`} className='mb-4' />}
-            <h1>Update Product</h1>
+            {/* {progress !== 0 && <ProgressBar now={progress} label={`${progress}%`} className='mb-4' />} */}
+            <h1>Create Product</h1>
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='name'>
@@ -159,7 +145,6 @@ const ProductEditScreen = ({ match, history }) => {
                   as='textarea'
                   rows={6}
                   maxLength={350}
-                  //   type='text'
                   placeholder='description'
                   value={form.description}
                   name='description'
@@ -171,8 +156,11 @@ const ProductEditScreen = ({ match, history }) => {
                 <Form.Control type='text' placeholder='category' value={form.category} name='category' onChange={formHandler}></Form.Control>
               </Form.Group>
 
-              <Button type='submit' className='mt-2 btn-block' disabled={buttonLoader}>
-                Update {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
+              <Button
+                type='submit'
+                className='mt-2 btn-block'
+                disabled={buttonLoader || !form.price || !form.name || !form.image || !form.description || !form.brand || !form.category}>
+                Create {buttonLoader && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
               </Button>
             </Form>
           </FormContainer>
@@ -182,4 +170,4 @@ const ProductEditScreen = ({ match, history }) => {
   );
 };
 
-export default ProductEditScreen;
+export default ProductCreateScreen;
