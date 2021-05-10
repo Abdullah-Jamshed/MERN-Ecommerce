@@ -24,4 +24,29 @@ const getUserOrder = () => {
   };
 };
 
-export { getOrderById, getUserOrder };
+const getOrders = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "ORDER_LIST_REQUEST" });
+      const { data } = await API.get(`/api/order/all`);
+      dispatch({ type: "ORDER_LIST_SUCCESS", payload: { data } });
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: "ORDER_LIST_FAILED", payload: { errorMessage: error.response.data?.msg } });
+    }
+  };
+};
+
+const deliveryStatus = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "ORDER_DELIVERY_STATUS_REQUEST" });
+      const { data } = await API.put(`/api/order/${id}/deliver`);
+      dispatch({ type: "ORDER_DELIVERY_STATUS_SUCCESS", payload: { data } });
+    } catch (error) {
+      dispatch({ type: "ORDER_DELIVERY_STATUS_FAILED", payload: { errorMessage: error.response.data?.msg } });
+    }
+  };
+};
+
+export { getOrderById, getUserOrder, getOrders, deliveryStatus };

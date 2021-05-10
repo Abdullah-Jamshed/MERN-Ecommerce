@@ -23,7 +23,6 @@ const getUserOrders = async (req, res) => {
 
 const createOrder = async (req, res) => {
   const { orderItems, paymentMethod, shippingAddress, itemsPrice, shippingPrice, taxPrice, totalPrice } = req.body;
-  console.log(itemsPrice);
   try {
     if (orderItems && orderItems.length === 0) return res.status(400).json();
     const order = new Order({
@@ -50,8 +49,8 @@ const createOrder = async (req, res) => {
 // @access Private
 
 const getOrderById = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     if (!mongoose.isValidObjectId(id)) return res.status(400).json({ msg: "Invalid Order Id" });
     const order = await Order.findById(id).populate("user", "name email");
     if (!order) return res.status(404).json({ msg: "Order Not Found" });
@@ -90,4 +89,40 @@ const updateOrderPayment = async (req, res) => {
   }
 };
 
-export { createOrder, getOrderById, updateOrderPayment, getUserOrders };
+// @desc   Update Order Delivery status
+// @route  PUT /api/order/:id/deliver
+// @access Private/Admin
+
+const updateOrdeDeliver = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // const order = await Order.findOneAndUpdate({ _id: id }, { isDelivered: true, deliverAt: Date.now() }, { new: true });
+
+    const order = await Order.findById(id);
+
+    order.isDelivered = true;
+    order.deliverAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    if (!updatedOrder) return res.status(404).json({ msg: "Order Not Found" });
+    res.json(updatedOrder);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+// @desc   Fetch Order By Id
+// @route  GET /api/order/:id
+// @access Private
+
+const getAllOrders = async (req, res) => {
+  try {
+    const order = await Order.find({});
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong", errorMessage: error.message });
+  }
+};
+
+export { createOrder, getOrderById, updateOrderPayment, getUserOrders, getAllOrders, updateOrdeDeliver };

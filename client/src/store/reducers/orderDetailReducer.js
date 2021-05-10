@@ -1,12 +1,12 @@
 const INITIAL_STATE = {
   order: null,
-  // orderItems: [], // extra
-  // shippingAdress: null, // extra
   isLoading: false,
   errorMessage: "",
   success: false,
   listLoader: false,
-  ordersList: [],
+  orders: [],
+  myOrders: [],
+  succesDeliver: false,
 };
 
 const orderDetailReducer = (state = INITIAL_STATE, action) => {
@@ -42,7 +42,7 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         listLoader: false,
-        ordersList: action.payload.data,
+        myOrders: action.payload.data,
       };
 
     case "MY_ORDER_LIST_FAILED":
@@ -55,8 +55,64 @@ const orderDetailReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         listLoader: false,
-        ordersList: [],
+        myOrders: [],
       };
+
+    case "ORDER_LIST_REQUEST":
+      return {
+        ...state,
+        isLoading: true,
+        errorMessage: "",
+      };
+    case "ORDER_LIST_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        orders: action.payload.data,
+      };
+
+    case "ORDER_LIST_FAILED":
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.payload.errorMessage,
+      };
+    case "ORDER_LIST_RESET":
+      return {
+        ...state,
+        isLoading: false,
+        orders: [],
+      };
+    case "ORDER_CLEAR_ERROR_MESSAGE":
+      return {
+        ...state,
+        errorMessage: "",
+      };
+
+    case "ORDER_DELIVERY_STATUS_REQUEST":
+      return {
+        ...state,
+        errorMessage: "",
+      };
+    case "ORDER_DELIVERY_STATUS_SUCCESS":
+      return {
+        ...state,
+        succesDeliver: true,
+      };
+
+    case "ORDER_DELIVERY_STATUS_FAILED":
+      return {
+        ...state,
+        succesDeliver: false,
+        errorMessage: action.payload.errorMessage,
+      };
+    case "ORDER_DELIVERY_STATUS_RESET":
+      return {
+        ...state,
+        succesDeliver: false,
+        errorMessage: "",
+      };
+
     default:
       return { ...state };
   }

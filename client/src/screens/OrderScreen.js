@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import API from "../api/";
 
 // UI LIBRARY COMPONENT
-import { Container, Row, Col, ListGroup, Spinner, Image, Card } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Spinner, Image, Card, Button } from "react-bootstrap";
 
 //  COMPONENT
 import Message from "../components/Message";
@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrderById } from "../store/actions/orderDetailActions";
 // import {} from "../store/actions/userActions";
 import { payOrder, resetOrderPay } from "../store/actions/paymentActions";
+import { deliveryStatus } from "../store/actions/orderDetailActions";
 
 // PAYPAL BUTTON
 import { PayPalButton } from "react-paypal-button-v2";
@@ -24,7 +25,8 @@ const OrderScreen = ({ history, match }) => {
   const [sdkReady, setSdkReady] = useState(false);
 
   // REDUX STATE HOOK
-  const { order, isLoading, errorMessage } = useSelector((state) => state.orderDetailReducer);
+  const { isLoading: isUserLoading, user, token } = useSelector((state) => state.userReducer);
+  const { order, isLoading, errorMessage, succesDeliver } = useSelector((state) => state.orderDetailReducer);
   const { successPay, isLoading: loadingPay } = useSelector((state) => state.paymentReducer);
 
   // REDUX DISPATCH HOOK
@@ -39,6 +41,14 @@ const OrderScreen = ({ history, match }) => {
   // LIFECYCLE
 
   useEffect(() => {
+    if (token && !isUserLoading) {
+      if (!user && !user.isAdmin) {
+        history.push("/login");
+      } else {
+        history.push("/login");
+      }
+    }
+
     const addPayPalScript = async () => {
       const { data: clientId } = await API.get("/api/config/paypal");
       const script = document.createElement("script");
@@ -51,9 +61,9 @@ const OrderScreen = ({ history, match }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay || order._id !== match.params.id) {
+    if (!order || successPay || succesDeliver || order._id !== match.params.id) {
       dispatch(resetOrderPay());
-      // dispatch({ type: ORDER_DELIVER_RESET })
+      dispatch({ type: "ORDER_DELIVERY_STATUS_RESET" });
       dispatch(getOrderById(match.params.id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -62,7 +72,20 @@ const OrderScreen = ({ history, match }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, match.params.id, order, successPay]);
+  }, [dispatch, match.params.id, order, successPay, succesDeliver]);
+
+  // useEffect(() => {
+  //   if (token && !isUserLoading) {
+  //     if (user.isAdmin) {
+  //       if (deliveryUpdate) {
+  //         history.push("/admin/orders");
+  //         dispatch({ type: "ORDER_DELIVERY_STATUS_RESET" });
+  //       }
+  //     } else {
+  //       history.push("/");
+  //     }
+  //   }
+  // }, [dispatch, history, deliveryUpdate]);
 
   return (
     <Container className='pt-4'>
@@ -75,6 +98,12 @@ const OrderScreen = ({ history, match }) => {
       ) : (
         order && (
           <>
+            <div className='py-4 mb-4'>
+              <Link to='/admin/orders' style={{ fontSize: "22px", textDecoration: "none" }}>
+                <i className='fa fa-chevron-left mr-4' />
+                Go Back
+              </Link>
+            </div>
             <h3>ORDER ID : {match.params.id}</h3>
             <Row>
               <Col md={8}>
@@ -173,12 +202,32 @@ const OrderScreen = ({ history, match }) => {
                         <Col>${order.totalPrice}</Col>
                       </Row>
                     </ListGroup.Item>
-                    {!order.isPaid && (
+                    {!order.isPaid && !user?.isAdmin && (
                       <ListGroup.Item className='text-center'>
                         {(loadingPay || !sdkReady) && (
                           <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />
                         )}
                         {sdkReady && <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
+                      </ListGroup.Item>
+                    )}
+                    {user?.isAdmin && (
+                      <ListGroup.Item>
+                        {!order.isPaid && (
+                          <p className='p-3' style={{ color: "red" }}>
+                            * payment pending
+                          </p>
+                        )}
+                        {order.isDelivered && (
+                          <p className='p-3' style={{ color: "green" }}>
+                            * Order Delivered
+                          </p>
+                        )}
+                        <Button
+                          className='btn-block'
+                          disabled={!order.isPaid || order.isDelivered}
+                          onClick={() => dispatch(deliveryStatus(match.params.id))}>
+                          Delivered
+                        </Button>
                       </ListGroup.Item>
                     )}
                   </ListGroup>
