@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Spinner, ProgressBar } from "react-bootstrap";
+import { Container, Button, Form, Spinner } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";
@@ -118,7 +118,7 @@ const ProductEditScreen = ({ match, history }) => {
             </Link>
           </div>
           <FormContainer>
-            {progress !== 0 && <ProgressBar now={progress} label={`${progress}%`} className='mb-4' />}
+            {/* {progress !== 0 && <ProgressBar now={progress} label={`${progress}%`} className='mb-4' />} */}
             <h1>Update Product</h1>
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             <Form onSubmit={submitHandler}>

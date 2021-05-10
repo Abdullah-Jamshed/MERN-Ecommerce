@@ -25,7 +25,7 @@ const ProfileScreen = ({ history }) => {
 
   // REDUX STATE
   const { user, errorMessage, success, token, buttonLoader } = useSelector((state) => state.userReducer);
-  const { listLoader, ordersList, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
+  const { listLoader, myOrders, errorMessage: orderErrorMessage } = useSelector((state) => state.orderDetailReducer);
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -109,7 +109,7 @@ const ProfileScreen = ({ history }) => {
           <h1>My Order</h1>
           <div className='text-center'>{listLoader && <Spinner animation='border' />}</div>
           {orderErrorMessage && <Message variant='danger'>{orderErrorMessage}</Message>}
-          {!listLoader && ordersList.length !== 0 && (
+          {!listLoader && myOrders.length !== 0 && (
             <>
               <Table striped bordered hover responsive className='table-sm'>
                 <thead>
@@ -123,7 +123,7 @@ const ProfileScreen = ({ history }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {ordersList.map((item) => (
+                  {myOrders.map((item) => (
                     <tr key={item._id}>
                       <td>{item._id}</td>
                       <td>{item.createdAt.substring(0, 10)}</td>
@@ -132,7 +132,7 @@ const ProfileScreen = ({ history }) => {
                         {item.isPaid ? item.paidAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}
                       </td>
                       <td className='text-center'>
-                        {item.isDelivered ? item.deliveredAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}
+                        {item.isDelivered ? item.deliverAt.substring(0, 10) : <i className='fa fa-times' style={{ color: "red" }} />}
                       </td>
                       <td>
                         <Button className='btn-sm' as={Link} to={`/order/${item._id}`} variant='light'>

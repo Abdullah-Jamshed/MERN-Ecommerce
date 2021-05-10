@@ -18,7 +18,7 @@ const ProductsListScreen = ({ history }) => {
 
   // REDUX STATE HOOK
   const { isLoading: isUserLoading, user, token } = useSelector((state) => state.userReducer);
-  const { isLoading, products, errorMessage, deleteSuccess, createdProduct, successCreate } = useSelector((state) => state.productReducer);
+  const { isLoading, products, errorMessage, deleteSuccess, createdProduct } = useSelector((state) => state.productReducer);
 
   //STATE
   const [modalShow, setModalShow] = useState(false);
@@ -40,9 +40,6 @@ const ProductsListScreen = ({ history }) => {
       if (!isUserLoading) {
         if (!user.isAdmin) {
           history.push("/login");
-        } else if (successCreate) {
-          history.push(`/admin/product/${createdProduct._id}/edit`);
-          dispatch({ type: "PRODUCT_CREATE_RESET" });
         } else {
           dispatch(fetchProduct());
         }
@@ -51,7 +48,7 @@ const ProductsListScreen = ({ history }) => {
       history.push("/login");
     }
     // eslint-disable-next-line
-  }, [dispatch, user, history, token, successCreate, createdProduct]);
+  }, [dispatch, user, history, token, createdProduct]);
 
   useEffect(() => {
     errorMessage && dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });

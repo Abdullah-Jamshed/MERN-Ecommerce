@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
-import { Container, Button, Form, Spinner, ProgressBar } from "react-bootstrap";
+import { Container, Button, Form, Spinner } from "react-bootstrap";
 
 //  COMPONENT
 import FormContainer from "../components/FormContainer";

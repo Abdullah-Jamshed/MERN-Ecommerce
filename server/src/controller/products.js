@@ -32,6 +32,7 @@ const fetchProductsById = async (req, res) => {
   }
 };
 
+
 // @desc   Delete Product by Id
 // @route  DELETE /api/product/:id
 // @access Private/Admin
