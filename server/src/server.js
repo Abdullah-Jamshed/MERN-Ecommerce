@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
+import morgan from "morgan";
 
 const __dirname = path.resolve();
 dotenv.config();
@@ -36,6 +37,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("port", process.env.PORT || 3001);
+if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.get("/", async (req, res) => {
   // const product = await Product.create({
@@ -57,13 +59,11 @@ app.get("/", async (req, res) => {
 // static folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/uploads", uploadRouter);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
-
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "invalid Route" });
