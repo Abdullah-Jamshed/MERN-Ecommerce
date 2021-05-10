@@ -90,4 +90,16 @@ const fileUpload = (formData) => {
   };
 };
 
-export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate, fileUpload };
+const createReview = (id, form) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "PRODUCT_CREATE_REVIEW_REQUEST" });
+      await API.post(`/api/products/${id}/review`, form);
+      dispatch({ type: "PRODUCT_CREATE_REVIEW_SUCCESS" });
+    } catch (error) {
+      dispatch({ type: "PRODUCT_CREATE_REVIEW_FAIL", payload: { msg: error.response.data.msg } });
+    }
+  };
+};
+
+export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate, fileUpload, createReview };

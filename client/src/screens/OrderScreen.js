@@ -13,7 +13,6 @@ import Message from "../components/Message";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderById } from "../store/actions/orderDetailActions";
-// import {} from "../store/actions/userActions";
 import { payOrder, resetOrderPay } from "../store/actions/paymentActions";
 import { deliveryStatus } from "../store/actions/orderDetailActions";
 
@@ -41,12 +40,14 @@ const OrderScreen = ({ history, match }) => {
   // LIFECYCLE
 
   useEffect(() => {
-    if (token && !isUserLoading) {
-      if (!user && !user.isAdmin) {
-        history.push("/login");
-      } else {
-        history.push("/login");
+    if (token) {
+      if (!isUserLoading) {
+        if (!user && !user.isAdmin) {
+          history.push("/login");
+        }
       }
+    } else {
+      history.push("/login");
     }
 
     const addPayPalScript = async () => {
@@ -72,20 +73,8 @@ const OrderScreen = ({ history, match }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, match.params.id, order, successPay, succesDeliver]);
-
-  // useEffect(() => {
-  //   if (token && !isUserLoading) {
-  //     if (user.isAdmin) {
-  //       if (deliveryUpdate) {
-  //         history.push("/admin/orders");
-  //         dispatch({ type: "ORDER_DELIVERY_STATUS_RESET" });
-  //       }
-  //     } else {
-  //       history.push("/");
-  //     }
-  //   }
-  // }, [dispatch, history, deliveryUpdate]);
+    // eslint-disable-next-line
+  }, [dispatch, token, user, history, match.params.id, order, successPay, succesDeliver]);
 
   return (
     <Container className='pt-4'>

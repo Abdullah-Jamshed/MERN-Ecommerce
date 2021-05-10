@@ -13,7 +13,7 @@ const Rating = ({ rating, reviews, color }) => {
           />
         ))}
       </span>
-      <span className='ml-2'>{reviews} reviews</span>
+      {reviews !== null && <span className='ml-2'>{reviews} reviews</span>}
     </div>
   );
 };

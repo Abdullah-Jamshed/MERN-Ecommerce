@@ -140,6 +140,32 @@ const productReducer = (state = INITIAL_STATE, action) => {
         imageUrl: "",
       };
 
+    case "PRODUCT_CREATE_REVIEW_REQUEST":
+      return {
+        ...state,
+        successCreate: false,
+        buttonLoader: true,
+      };
+    case "PRODUCT_CREATE_REVIEW_SUCCESS":
+      return {
+        ...state,
+        successCreate: true,
+        buttonLoader: false,
+      };
+    case "PRODUCT_CREATE_REVIEW_FAIL":
+      return {
+        ...state,
+        errorMessage: action.payload.msg,
+        buttonLoader: false,
+      };
+    case "PRODUCT_CREATE_REVIEW_RESET":
+      return {
+        ...state,
+        successCreate: false,
+        errorMessage: "",
+        buttonLoader: false,
+      };
+
     default:
       return { ...state };
   }

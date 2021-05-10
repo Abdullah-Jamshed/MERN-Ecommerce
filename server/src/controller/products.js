@@ -98,16 +98,15 @@ const updateProduct = async (req, res) => {
 
 const createReview = async (req, res) => {
   try {
-    const { sub: user } = req;
-    const { name, comment, rating } = req.body;
+    const { name, comment, rating, user } = req.body;
     const { id } = req.params;
 
-    const product = await await Product.findById(id); // nested populate .populate("reviews.user");
+    const product = await Product.findById(id); // nested populate .populate("reviews.user");
 
     if (!product) return res.status(404).json({ msg: "Product Not Found" });
 
-    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === userId.toString());
-    if (alreadyReviewed) return res.status(400).json({ msg: "Product Already Reviewed" });
+    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === user.toString());
+    if (alreadyReviewed) return res.status(400).json({ msg: "You Already Reviewed Product" });
 
     const review = {
       name,
@@ -123,7 +122,7 @@ const createReview = async (req, res) => {
     await product.save();
     res.status(201).json({ msg: "review added" });
   } catch (error) {
-    res.status(500).json({ msg: "Something Went Wrong" });
+    res.status(500).json({ msg: "Something Went Wrong", m: error.message });
   }
 };
 
