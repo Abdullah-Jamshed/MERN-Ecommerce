@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+
+// UI LIBRARY COMPONENTS
 import { Button, Form } from "react-bootstrap";
 
 const SearchBox = ({ history }) => {
   // STATE
   const [keyword, setKeyword] = useState("");
+
   // HANDLER FUNCTION
   const submitHandler = (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ const SearchBox = ({ history }) => {
       history.push(`/`);
     }
   };
+
   return (
     <Form onSubmit={submitHandler} inline>
       <Form.Control type='text' name='q' onChange={(e) => setKeyword(e.target.value)} placeholder='search' className='mr-sm-2 mr-sm-4'></Form.Control>

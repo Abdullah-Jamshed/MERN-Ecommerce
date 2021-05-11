@@ -46,8 +46,9 @@ const Routes = () => {
           <Header />
           <Switch>
             <Route exact path='/' component={HomeScreen} />
-            <Route path='/search/:keyword' component={HomeScreen} />
             <Route path='/page/:pageNumber' component={HomeScreen} />
+            <Route exact path='/search/:keyword' component={HomeScreen} />
+            <Route path='/search/:keyword/page/:pageNumber' component={HomeScreen} />
             <Route path='/product/:id' component={ProductScreen} />
             <Route path='/cart/:id?' component={CartScreen} />
             <Route path='/login' component={LoginScreen} />
@@ -59,7 +60,8 @@ const Routes = () => {
             <Route path='/order/:id' component={OrderScreen} />
             <Route path='/admin/users' component={UserListScreen} />
             <Route path='/admin/user/:id/edit' component={UserEditScreen} />
-            <Route path='/admin/products' component={ProductsListScreen} />
+            <Route exact path='/admin/products' component={ProductsListScreen} />
+            <Route path='/admin/products/:pageNumber' component={ProductsListScreen} />
             <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
             <Route path='/admin/product/create' component={ProductCreateScreen} />
             <Route path='/admin/orders' component={OrderListScreen} />

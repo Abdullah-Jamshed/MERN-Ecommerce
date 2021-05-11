@@ -1,7 +1,11 @@
 import React from "react";
+// UI LIBRARY COMPONENTS
+
 import { Button, Modal } from "react-bootstrap";
 
 const ModalComponent = ({ show, onHide, children, handlerFunction, id }) => {
+  
+  // HANDLER FUNCTION
   const handle = (id) => {
     handlerFunction(id);
     onHide();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 // UI LIBRARY COMPONENT
 import { Button, Col, Container, Row, Spinner, Table } from "react-bootstrap";
@@ -7,18 +7,21 @@ import { Button, Col, Container, Row, Spinner, Table } from "react-bootstrap";
 // COMPONENTS
 import Message from "../components/Message";
 import ModalComponent from "../components/ModalComponent";
+import Paginate from "../components/Paginate";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, fetchProduct } from "../store/actions/productActions";
 
-const ProductsListScreen = ({ history }) => {
+const ProductsListScreen = ({ history, match }) => {
+  const pageNumber = match.params.pageNumber || 1;
+
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
   // REDUX STATE HOOK
   const { isLoading: isUserLoading, user, token } = useSelector((state) => state.userReducer);
-  const { isLoading, products, errorMessage, deleteSuccess, createdProduct } = useSelector((state) => state.productReducer);
+  const { isLoading, products, errorMessage, deleteSuccess, createdProduct, page, pages } = useSelector((state) => state.productReducer);
 
   //STATE
   const [modalShow, setModalShow] = useState(false);
@@ -41,14 +44,14 @@ const ProductsListScreen = ({ history }) => {
         if (!user.isAdmin) {
           history.push("/login");
         } else {
-          dispatch(fetchProduct());
+          dispatch(fetchProduct("", pageNumber));
         }
       }
     } else {
       history.push("/login");
     }
     // eslint-disable-next-line
-  }, [dispatch, user, history, token, createdProduct]);
+  }, [dispatch, user, history, token, createdProduct, pageNumber]);
 
   useEffect(() => {
     errorMessage && dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
@@ -124,6 +127,7 @@ const ProductsListScreen = ({ history }) => {
               ))}
             </tbody>
           </Table>
+          <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={user?.isAdmin} />} />
         </>
       )}
     </Container>

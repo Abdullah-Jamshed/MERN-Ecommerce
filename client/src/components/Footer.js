@@ -1,4 +1,6 @@
 import React from "react";
+
+// UI LIBRARY COMPONENTS
 import { Container } from "react-bootstrap";
 
 const Footer = () => {

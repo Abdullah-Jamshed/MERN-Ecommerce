@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Route } from "react-router-dom";
 
 // UI LIBRARY COMPONENTS
 import { Col, Container, Row, Spinner } from "react-bootstrap";
@@ -6,6 +7,7 @@ import { Col, Container, Row, Spinner } from "react-bootstrap";
 // COMPONENTS
 import Product from "../components/Product";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +16,12 @@ import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = ({ match }) => {
   const { keyword, pageNumber } = match.params;
-
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { products, errorMessage, isLoading, pages } = useSelector((state) => state.productReducer);
+  const { products, errorMessage, isLoading, pages, page } = useSelector((state) => state.productReducer);
+
   // LIFECYCLES
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const HomeScreen = ({ match }) => {
                   </Col>
                 ))}
               </Row>
+              <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={false} keyword={keyword || ""} />} />
             </>
           )}
         </>

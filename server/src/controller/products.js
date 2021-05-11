@@ -9,7 +9,7 @@ import Product from "../models/productModel.js";
 
 const fetchProducts = async (req, res) => {
   try {
-    const numOfItems = 2;
+    const numOfItems = 10;
     const pageNumber = Number(req.query.page) || 1;
 
     const keyword = req.query.keyword
