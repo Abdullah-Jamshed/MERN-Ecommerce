@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct, getTopProducts } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
-const HomeScreen = ({ match }) => {
+const HomeScreen = ({ history, match }) => {
   const { keyword, pageNumber } = match.params;
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
@@ -40,7 +40,20 @@ const HomeScreen = ({ match }) => {
   return (
     <>
       <Meta />
-      {!keyword && <ProductCarousel />}
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <div className='p-4'>
+          <h4
+            onClick={() => {
+              history.push("/");
+            }}
+            style={{ fontSize: "22px", textDecoration: "none" }}>
+            <i className='fa fa-chevron-left mr-4' />
+            Go Back
+          </h4>
+        </div>
+      )}
       <Container className='py-4 text-center'>
         {!isLoading ? (
           <>
