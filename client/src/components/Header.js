@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 // UI LIBRARY COMPONENTS
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+
+//  COMPONENTS
+import SearchBox from "./SearchBox";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -27,10 +30,8 @@ const Header = () => {
         <Navbar.Brand as={Link} to='/' href='/'>
           MyShop
         </Navbar.Brand>
-        {/* <Form inline>
-        <FormControl type='text' placeholder='Search' className='mr-sm-2' />
-        <Button variant='outline-success'>Search</Button>
-      </Form> */}
+        <Route render={({ history }) => <SearchBox history={history} />} />
+
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ml-auto'>

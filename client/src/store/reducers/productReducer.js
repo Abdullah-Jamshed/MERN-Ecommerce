@@ -166,6 +166,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
         buttonLoader: false,
       };
 
+    case "PRODUCTS_RESET":
+      return {
+        ...state,
+        products: [],
+      };
+
     default:
       return { ...state };
   }

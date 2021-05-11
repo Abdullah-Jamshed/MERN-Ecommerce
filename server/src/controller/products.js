@@ -9,7 +9,16 @@ import Product from "../models/productModel.js";
 
 const fetchProducts = async (req, res) => {
   try {
-    const products = await Product.find({}); // .populate("user") to get data through ref
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const products = await Product.find({ ...keyword }); // .populate("user") to get data through ref
+    if (products.length === 0) return res.status(404).json({ msg: "Product Not Found" });
     res.json(products);
   } catch (error) {
     res.status(500).json({ msg: "Something Went Wrong" });
