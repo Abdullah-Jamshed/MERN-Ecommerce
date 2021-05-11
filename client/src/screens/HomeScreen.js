@@ -9,6 +9,7 @@ import Product from "../components/Product";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +39,7 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
+      <Meta />
       {!keyword && <ProductCarousel />}
       <Container className='py-4 text-center'>
         {!isLoading ? (

@@ -7,6 +7,7 @@ import { Button, Card, Col, Container, Form, Image, ListGroup, Row, Spinner } fr
 //  COMPONENTS
 import Rating from "../components/Rating";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -82,6 +83,7 @@ const ProductScreen = ({ history, match }) => {
         {!isLoading ? (
           product ? (
             <>
+              <Meta title={product.name} />
               <Row>
                 <Col md={6}>
                   <Image src={product.image} alt={product.name} fluid />
