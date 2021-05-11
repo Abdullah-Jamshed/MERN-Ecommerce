@@ -13,14 +13,13 @@ import { fetchProduct } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = ({ match }) => {
-  const { keyword } = match.params;
+  const { keyword, pageNumber } = match.params;
 
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { products, errorMessage, isLoading } = useSelector((state) => state.productReducer);
-
+  const { products, errorMessage, isLoading, pages } = useSelector((state) => state.productReducer);
   // LIFECYCLES
 
   useEffect(() => {
@@ -30,8 +29,8 @@ const HomeScreen = ({ match }) => {
   useEffect(() => {
     dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
     dispatch({ type: "PRODUCTS_RESET" });
-    dispatch(fetchProduct(keyword));
-  }, [dispatch, keyword]);
+    dispatch(fetchProduct(keyword, pageNumber));
+  }, [dispatch, keyword, pages, pageNumber]);
 
   return (
     <Container className='py-4 text-center'>
@@ -43,7 +42,7 @@ const HomeScreen = ({ match }) => {
               <h1>Latest Product</h1>
               <Row>
                 {products.map((product) => (
-                  <Col key={product._id} sm={12} md={6} lg={3} className=''>
+                  <Col key={product._id} sm={12} md={6} lg={3}>
                     <Product product={product} />
                   </Col>
                 ))}

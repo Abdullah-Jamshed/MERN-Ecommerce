@@ -9,6 +9,9 @@ import Product from "../models/productModel.js";
 
 const fetchProducts = async (req, res) => {
   try {
+    const numOfItems = 2;
+    const pageNumber = Number(req.query.page) || 1;
+
     const keyword = req.query.keyword
       ? {
           name: {
@@ -17,9 +20,16 @@ const fetchProducts = async (req, res) => {
           },
         }
       : {};
-    const products = await Product.find({ ...keyword }); // .populate("user") to get data through ref
+
+    const count = await Product.countDocuments({ ...keyword }); // .populate("user") to get data through ref
+
+    // .populate("user") to get data through ref
+
+    const products = await Product.find({ ...keyword }) // .populate("user") to get data through ref
+      .limit(numOfItems)
+      .skip(numOfItems * (pageNumber - 1));
     if (products.length === 0) return res.status(404).json({ msg: "Product Not Found" });
-    res.json(products);
+    res.json({ products, pageNumber, pages: Math.ceil(count / numOfItems) });
   } catch (error) {
     res.status(500).json({ msg: "Something Went Wrong" });
   }

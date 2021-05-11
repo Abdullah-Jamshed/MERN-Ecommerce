@@ -1,11 +1,11 @@
 import API from "../../api";
 
-const fetchProduct = (keyword = "") => {
+const fetchProduct = (keyword = "", pageNumber = "") => {
   return async (dispatch) => {
     try {
       dispatch({ type: "LOADING", payload: { flag: true } });
-      const { data } = await API.get(`/api/products?keyword=${keyword}`);
-      dispatch({ type: "PRODUCTS", payload: { products: data || []} });
+      const { data } = await API.get(`/api/products?keyword=${keyword}&page=${pageNumber}`);
+      dispatch({ type: "PRODUCTS", payload: { products: data.products, page: data.pageNumber, pages: data.pages } });
     } catch (error) {
       // dispatch({ type: "FETCH_FAILED", payload: { msg: err.response?.data.msg || "Some thing Went Wrong" } });
       dispatch({ type: "FETCH_FAILED", payload: { msg: error.response?.data.msg } });

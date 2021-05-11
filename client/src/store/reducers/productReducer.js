@@ -10,6 +10,8 @@ const INITIAL_STATE = {
   successUpdate: false,
   imageUrl: "",
   progress: 0,
+  page: 1,
+  pages: 0,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -26,6 +28,8 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         products: action.payload.products,
         isLoading: false,
+        page: action.payload.page,
+        pages: action.payload.pages,
       };
     case "PRODUCT":
       return {
