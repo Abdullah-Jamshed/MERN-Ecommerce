@@ -26,7 +26,7 @@ const ProductCarousel = () => {
   }, [dispatch, topProducts]);
 
   return (
-    topProducts.length && (
+    topProducts.length !== 0 && (
       <Carousel pause='hover' className='bg-dark m-4'>
         {topProducts.length !== 0 &&
           topProducts.map((product) => (
