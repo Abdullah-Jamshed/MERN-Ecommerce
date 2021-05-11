@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   progress: 0,
   page: 1,
   pages: 0,
+  topProducts: [],
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -176,6 +177,23 @@ const productReducer = (state = INITIAL_STATE, action) => {
         products: [],
       };
 
+    case "PRODUCT_TOP_REQUEST":
+      return {
+        ...state,
+        topProducts: [],
+      };
+
+    case "PRODUCT_TOP_SUCCESS":
+      return {
+        ...state,
+        topProducts: action.payload.data,
+      };
+
+    case "PRODUCT_TOP_FAIL":
+      return {
+        ...state,
+        errorMessage: action.payload.msg,
+      };
     default:
       return { ...state };
   }

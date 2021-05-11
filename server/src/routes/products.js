@@ -6,11 +6,20 @@ import admin from "../middleware/admin.js";
 import auth from "../middleware/auth.js";
 
 // CONTROLLER
-import { fetchProducts, fetchProductsById, deleteProductsById, createProduct, updateProduct, createReview } from "../controller/products.js";
+import {
+  fetchProducts,
+  fetchProductsById,
+  deleteProductsById,
+  createProduct,
+  updateProduct,
+  createReview,
+  getTopProduct,
+} from "../controller/products.js";
 
-productsRoute.get("/?", fetchProducts);
+productsRoute.get("/", fetchProducts);
 productsRoute.post("/", auth, admin, createProduct);
 productsRoute.put("/:id", auth, admin, updateProduct);
+productsRoute.get("/top", getTopProduct);
 productsRoute.get("/:id", fetchProductsById);
 productsRoute.delete("/:id", deleteProductsById);
 productsRoute.post("/:id/review", auth, createReview);

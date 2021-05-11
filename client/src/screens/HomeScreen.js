@@ -8,10 +8,11 @@ import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Product from "../components/Product";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../store/actions/productActions";
+import { fetchProduct, getTopProducts } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = ({ match }) => {
@@ -20,7 +21,7 @@ const HomeScreen = ({ match }) => {
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { products, errorMessage, isLoading, pages, page } = useSelector((state) => state.productReducer);
+  const { products, errorMessage, isLoading, pages, page, topProducts } = useSelector((state) => state.productReducer);
 
   // LIFECYCLES
 
@@ -31,32 +32,36 @@ const HomeScreen = ({ match }) => {
   useEffect(() => {
     dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
     dispatch({ type: "PRODUCTS_RESET" });
+    dispatch(getTopProducts());
     dispatch(fetchProduct(keyword, pageNumber));
   }, [dispatch, keyword, pages, pageNumber]);
 
   return (
-    <Container className='py-4 text-center'>
-      {!isLoading ? (
-        <>
-          {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
-          {products.length !== 0 && (
-            <>
-              <h1>Latest Product</h1>
-              <Row>
-                {products.map((product) => (
-                  <Col key={product._id} sm={12} md={6} lg={3}>
-                    <Product product={product} />
-                  </Col>
-                ))}
-              </Row>
-              <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={false} keyword={keyword || ""} />} />
-            </>
-          )}
-        </>
-      ) : (
-        <Spinner className='mt-4' animation='grow' />
-      )}
-    </Container>
+    <>
+      {!keyword && <ProductCarousel />}
+      <Container className='py-4 text-center'>
+        {!isLoading ? (
+          <>
+            {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+            {products.length !== 0 && (
+              <>
+                <h1>Latest Product</h1>
+                <Row>
+                  {products.map((product) => (
+                    <Col key={product._id} sm={12} md={6} lg={3}>
+                      <Product product={product} />
+                    </Col>
+                  ))}
+                </Row>
+                <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={false} keyword={keyword || ""} />} />
+              </>
+            )}
+          </>
+        ) : (
+          <Spinner className='mt-4' animation='grow' />
+        )}
+      </Container>
+    </>
   );
 };
 

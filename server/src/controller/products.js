@@ -141,8 +141,21 @@ const createReview = async (req, res) => {
     await product.save();
     res.status(201).json({ msg: "review added" });
   } catch (error) {
-    res.status(500).json({ msg: "Something Went Wrong", m: error.message });
+    res.status(500).json({ msg: "Something Went Wrong" });
   }
 };
 
-export { fetchProducts, fetchProductsById, deleteProductsById, createProduct, updateProduct, createReview };
+// @desc   Fetch top rated product
+// @route  GET /api/products/top
+// @access Public
+
+const getTopProduct = async (req, res) => {
+  try {
+    const product = await Product.find({}).sort({ rating: -1 }).limit(3);
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ msg: "Something Went Wrong" });
+  }
+};
+
+export { fetchProducts, fetchProductsById, deleteProductsById, createProduct, updateProduct, createReview, getTopProduct };

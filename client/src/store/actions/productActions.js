@@ -100,4 +100,16 @@ const createReview = (id, form) => {
   };
 };
 
-export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate, fileUpload, createReview };
+const getTopProducts = (id, form) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: "PRODUCT_TOP_REQUEST" });
+      const { data } = await API.get(`/api/products/top`);
+      dispatch({ type: "PRODUCT_TOP_SUCCESS", payload: { data } });
+    } catch (error) {
+      dispatch({ type: "PRODUCT_TOP_FAIL", payload: { msg: error.response.data.msg } });
+    }
+  };
+};
+
+export { fetchProduct, fetchProductById, clearProduct, deleteProduct, createProduct, productUpdate, fileUpload, createReview, getTopProducts };
