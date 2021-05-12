@@ -13,6 +13,7 @@ const payOrder = (orderId, paymentResult) => {
       dispatch({ type: "ORDER_PAY_REQUEST" });
       const { data } = await API.put(`/api/order/${orderId}/pay/`, paymentResult);
       dispatch({ type: "ORDER_PAY_SUCCESS", payload: { data } });
+      localStorage.removeItem("cartItems");
     } catch (error) {
       console.log(error.response.data);
       dispatch({ type: "ORDER_PAY_FAILED", payload: { errorMessage: error.response.data.msg } });

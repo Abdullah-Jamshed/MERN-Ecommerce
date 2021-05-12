@@ -24,11 +24,6 @@ const PaymentScreen = ({ history }) => {
 
   // HANDLER FUNCTIONS
 
-  // const formHandler = (e) => {
-  //   const { value } = e.target;
-  //   setPaymentMethod(e.target.value);
-  // };
-
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(method));
@@ -41,7 +36,7 @@ const PaymentScreen = ({ history }) => {
     if (!shippingAddress) {
       history.push("/shipping");
     }
-  }, [shippingAddress,history]);
+  }, [shippingAddress, history]);
 
   useEffect(() => {
     if (paymentMethod) {
@@ -54,7 +49,6 @@ const PaymentScreen = ({ history }) => {
       <FormContainer>
         <CheckoutSteps step1 step2 step3 />
         <h1>Payment</h1>
-        {/* {(errorMessage || errorMsg) && <Message variant='danger'>{errorMessage || errorMsg}</Message>} */}
         <Form onSubmit={submitHandler}>
           <Form.Group>
             <Form.Label as='legend'>Select Method </Form.Label>
