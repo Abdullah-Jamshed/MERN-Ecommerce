@@ -14,7 +14,7 @@ import Meta from "../components/Meta";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../store/actions/productActions";
-import { isUserLogin } from "../store/actions/userActions";
+// import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = ({ history, match }) => {
   const { keyword, pageNumber } = match.params;
@@ -27,9 +27,9 @@ const HomeScreen = ({ history, match }) => {
 
   // LIFECYCLES
 
-  useEffect(() => {
-    dispatch(isUserLogin());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(isUserLogin());
+  // }, [dispatch]);
 
   useEffect(() => {
     dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });

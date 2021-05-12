@@ -35,7 +35,9 @@ const Routes = () => {
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
+  var a = 0;
   useEffect(() => {
+    console.log(++a);
     dispatch(isUserLogin());
   }, [dispatch]);
 
