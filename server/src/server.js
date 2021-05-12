@@ -35,13 +35,13 @@ app.set("port", process.env.PORT || 3001);
 // static folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// routes
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/uploads", uploadRouter);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
-console.log(path.join(__dirname, "../", "client", "build"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../", "client", "build")));
