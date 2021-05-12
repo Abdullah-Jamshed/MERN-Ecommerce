@@ -7,9 +7,11 @@
   "scripts": {
     "start": "nodemon server/src/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false yarn --cwd server && yarn --cwd client && yarn --cwd client build"
+    "postinstall": "yarn --cwd server",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client && yarn --cwd client build"
   },
   "keywords": [],
   "author": "",
+  "dependencies": {},
   "license": "ISC"
 }

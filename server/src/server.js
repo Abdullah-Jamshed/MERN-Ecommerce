@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 const __dirname = path.resolve();
+// dotenv.config();
 dotenv.config({ path: path.join(__dirname, "server", ".env") });
 
 // ROUTES
@@ -30,12 +31,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set("port", process.env.PORT || 3001);
+app.set("port", process.env.PORT || 5000);
 
 // static folder
+console.log(path.join(__dirname, "server", ".env"));
+console.log(process.env.NODE_ENV);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-console.log(__dirname)
 
 // routes
 app.use("/api/user", userRoute);
