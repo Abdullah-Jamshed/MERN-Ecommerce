@@ -40,13 +40,13 @@ const HomeScreen = ({ history, match }) => {
   return (
     <>
       <Meta />
-      <Container className='py-4 text-center'>
+      <Container fluid className='py-4 text-center'>
         {!isLoading && !isUserLoading ? (
           <>
             {!keyword ? (
               <ProductCarousel />
             ) : (
-              <div className='p-4 text-left' style={{cursor:"pointer"}}>
+              <div className='p-4 text-left' style={{ cursor: "pointer" }}>
                 <h4
                   onClick={() => {
                     history.push("/");
@@ -57,20 +57,22 @@ const HomeScreen = ({ history, match }) => {
                 </h4>
               </div>
             )}
-            {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
-            {products.length !== 0 && (
-              <>
-                <h1>Latest Product</h1>
-                <Row>
-                  {products.map((product) => (
-                    <Col key={product._id} sm={12} md={6} lg={3}>
-                      <Product product={product} />
-                    </Col>
-                  ))}
-                </Row>
-                <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={false} keyword={keyword || ""} />} />
-              </>
-            )}
+            <Container className='py-4 text-center'>
+              {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+              {products.length !== 0 && (
+                <>
+                  <h1>Latest Product</h1>
+                  <Row>
+                    {products.map((product) => (
+                      <Col key={product._id} sm={12} md={6} lg={3}>
+                        <Product product={product} />
+                      </Col>
+                    ))}
+                  </Row>
+                  <Route render={({ history }) => <Paginate history={history} page={page} pages={pages} isAdmin={false} keyword={keyword || ""} />} />
+                </>
+              )}
+            </Container>
           </>
         ) : (
           <Spinner className='mt-4' animation='grow' />
