@@ -35,6 +35,8 @@ app.set("port", process.env.PORT || 3001);
 // static folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+console.log(__dirname)
+
 // routes
 app.use("/api/user", userRoute);
 app.use("/api/products", productsRoute);
@@ -43,10 +45,10 @@ app.use("/api/uploads", uploadRouter);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../", "client", "build")));
+  app.use(express.static(path.join(__dirname, "client", "build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../", "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
