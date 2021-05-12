@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 const __dirname = path.resolve();
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, "server", ".env") });
 
 // ROUTES
 import productsRoute from "./routes/products.js";
@@ -41,7 +41,6 @@ app.use("/api/products", productsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/uploads", uploadRouter);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
-
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../", "client", "build")));
