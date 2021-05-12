@@ -19,7 +19,7 @@ const styles = {
 const Product = ({ product }) => {
   return (
     <Card style={{ width: "100%" }} className='my-2 mx-auto'>
-      <Link to={`product/${product._id}`}>
+      <Link to={`/product/${product._id}`}>
         <Card.Img variant='top' src={product.image} />
       </Link>
       <Card.Body className='text-left'>

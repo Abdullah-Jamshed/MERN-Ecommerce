@@ -13,7 +13,7 @@ import Meta from "../components/Meta";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct, getTopProducts } from "../store/actions/productActions";
+import { fetchProduct } from "../store/actions/productActions";
 import { isUserLogin } from "../store/actions/userActions";
 
 const HomeScreen = ({ history, match }) => {
@@ -22,7 +22,8 @@ const HomeScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   // REDUX STATE
-  const { products, errorMessage, isLoading, pages, page, topProducts } = useSelector((state) => state.productReducer);
+  const { products, errorMessage, isLoading, pages, page } = useSelector((state) => state.productReducer);
+  const { isLoading: isUserLoading } = useSelector((state) => state.userReducer);
 
   // LIFECYCLES
 
@@ -33,30 +34,29 @@ const HomeScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: "PRODUCT_CLEAR_ERROR_MESSAGE" });
     dispatch({ type: "PRODUCTS_RESET" });
-    dispatch(getTopProducts());
     dispatch(fetchProduct(keyword, pageNumber));
-  }, [dispatch, keyword, pages, pageNumber]);
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
       <Meta />
-      {!keyword ? (
-        <ProductCarousel />
-      ) : (
-        <div className='p-4'>
-          <h4
-            onClick={() => {
-              history.push("/");
-            }}
-            style={{ fontSize: "22px", textDecoration: "none" }}>
-            <i className='fa fa-chevron-left mr-4' />
-            Go Back
-          </h4>
-        </div>
-      )}
       <Container className='py-4 text-center'>
-        {!isLoading ? (
+        {!isLoading && !isUserLoading ? (
           <>
+            {!keyword ? (
+              <ProductCarousel />
+            ) : (
+              <div className='p-4'>
+                <h4
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                  style={{ fontSize: "22px", textDecoration: "none" }}>
+                  <i className='fa fa-chevron-left mr-4' />
+                  Go Back
+                </h4>
+              </div>
+            )}
             {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
             {products.length !== 0 && (
               <>
