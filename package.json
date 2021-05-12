@@ -1,0 +1,14 @@
+{
+  "name": "mern-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon src/server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false yarn --cwd client && yarn --cwd client build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
