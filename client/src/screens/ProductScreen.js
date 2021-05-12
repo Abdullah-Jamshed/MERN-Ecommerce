@@ -68,7 +68,7 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <div className='p-4'>
+      <div className='p-4' style={{cursor:"pointer"}}>
         <h4
           onClick={() => {
             dispatch(clearProduct());

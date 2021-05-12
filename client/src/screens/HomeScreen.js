@@ -46,7 +46,7 @@ const HomeScreen = ({ history, match }) => {
             {!keyword ? (
               <ProductCarousel />
             ) : (
-              <div className='p-4'>
+              <div className='p-4 text-left' style={{cursor:"pointer"}}>
                 <h4
                   onClick={() => {
                     history.push("/");
