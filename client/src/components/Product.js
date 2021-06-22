@@ -14,13 +14,26 @@ const styles = {
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  card: {
+    height: "400px",
+    width: "100%",
+  },
+  cardImageContainer: {
+    height: "50%",
+    padding: "10px",
+    margin: "auto",
+  },
+  cardImage: {
+    height: "100%",
+    objectFit: "contain",
+  },
 };
 
 const Product = ({ product }) => {
   return (
-    <Card style={{ width: "100%" }} className='my-2 mx-auto'>
-      <Link to={`/product/${product._id}`}>
-        <Card.Img variant='top' src={product.image} />
+    <Card style={styles.card} className={`my-2 mx-auto`}>
+      <Link to={`/product/${product._id}`} style={styles.cardImageContainer}>
+        <Card.Img style={styles.cardImage} variant='top' src={product.image} />
       </Link>
       <Card.Body className='text-left'>
         <Card.Title style={styles.textStyle}>{product.name}</Card.Title>
