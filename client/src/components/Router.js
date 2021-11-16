@@ -38,10 +38,8 @@ const Routes = () => {
 
   var a;
   useEffect(() => {
-    console.log(a++)
     dispatch(isUserLogin());
   }, [dispatch]);
-
   return (
     <Router>
       <div className='App'>
