@@ -35,11 +35,10 @@ const Routes = () => {
   // REDUX DISPATCH HOOK
   const dispatch = useDispatch();
 
-
-  var a;
   useEffect(() => {
     dispatch(isUserLogin());
   }, [dispatch]);
+  
   return (
     <Router>
       <div className='App'>
