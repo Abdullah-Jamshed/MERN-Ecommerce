@@ -88,7 +88,7 @@ const OrderScreen = ({ history, match }) => {
         order && (
           <>
             <div className='py-4 mb-4'>
-              <Link to='/profile' style={{ fontSize: "22px", textDecoration: "none" }}>
+              <Link to='/' style={{ fontSize: "22px", textDecoration: "none" }}>
                 <i className='fa fa-chevron-left mr-4' />
                 Go Back
               </Link>
