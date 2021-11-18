@@ -148,7 +148,7 @@ const PlaceOrderScreen = ({ history }) => {
                 </ListGroup.Item>
               )}
               <ListGroup.Item>
-                <Button type='button' className='btn-block' disabled={cartItems.length === 0} onClick={placeOrderHandler}>
+                <Button type='button' className='btn-block' disabled={cartItems.length === 0 || isLoading} onClick={placeOrderHandler}>
                   Place Order {isLoading && <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' className='ml-2' />}
                 </Button>
               </ListGroup.Item>
